@@ -1,0 +1,6 @@
+{
+  "*.{js,jsx,ts,tsx}": [
+    "yarn lint --cache",
+    "yarn test:unit --findRelatedTests --passWithNoTests"
+  ]
+}
