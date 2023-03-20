@@ -146,17 +146,18 @@ jobs:
           path: ${{ env.CACHED_DEPENDENCY_PATHS }}
           key: ${{ needs.job_install_dependencies.outputs.dependency_cache_key }}
 
-      - name: Install cypress dependencies
-        run: yarn add cypress
+      - name: Install dependencies
+        run: yarn
 
       - name: Cypress run
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v3.1.0
         with:
           install: false
-          start: yarn dev
           browser: chrome
-          headed: true
           record: true
+          start: yarn dev
+          command: yarn cypress:run
+          config-file: cypress.config.ts
         env:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           CYPRESS_PROJECT_ID: ${{ secrets.CYPRESS_PROJECT_ID }}
