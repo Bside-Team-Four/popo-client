@@ -59,3 +59,7 @@ public/*.map
 cypress/screenshots
 cypress/videos
 cypress/log
+
+# lighthouse
+.lighthouseci
+lhci_reports

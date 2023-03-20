@@ -68,6 +68,7 @@
  ┣ 📜 jest.config.js
  ┣ 📜 jest.setup.js
  ┣ 📜 LICENSE
+ ┣ 📜 lighthouserc.js
  ┣ 📜 next.config.js
  ┣ 📜 package.json
  ┣ 📜 README.md
