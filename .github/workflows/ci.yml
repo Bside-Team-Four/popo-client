@@ -7,7 +7,9 @@ on:
     branches: [main]
 
 env:
-  CACHED_DEPENDENCY_PATHS: ${{ github.workspace }}/.yarn/unplugged
+  CACHED_DEPENDENCY_PATHS: |
+    ${{ github.workspace }}/.yarn/cache
+    ${{ github.workspace }}/.yarn/unplugged
   CACHED_BUILD_PATHS: ${{ github.workspace }}/.next
   BUILD_CACHE_KEY: ${{ github.sha }}
   DEFAULT_NODE_VERSION: '18'
@@ -19,15 +21,15 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: Check out current commit (${{ github.sha }})
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Set up Node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ env.DEFAULT_NODE_VERSION }}
 
       - name: Compute dependency cache key
         id: compute_lockfile_hash
-        run: echo "::set-output name=hash::${{ hashFiles('yarn.lock') }}"
+        run: echo "hash=${{ hashFiles('yarn.lock') }}" >> $GITHUB_OUTPUT
 
       - name: Check dependency cache
         uses: actions/cache@v3
@@ -49,9 +51,9 @@ jobs:
     timeout-minutes: 15
     steps:
       - name: Check out current commit (${{ github.sha }})
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Set up Node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ env.DEFAULT_NODE_VERSION }}
 
@@ -80,9 +82,9 @@ jobs:
     needs: [ job_install_dependencies ]
     steps:
       - name: Check out current commit (${{ github.sha }})
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Set up Node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ env.DEFAULT_NODE_VERSION }}
 
@@ -106,9 +108,9 @@ jobs:
     needs: [ job_install_dependencies ]
     steps:
       - name: Check out current commit (${{ github.sha }})
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Set up Node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ env.DEFAULT_NODE_VERSION }}
 
@@ -134,9 +136,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out current commit (${{ github.sha }})
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Set up Node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ env.DEFAULT_NODE_VERSION }}
 
@@ -168,9 +170,9 @@ jobs:
     needs: [job_build]
     steps:
       - name: Check out current commit (${{ github.sha }})
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Set up Node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ env.DEFAULT_NODE_VERSION }}
 
@@ -193,16 +195,16 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  job_lighthouse:
+  job_lhci:
     name: Lighthouse CI
     if: github.event_name != 'push'
     needs: [ job_build ]
     runs-on: ubuntu-latest
     steps:
       - name: Check out current commit (${{ github.sha }})
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Set up Node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ env.DEFAULT_NODE_VERSION }}
 
@@ -218,12 +220,13 @@ jobs:
           key: ${{ env.BUILD_CACHE_KEY }}
 
       - name: Install @lhci/cli dependencies
-        run: yarn add -D @lhci/cli
+        run: yarn install
 
       - name: Run Lighthouse CI
         env:
           LHCI_GITHUB_APP_TOKEN: ${{ secrets.LHCI_GITHUB_APP_TOKEN }}
         run: yarn lhci autorun || echo "Fail to Run Lighthouse CI!"
+
       - name: Format lighthouse score
         id: format_lighthouse_score
         uses: actions/github-script@v6
@@ -231,17 +234,21 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const fs = require('fs');
+            
             const results = JSON.parse(fs.readFileSync('${{ github.workspace }}/lhci_reports/manifest.json'));
             let comments = '';
+            
             results.forEach((result, index) => {
               const { summary, jsonPath } = result;
               const details = JSON.parse(fs.readFileSync(jsonPath));
               const { audits } = details;
+            
               const formatResult = (res) => Math.round(res * 100);
+              
               Object.keys(summary).forEach((key) => {
                 summary[key] = formatResult(summary[key]);
               });
-              // https://web.dev/performance-scoring/#color-coding
+              
               const score = (res) => {
                 if (res >= 90) {
                   return '🟢';
@@ -251,6 +258,7 @@ jobs:
                 }
                 return '🔴';
               };
+            
               const comment = [
                 `⚡️ ${index + 1} Lighthouse report!`,
                 '| Category | Score |',
@@ -261,6 +269,7 @@ jobs:
                 `| ${score(summary.seo)} SEO | ${summary.seo} |`,
                 `| ${score(summary.pwa)} PWA | ${summary.pwa} |`,
               ].join('\n');
+            
               const detail = [
                 '| Category | Score |',
                 '| --- | --- |',
@@ -271,8 +280,10 @@ jobs:
                 `| ${score(audits['largest-contentful-paint'].score * 100)} Largest Contentful Paint | ${audits['largest-contentful-paint'].displayValue} |`,
                 `| ${score(audits['cumulative-layout-shift'].score * 100)} Cumulative Layout Shift | ${audits['cumulative-layout-shift'].displayValue} |`,
               ].join('\n');
+            
               comments += `${comment}\n\n${detail}\n\n`;
             });
+            
             core.setOutput('comments', comments);
       - name: comment PR
         uses: unsplash/comment-on-pr@v1.3.0
