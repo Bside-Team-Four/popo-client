@@ -1,9 +1,13 @@
-const runtimeCaching = require('next-pwa/cache');
-const withPWA = require('next-pwa');
+const withPWA = require('@ducanh2912/next-pwa').default({
+  dest: 'public',
+  register: true,
+  disable: process.env.NODE_ENV === 'development',
+  buildExcludes: [/_buildManifest\.js$/],
+});
 
 const isProd = process.env.NODE_ENV === 'production';
 
-const nextConfig = {
+module.exports = withPWA({
   reactStrictMode: true,
   eslint: {
     ignoreDuringBuilds: true,
@@ -31,12 +35,4 @@ const nextConfig = {
 
     return config;
   },
-};
-
-module.exports = withPWA({
-  dest: 'public',
-  maximumFileSizeToCacheInBytes: 7000000,
-  disable: process.env.NODE_ENV === 'development',
-  buildExcludes: [/_buildManifest\.js$/],
-  runtimeCaching,
-})(nextConfig);
+});
