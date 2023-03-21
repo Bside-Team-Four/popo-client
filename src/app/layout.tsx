@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 
-import StyledComponentsRegistry from '../lib/StyledComponentsRegistry';
+import Layout from '@/components/common/Layout';
+import StyledComponentsRegistry from '@/lib/StyledComponentsRegistry';
 
 import GlobalStyleThemeProvider from './GlobalStyleThemeProvider';
 
@@ -54,10 +55,16 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
+      <head>
+        <link rel="stylesheet" as="style" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/variable/pretendardvariable-dynamic-subset.css" />
+        <title>PoPo</title>
+      </head>
       <body>
         <StyledComponentsRegistry>
           <GlobalStyleThemeProvider>
-            {children}
+            <Layout>
+              {children}
+            </Layout>
           </GlobalStyleThemeProvider>
         </StyledComponentsRegistry>
       </body>
