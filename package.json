@@ -17,6 +17,7 @@
     "test:watchAll:coverage": "jest --watchAll --coverage",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
+    "cypress:pnp": "node ./scripts/cypress-pnp.cjs",
     "test:e2e": "start-server-and-test dev http://localhost:3000 cypress:run",
     "postinstall": "husky install && chmod ug+x .husky/*"
   },
