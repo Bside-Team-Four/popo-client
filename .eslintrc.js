@@ -115,5 +115,16 @@ module.exports = {
       args: 'after-used',
       argsIgnorePattern: '^_',
     }],
+    'import/extensions': [
+      'error',
+      'ignorePackages',
+      {
+        js: 'never',
+        jsx: 'never',
+        ts: 'never',
+        tsx: 'never',
+        json: 'never',
+      },
+    ],
   },
 };
