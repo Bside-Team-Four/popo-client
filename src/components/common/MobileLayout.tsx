@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 import useResizeViewportHeight from '@/hooks/useResizeViewportHeight';
 
-export default function Layout({ children }:PropsWithChildren) {
+export default function MobileLayout({ children }:PropsWithChildren) {
   useResizeViewportHeight();
 
   return (
@@ -36,6 +36,7 @@ const LayoutWrapper = styled.div`
 const ContentWrapper = styled.div`
   display: flex;
   overflow: hidden;
+  flex-direction: column;
   width: 430px;
   max-width: 430px;
   height: auto;

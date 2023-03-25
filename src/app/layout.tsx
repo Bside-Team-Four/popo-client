@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 
 import localFont from 'next/font/local';
 
-import Layout from '@/components/common/Layout';
+import MobileLayout from '@/components/common/MobileLayout';
 import StyledComponentsRegistry from '@/lib/StyledComponentsRegistry';
 
 import GlobalStyleThemeProvider from './GlobalStyleThemeProvider';
@@ -54,7 +54,7 @@ const pretendard = localFont({
   src: '../../public/font/PretendardVariable.woff2',
 });
 
-export default function RootLayout({
+export default function Layout({
   children,
 }: {
   children: ReactNode
@@ -67,9 +67,9 @@ export default function RootLayout({
       <body>
         <StyledComponentsRegistry>
           <GlobalStyleThemeProvider>
-            <Layout>
+            <MobileLayout>
               {children}
-            </Layout>
+            </MobileLayout>
           </GlobalStyleThemeProvider>
         </StyledComponentsRegistry>
       </body>
