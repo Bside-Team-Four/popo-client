@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 import useResizeViewportHeight from '@/hooks/useResizeViewportHeight';
 
-export default function Layout({ children }:PropsWithChildren) {
+export default function MobileLayout({ children }:PropsWithChildren) {
   useResizeViewportHeight();
 
   return (
@@ -19,6 +19,12 @@ export default function Layout({ children }:PropsWithChildren) {
 }
 
 const LayoutWrapper = styled.div`
+  display: flex;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
   width: 100%;
   max-width: 100%;
   height: 100%;
@@ -28,40 +34,14 @@ const LayoutWrapper = styled.div`
 `;
 
 const ContentWrapper = styled.div`
-  width: auto;
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+  width: 430px;
   max-width: 430px;
   height: auto;
   min-height: calc(var(--vh, 1vh) * 100);
   position: relative;
   background-color: ${({ theme }) => theme.color.white};
   margin: 0 auto;
-  padding: 24px;
-  &::before {
-    z-index: 10;
-    content: " ";
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    border-left: 1px solid #D2C6C6;
-  }
-  &::after {
-    z-index: 10;
-    content: " ";
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    border-right: 1px solid #D2C6C6;
-  }
-  @media (max-width: 430px) {
-    width: 100%;
-    max-width: initial;
-    &::before {
-      content: none;
-    }
-    &::after {
-      content: none;
-    }
-  }
 `;

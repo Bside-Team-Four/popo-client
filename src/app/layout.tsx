@@ -2,7 +2,7 @@ import { ReactNode } from 'react';
 
 import localFont from 'next/font/local';
 
-import Layout from '@/components/common/Layout';
+import MobileLayout from '@/components/common/MobileLayout';
 import StyledComponentsRegistry from '@/lib/StyledComponentsRegistry';
 
 import GlobalStyleThemeProvider from './GlobalStyleThemeProvider';
@@ -54,7 +54,7 @@ const pretendard = localFont({
   src: '../../public/font/PretendardVariable.woff2',
 });
 
-export default function RootLayout({
+export default function Layout({
   children,
 }: {
   children: ReactNode
@@ -62,16 +62,14 @@ export default function RootLayout({
   return (
     <html lang="ko" className={pretendard.className}>
       <head>
-        {/* <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" /> */}
-        {/* <link rel="stylesheet" as="style" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/variable/pretendardvariable-dynamic-subset.css" /> */}
         <title>PoPo</title>
       </head>
       <body>
         <StyledComponentsRegistry>
           <GlobalStyleThemeProvider>
-            <Layout>
+            <MobileLayout>
               {children}
-            </Layout>
+            </MobileLayout>
           </GlobalStyleThemeProvider>
         </StyledComponentsRegistry>
       </body>

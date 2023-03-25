@@ -15,6 +15,12 @@ export const GlobalStyle = createGlobalStyle`
   }
   body {
     font-family: Pretendard,sans-serif;
+    user-select: none;
+    box-sizing: border-box;
+    overflow: hidden;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
   }
   a {
     cursor: pointer;
