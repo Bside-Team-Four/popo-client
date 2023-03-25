@@ -62,8 +62,6 @@ export default function RootLayout({
   return (
     <html lang="ko" className={pretendard.className}>
       <head>
-        {/* <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" /> */}
-        {/* <link rel="stylesheet" as="style" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.6/dist/web/variable/pretendardvariable-dynamic-subset.css" /> */}
         <title>PoPo</title>
       </head>
       <body>
