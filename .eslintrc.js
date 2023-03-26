@@ -21,10 +21,12 @@ module.exports = {
     'plugin:jsx-a11y/recommended',
     'plugin:react/jsx-runtime',
     'plugin:@next/next/recommended',
+    'plugin:lodash-fp/recommended',
   ],
   plugins: [
     'simple-import-sort',
     'unused-imports',
+    'lodash-fp',
   ],
   parserOptions: {
     ecmaFeatures: {
@@ -126,5 +128,7 @@ module.exports = {
         json: 'never',
       },
     ],
+    'lodash-fp/no-unused-result': 'warn',
+    'lodash-fp/no-extraneous-function-wrapping': 'warn',
   },
 };
