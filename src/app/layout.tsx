@@ -1,11 +1,15 @@
 import { ReactNode } from 'react';
 
+import dynamic from 'next/dynamic';
 import localFont from 'next/font/local';
 
 import MobileLayout from '@/components/common/MobileLayout';
-import StyledComponentsRegistry from '@/lib/StyledComponentsRegistry';
 
-import GlobalStyleThemeProvider from './GlobalStyleThemeProvider';
+import StyledComponentsRegistry from './StyledComponentsRegistry';
+
+const SizeThemeProvider = dynamic(() => import('./SizeThemeProvider'), {
+  ssr: false,
+});
 
 export const metadata = {
   applicationName: 'PoPo',
@@ -17,14 +21,14 @@ export const metadata = {
   description: '좋아하는 마음을 익명으로 표현하고 싶은 10대를 위한, 투표 형식의 SNS 플랫폼 PoPo ❤️',
   manifest: '/manifest.json',
   themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#6517FF' },
-    { media: '(prefers-color-scheme: dark)', color: '#6517FF' },
+    { media: '(prefers-color-scheme: light)', color: '#FFFFFF' },
+    { media: '(prefers-color-scheme: dark)', color: '#000000' },
   ],
   // TODO: itunes 등록 필요
   appleWebApp: {
     capable: true,
     title: 'PoPo',
-    statusBarStyle: 'black-translucent',
+    statusBarStyle: 'default',
     // TODO: startUpImage splash image
   },
   icons: {
@@ -66,11 +70,11 @@ export default function Layout({
       </head>
       <body>
         <StyledComponentsRegistry>
-          <GlobalStyleThemeProvider>
+          <SizeThemeProvider>
             <MobileLayout>
               {children}
             </MobileLayout>
-          </GlobalStyleThemeProvider>
+          </SizeThemeProvider>
         </StyledComponentsRegistry>
       </body>
     </html>

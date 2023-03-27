@@ -6,13 +6,13 @@ import styled from 'styled-components';
 
 export default function MainLayout({ children }:PropsWithChildren) {
   return (
-    <ContentWrapper>
+    <Container>
       {children}
-    </ContentWrapper>
+    </Container>
   );
 }
 
-const ContentWrapper = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   overflow-x: hidden;

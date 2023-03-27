@@ -10,15 +10,15 @@ export default function MobileLayout({ children }:PropsWithChildren) {
   useResizeViewportHeight();
 
   return (
-    <LayoutWrapper>
+    <Container>
       <ContentWrapper>
         {children}
       </ContentWrapper>
-    </LayoutWrapper>
+    </Container>
   );
 }
 
-const LayoutWrapper = styled.div`
+const Container = styled.div`
   display: flex;
   position: absolute;
   top: 0;

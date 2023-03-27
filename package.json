@@ -5,6 +5,20 @@
   "description": "좋아하는 마음을 익명으로 표현하고 싶은 10대를 위한, 투표 형식의 SNS 플랫폼 PoPo ❤️",
   "license": "MIT",
   "author": "B-Side Team4",
+  "keywords": [
+    "popo",
+    "react",
+    "next.js",
+    "project"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bside-Team-Four/popo-client.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Bside-Team-Four/popo-client/issues"
+  },
+  "homepage": "https://popo-client.vercel.app",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
@@ -22,7 +36,7 @@
     "postinstall": "husky install && chmod ug+x .husky/*"
   },
   "dependencies": {
-    "@ducanh2912/next-pwa": "^8.1.1",
+    "@ducanh2912/next-pwa": "^8.2.0",
     "lodash": "^4.17.21",
     "next": "13.2.4",
     "react": "18.2.0",

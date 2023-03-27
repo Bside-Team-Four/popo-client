@@ -47,15 +47,19 @@
  ┣ 📂 cypress
  ┣ 📂 images
  ┣ 📂 public
+ ┣ 📂 scripts
  ┣ 📂 src
  ┃ ┣ 📂 app
- ┃ ┃ ┣ 📂 api
- ┃ ┃ ┣ 📜 head.tsx
+ ┃ ┃ ┣ 📂 (main)
  ┃ ┃ ┣ 📜 layout.tsx
- ┃ ┃ ┣ 📜 page.tsx
+ ┃ ┃ ┣ 📜 SizeThemeProvider.tsx
+ ┃ ┃ ┣ 📜 StyledComponentsRegistry.tsx
  ┃ ┣ 📂 components
- ┃ ┣ 📂 lib
- ┃ ┣ 📂 styles
+ ┃ ┣ 📂 fixtures
+ ┃ ┣ 📂 hooks
+ ┃ ┣ 📂 styles  
+ ┃ ┣ 📂 test
+ ┃ ┣ 📂 types
  ┃ ┣ 📂 utils
  ┣ 📜 .eslintrc.js
  ┣ 📜 .gitignore

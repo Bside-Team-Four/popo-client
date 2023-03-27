@@ -35,18 +35,18 @@ const NavItems: NavItem[] = [
 
 export default function BottomNavigation() {
   return (
-    <Wrapper>
+    <Container>
       {NavItems.map((item) => (
         <NavigationItem
           key={item.title}
           item={item}
         />
       ))}
-    </Wrapper>
+    </Container>
   );
 }
 
-const Wrapper = styled.div`
+const Container = styled.div`
   position: fixed;
   bottom: 0;
   display: flex;

@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import BottomNavigation from '@/components/common/BottomNavigation';
 
 describe('BottomNavigation', () => {
-  it('navigation item들을 잘 렌더링하는가', () => {
+  it('navigation items render', () => {
     render(<BottomNavigation />);
 
     expect(screen.getAllByRole('link')).toHaveLength(4);
