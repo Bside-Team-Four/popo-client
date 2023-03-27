@@ -33,7 +33,7 @@ export const metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    url: 'http://localhost:3000',
+    url: 'https://popo-client.vercel.app',
     title: 'PoPo',
     description: '좋아하는 마음을 익명으로 표현하고 싶은 10대를 위한, 투표 형식의 SNS 플랫폼 PoPo ❤️',
     // TODO
@@ -43,7 +43,7 @@ export const metadata = {
   openGraph: {
     title: 'PoPo',
     description: '좋아하는 마음을 익명으로 표현하고 싶은 10대를 위한, 투표 형식의 SNS 플랫폼 PoPo ❤️',
-    url: 'http://localhost:3000',
+    url: 'https://popo-client.vercel.app',
     siteName: 'PoPo',
     images: '/images/thumbnail.png',
     type: 'website',
