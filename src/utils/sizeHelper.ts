@@ -5,9 +5,9 @@ import { DefaultTheme, ThemeContext } from 'styled-components';
 
 import Size from '@/types/Size';
 
-interface ThemeProps {
+type ThemeProps = {
   theme: { size: Size };
-}
+};
 
 export const getAppWidth = (props: ThemeProps) => props.theme.size.width;
 

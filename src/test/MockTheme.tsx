@@ -1,8 +1,8 @@
 import { ReactElement, ReactNode } from 'react';
 
-import lightTheme from 'src/styles/theme';
 import { ThemeProvider } from 'styled-components';
 
+import lightTheme from '@/styles/theme';
 import Size from '@/types/Size';
 
 interface Props {

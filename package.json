@@ -5,6 +5,20 @@
   "description": "좋아하는 마음을 익명으로 표현하고 싶은 10대를 위한, 투표 형식의 SNS 플랫폼 PoPo ❤️",
   "license": "MIT",
   "author": "B-Side Team4",
+  "keywords": [
+    "popo",
+    "react",
+    "next.js",
+    "project"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Bside-Team-Four/popo-client.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Bside-Team-Four/popo-client/issues"
+  },
+  "homepage": "https://popo-client.vercel.app",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

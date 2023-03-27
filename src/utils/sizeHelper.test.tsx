@@ -1,19 +1,11 @@
 import { renderHook } from '@testing-library/react';
 
-import MockTheme from '@/utils/test/MockTheme';
+import fixtures from '@/fixtures';
+import MockTheme from '@/test/MockTheme';
 
 import {
   getAppHeight, getAppWidth, getRatioSize, useAppHeight, useAppWidth,
 } from './sizeHelper';
-
-const fixtureTheme = {
-  theme: {
-    size: {
-      width: 320,
-      height: 480,
-    },
-  },
-};
 
 describe('sizeHelper', () => {
   const renderMockThemeHook = (func: () => number) => renderHook(
@@ -21,7 +13,7 @@ describe('sizeHelper', () => {
     {
       wrapper: ({ children }) => (
         <MockTheme
-          size={fixtureTheme.theme.size}
+          size={fixtures.theme.size}
         >
           {children}
         </MockTheme>
@@ -31,19 +23,19 @@ describe('sizeHelper', () => {
 
   context('getAppWidth', () => {
     it('returns app width', () => {
-      expect(getAppWidth(fixtureTheme)).toBe(320);
+      expect(getAppWidth({ theme: fixtures.theme })).toBe(320);
     });
   });
   context('getAppHeight', () => {
     it('returns app height', () => {
-      expect(getAppHeight(fixtureTheme)).toBe(480);
+      expect(getAppHeight({ theme: fixtures.theme })).toBe(480);
     });
   });
   context('getRatioSize', () => {
     it('returns ratio size', () => {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      const result = getRatioSize(100)(fixtureTheme);
+      const result = getRatioSize(100)({ theme: fixtures.theme });
       expect(result).toBe('44.44444444444444px');
     });
   });

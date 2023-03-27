@@ -1,8 +1,6 @@
 'use client';
 
-import {
-  ReactNode, useEffect, useState,
-} from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 
 import _ from 'lodash/fp';
 import { ThemeProvider } from 'styled-components';
@@ -35,7 +33,7 @@ const getSize = (isIos:boolean):Size => ({
   height: getInnerHeight(isIos),
 });
 
-function GlobalStyleThemeProvider({ children }: { children: ReactNode }) {
+function SizeThemeProvider({ children }: { children: ReactNode }) {
   const [isIos, setIsIos] = useState<boolean>(false);
   const [size, setSize] = useState<Size>(getSize(isIos));
 
@@ -67,4 +65,4 @@ function GlobalStyleThemeProvider({ children }: { children: ReactNode }) {
   );
 }
 
-export default GlobalStyleThemeProvider;
+export default SizeThemeProvider;

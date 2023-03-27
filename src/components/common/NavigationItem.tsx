@@ -17,7 +17,7 @@ export default function NavigationItem({ item }:NavigationItemProps) {
 
   return (
     <Link href={item.url}>
-      <ItemBox>
+      <Container>
         <ItemIcon
           src={`/images/${isActive ? item.activeIcon : item.inactiveIcon}.svg`}
           width={24}
@@ -26,12 +26,12 @@ export default function NavigationItem({ item }:NavigationItemProps) {
           priority
         />
         <ItemText $isActive={isActive}>{item.title}</ItemText>
-      </ItemBox>
+      </Container>
     </Link>
   );
 }
 
-const ItemBox = styled.div`
+const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;

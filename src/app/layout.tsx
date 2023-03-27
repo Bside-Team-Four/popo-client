@@ -3,9 +3,9 @@ import { ReactNode } from 'react';
 import localFont from 'next/font/local';
 
 import MobileLayout from '@/components/common/MobileLayout';
-import StyledComponentsRegistry from '@/lib/StyledComponentsRegistry';
 
-import GlobalStyleThemeProvider from './GlobalStyleThemeProvider';
+import SizeThemeProvider from './SizeThemeProvider';
+import StyledComponentsRegistry from './StyledComponentsRegistry';
 
 export const metadata = {
   applicationName: 'PoPo',
@@ -24,7 +24,7 @@ export const metadata = {
   appleWebApp: {
     capable: true,
     title: 'PoPo',
-    statusBarStyle: 'black-translucent',
+    statusBarStyle: 'default',
     // TODO: startUpImage splash image
   },
   icons: {
@@ -66,11 +66,11 @@ export default function Layout({
       </head>
       <body>
         <StyledComponentsRegistry>
-          <GlobalStyleThemeProvider>
+          <SizeThemeProvider>
             <MobileLayout>
               {children}
             </MobileLayout>
-          </GlobalStyleThemeProvider>
+          </SizeThemeProvider>
         </StyledComponentsRegistry>
       </body>
     </html>
