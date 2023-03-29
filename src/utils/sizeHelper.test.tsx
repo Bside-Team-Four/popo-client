@@ -12,9 +12,7 @@ describe('sizeHelper', () => {
     () => func(),
     {
       wrapper: ({ children }) => (
-        <MockTheme
-          size={fixtures.theme.size}
-        >
+        <MockTheme>
           {children}
         </MockTheme>
       ),

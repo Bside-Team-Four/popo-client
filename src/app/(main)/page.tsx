@@ -1,7 +1,10 @@
-export default function Home() {
+'use client';
+
+import Home from '@/components/home';
+
+export default function PoPo() {
+  // TODO: Server 통신 후 데이터 받아서 넘겨주기 (useOOO)
   return (
-    <div>
-      <h1>PoPo</h1>
-    </div>
+    <Home currentRabbitState="start" />
   );
 }
