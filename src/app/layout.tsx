@@ -3,6 +3,9 @@ import { ReactNode } from 'react';
 import dynamic from 'next/dynamic';
 import localFont from 'next/font/local';
 
+import dayjs from 'dayjs';
+import utc from 'dayjs/plugin/utc';
+
 import MobileLayout from '@/components/common/MobileLayout';
 
 import StyledComponentsRegistry from './StyledComponentsRegistry';
@@ -10,6 +13,9 @@ import StyledComponentsRegistry from './StyledComponentsRegistry';
 const SizeThemeProvider = dynamic(() => import('./SizeThemeProvider'), {
   ssr: false,
 });
+
+dayjs.locale('ko');
+dayjs.extend(utc);
 
 export const metadata = {
   applicationName: 'PoPo',

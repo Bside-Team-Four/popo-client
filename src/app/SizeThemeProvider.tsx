@@ -20,9 +20,9 @@ const getInnerHeight = (): number => {
 
 const getInnerWidth = (): number => {
   if (iOS) {
-    return window.outerWidth;
+    return window.outerWidth <= 430 ? window.outerWidth : 430;
   }
-  return window.innerWidth;
+  return window.innerWidth <= 430 ? window.innerWidth : 430;
 };
 const getSize = ():Size => ({
   width: getInnerWidth(),
