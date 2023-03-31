@@ -8,7 +8,7 @@ import VoteButton from './VoteButton';
 describe('VoteButton', () => {
   const renderVoteButton = (rabbitState: RabbitState) => render(
     <MockTheme>
-      <VoteButton rabbitState={rabbitState} />
+      <VoteButton openPollPopup={jest.fn()} rabbitState={rabbitState} />
     </MockTheme>,
   );
 

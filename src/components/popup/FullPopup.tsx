@@ -6,18 +6,7 @@ import { getAppHeight, getAppWidth } from '@/utils/sizeHelper';
 
 import Portal from './Portal';
 
-type FullPopupProps = {
-  visible: boolean;
-};
-
-export default function FullPopup({
-  visible,
-  children,
-}: PropsWithChildren<FullPopupProps>) {
-  if (!visible) {
-    return null;
-  }
-
+export default function FullPopup({ children }: PropsWithChildren) {
   return (
     <Portal>
       <InnerContainer>
