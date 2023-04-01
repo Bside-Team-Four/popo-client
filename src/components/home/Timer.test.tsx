@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react';
 
 import RabbitState from '@/types/RabbitState';
-import renderWithProviders from '@/utils/testHelper';
+import { renderWithProviders } from '@/utils/testHelper';
 
 import Timer from './Timer';
 

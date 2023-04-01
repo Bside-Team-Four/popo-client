@@ -4,7 +4,8 @@ import RabbitState from '@/types/RabbitState';
 import { getRatioSizePX } from '@/utils/sizeHelper';
 
 type VoteButtonProps = {
-  rabbitState: RabbitState
+  rabbitState: RabbitState;
+  openPollPopup:() => void;
 };
 
 const getButtonText = (state: RabbitState) => {
@@ -17,11 +18,15 @@ const getButtonText = (state: RabbitState) => {
   return '시작하기';
 };
 
-export default function VoteButton({ rabbitState }: VoteButtonProps) {
+export default function VoteButton({ rabbitState, openPollPopup }: VoteButtonProps) {
   const buttonText = getButtonText(rabbitState);
 
   return (
-    <Container type="button" disabled={rabbitState !== 'start'}>
+    <Container
+      type="button"
+      disabled={rabbitState !== 'start'}
+      onClick={openPollPopup}
+    >
       {buttonText}
     </Container>
   );
