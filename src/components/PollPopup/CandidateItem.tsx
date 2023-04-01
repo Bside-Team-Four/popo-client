@@ -11,13 +11,13 @@ type CandidateItemProps = {
 
 export default function CandidateItem({ candidate, onClick }:CandidateItemProps) {
   return (
-    <StudentButton onClick={onClick}>
+    <Wrapper onClick={onClick}>
       {candidate.name ? candidate.name : <CandidateDefaultIcon />}
-    </StudentButton>
+    </Wrapper>
   );
 }
 
-const StudentButton = styled.button`
+const Wrapper = styled.button`
   font-size: 16px;
   font-weight: 700;
   line-height: 24px;

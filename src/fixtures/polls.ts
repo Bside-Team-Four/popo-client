@@ -62,7 +62,7 @@ const polls:Poll[] = [
       },
       {
         userId: 4,
-        name: '리사',
+        name: '이재준',
       },
     ],
   },

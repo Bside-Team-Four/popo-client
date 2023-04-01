@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 import { motion, useAnimate } from 'framer-motion';
 import styled from 'styled-components';
@@ -46,11 +46,6 @@ export default function PollPopup({ onClose }:PollPopupProps) {
     setIsChanged(false);
   }, [currentStep, onClosePollPopup, polls.length]);
 
-  useEffect(() => () => {
-    setCurrentStep(0);
-    setIsChanged(false);
-  }, []);
-
   return (
     <FullPopup>
       <Container
@@ -70,7 +65,6 @@ export default function PollPopup({ onClose }:PollPopupProps) {
         />
         <Question category={categoryName} content={content} />
         <CandidateList
-          currentStep={currentStep}
           isChanged={isChanged}
           candidates={candidates}
           goNextStep={goNextStep}

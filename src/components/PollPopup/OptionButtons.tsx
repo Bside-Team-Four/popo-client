@@ -19,10 +19,10 @@ export default function OptionButtons({
     setIsChanged(true);
   }, [setIsChanged]);
 
-  const onClickSkip = () => {
+  const onClickSkip = useCallback(() => {
     // TODO: /vote/skip post
     goNextStep();
-  };
+  }, [goNextStep]);
 
   return (
     <ButtonsContainer>

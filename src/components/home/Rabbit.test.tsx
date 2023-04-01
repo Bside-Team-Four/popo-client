@@ -1,15 +1,13 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 
-import MockTheme from '@/test/MockTheme';
 import RabbitState from '@/types/RabbitState';
+import { renderWithProviders } from '@/utils/testHelper';
 
 import Rabbit from './Rabbit';
 
 describe('Rabbit', () => {
-  const rabbitRender = (rabbitState: RabbitState) => render(
-    <MockTheme>
-      <Rabbit rabbitState={rabbitState} />
-    </MockTheme>,
+  const rabbitRender = (rabbitState: RabbitState) => renderWithProviders(
+    <Rabbit rabbitState={rabbitState} />,
   );
 
   context('when rabbitState is sleep', () => {

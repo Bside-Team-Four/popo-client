@@ -1,15 +1,13 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 
-import MockTheme from '@/test/MockTheme';
 import RabbitState from '@/types/RabbitState';
+import { renderWithProviders } from '@/utils/testHelper';
 
 import VoteButton from './VoteButton';
 
 describe('VoteButton', () => {
-  const renderVoteButton = (rabbitState: RabbitState) => render(
-    <MockTheme>
-      <VoteButton openPollPopup={jest.fn()} rabbitState={rabbitState} />
-    </MockTheme>,
+  const renderVoteButton = (rabbitState: RabbitState) => renderWithProviders(
+    <VoteButton openPollPopup={jest.fn()} rabbitState={rabbitState} />,
   );
 
   context('when rabbitState is sleep', () => {

@@ -17,7 +17,7 @@ export default function OptionButton({
   text, imgSrc, disabled = false, size, onClick,
 }:OptionButtonProps) {
   return (
-    <Wrapper disabled={disabled} onClick={onClick}>
+    <Wrapper data-testid={`${text} button`} disabled={disabled} onClick={onClick}>
       <ButtonIcon
         src={imgSrc}
         width={size.width}

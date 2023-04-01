@@ -19,30 +19,40 @@ const getNowTime = () => {
   };
 };
 
-const getTimerText = () => {
+const getNowText = () => {
   const { hour, minute, second } = getNowTime();
 
   if (hour >= 3 && hour < 7) {
     const remainSecond = (3600 * 7) - (hour * 3600 + minute * 60 + second);
 
     return {
-      hourText: padInt(2)(Math.floor(remainSecond / 3600)),
-      minuteText: padInt(2)(Math.floor((remainSecond % 3600) / 60)),
-      secondText: padInt(2)(remainSecond % 60),
+      hourText: Math.floor(remainSecond / 3600),
+      minuteText: Math.floor((remainSecond % 3600) / 60),
+      secondText: remainSecond % 60,
     };
   }
 
   const remainSecond = 3600 - (minute * 60 + second);
   return {
-    hourText: '00',
-    minuteText: padInt(2)(Math.floor(remainSecond / 60)),
-    secondText: padInt(2)(remainSecond % 60),
+    hourText: 0,
+    minuteText: Math.floor(remainSecond / 60),
+    secondText: remainSecond % 60,
+  };
+};
+
+const getTimerText = () => {
+  const { hourText, minuteText, secondText } = getNowText();
+
+  return {
+    hourText: padInt(2)(hourText),
+    minuteText: padInt(2)(minuteText),
+    secondText: padInt(2)(secondText),
   };
 };
 
 const getTimerMessage = (rabbitState: RabbitState) => {
   const { hour } = getNowTime();
-  const { minuteText } = getTimerText();
+  const { minuteText, secondText } = getNowText();
 
   if (rabbitState === 'sleep') {
     return '내일 아침 7시에 다시 POPO가 시작돼';
@@ -54,7 +64,7 @@ const getTimerMessage = (rabbitState: RabbitState) => {
 
     return (hour + 1) !== 3 ? `이따 ${ampm} ${displayHour}시에 만나자` : '내일 아침 7시에 다시 POPO가 시작돼';
   }
-  return `남은 시간 ${minuteText}분이야`;
+  return minuteText === 0 ? `남은 시간 ${secondText}초야` : `남은 시간 ${minuteText}분이야`;
 };
 
 const useTimerText = (

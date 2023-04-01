@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import { useAnimate } from 'framer-motion';
 import styled from 'styled-components';
@@ -9,13 +9,12 @@ import { getRatioSizePX } from '@/utils/sizeHelper';
 import CandidateItem from './CandidateItem';
 
 type CandidateListProps = {
-  currentStep: number;
   isChanged: boolean;
   candidates: Candidate[];
   goNextStep: () => void;
 };
 
-const getCandidateData = (candidates: Candidate[], isChanged = false) => {
+const getCandidateData = (candidates: Candidate[], isChanged:boolean) => {
   const candidatesMaxCount = candidates.length > 4 ? 8 : 4;
 
   const emptyCandidates = Array(candidatesMaxCount - candidates.length)
@@ -29,26 +28,20 @@ const getCandidateData = (candidates: Candidate[], isChanged = false) => {
 };
 
 export default function CandidateList({
-  currentStep, isChanged, candidates, goNextStep,
+  isChanged, candidates, goNextStep,
 }:CandidateListProps) {
-  const [candidateData, setCandidateData] = useState<Candidate[]>(getCandidateData(candidates));
+  const candidateData = getCandidateData(candidates, isChanged);
   const [divRef, animate] = useAnimate();
 
-  const candidateOnClick = (candidate: Candidate) => {
-    if (candidate.userId === 0) {
-      // TODO: /vote/skip post
-    }
-    // TODO: /vote post
+  const candidateOnClick = () => {
     goNextStep();
   };
 
   const onChangeAnimation = useCallback(async () => {
-    await animate(divRef.current, { opacity: 0, x: -20 }, { duration: 0.5 });
-
-    setCandidateData(getCandidateData(candidates, isChanged));
+    await animate(divRef.current, { opacity: 0, x: -20 }, { duration: 0.3 });
 
     animate(divRef.current, { opacity: 1, x: 0 }, { duration: 0 });
-  }, [animate, candidates, divRef, isChanged]);
+  }, [animate, divRef]);
 
   useEffect(() => {
     if (isChanged) {
@@ -56,17 +49,13 @@ export default function CandidateList({
     }
   }, [isChanged, onChangeAnimation]);
 
-  useEffect(() => {
-    setCandidateData(getCandidateData(candidates));
-  }, [currentStep, candidates]);
-
   return (
     <Container ref={divRef}>
       {candidateData.map((candidate, i) => (
         <CandidateItem
           key={`${candidate.userId}-${i}`}
           candidate={candidate}
-          onClick={() => candidateOnClick(candidate)}
+          onClick={() => candidateOnClick()}
         />
       ))}
     </Container>
