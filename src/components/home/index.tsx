@@ -6,7 +6,7 @@ import styled from 'styled-components';
 
 import Timer from '@/components/home/Timer';
 import VoteButton from '@/components/home/VoteButton';
-import PollPopup from '@/components/PollPopup';
+import PollPopup from '@/components/popup/PollPopup';
 import RabbitState from '@/types/RabbitState';
 import { getRatioSizePX, useGetRatioSize } from '@/utils/sizeHelper';
 

@@ -1,13 +1,13 @@
 import { fireEvent, screen } from '@testing-library/react';
 
-import { renderWithProviders } from '@/utils/testHelper';
+import { renderWithThemeProviders } from '@/utils/testHelper';
 
 import PollHeader from './PollHeader';
 
 describe('PollHeader', () => {
   const onClosePollPopupMock = jest.fn();
 
-  const renderPollHeader = () => renderWithProviders(
+  const renderPollHeader = () => renderWithThemeProviders(
     <PollHeader
       currentStep={2}
       stepCount={7}

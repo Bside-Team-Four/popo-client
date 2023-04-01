@@ -6,7 +6,7 @@ import { ThemeProvider } from 'styled-components';
 import fixtures from '@/fixtures';
 import lightTheme from '@/styles/theme';
 
-export function renderWithProviders(node: ReactNode) {
+export function renderWithThemeProviders(node: ReactNode) {
   return render((
     <ThemeProvider theme={{ ...lightTheme, size: fixtures.theme.size }}>
       {node}
