@@ -27,6 +27,12 @@ jobs:
         with:
           node-version: ${{ env.DEFAULT_NODE_VERSION }}
 
+      - name: Create env file
+        run: |
+          echo "NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL" >> .env
+        env:
+          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
+
       - name: Compute dependency cache key
         id: compute_lockfile_hash
         run: echo "hash=${{ hashFiles('yarn.lock') }}" >> $GITHUB_OUTPUT

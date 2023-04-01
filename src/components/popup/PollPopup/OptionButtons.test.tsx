@@ -1,13 +1,13 @@
 import { fireEvent, screen } from '@testing-library/react';
 
-import OptionButtons from '@/components/PollPopup/OptionButtons';
-import { renderWithProviders } from '@/utils/testHelper';
+import OptionButtons from '@/components/popup/PollPopup/OptionButtons';
+import { renderWithThemeProviders } from '@/utils/testHelper';
 
 describe('OptionButtons', () => {
   const setIsChanged = jest.fn();
   const goNextStep = jest.fn();
 
-  const renderOptionButtons = () => renderWithProviders(
+  const renderOptionButtons = () => renderWithThemeProviders(
     <OptionButtons
       isChanged={given.isChanged}
       setIsChanged={setIsChanged}

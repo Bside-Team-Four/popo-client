@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react';
 
 import RabbitState from '@/types/RabbitState';
-import { renderWithProviders } from '@/utils/testHelper';
+import { renderWithThemeProviders } from '@/utils/testHelper';
 
 import Timer from './Timer';
 
@@ -12,7 +12,7 @@ describe('Timer', () => {
   });
 
   const setRabbitState = jest.fn();
-  const renderTimer = (rabbitState: RabbitState) => renderWithProviders(
+  const renderTimer = (rabbitState: RabbitState) => renderWithThemeProviders(
     <Timer rabbitState={rabbitState} setRabbitState={setRabbitState} />,
   );
 

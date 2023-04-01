@@ -54,7 +54,7 @@ export default function PollPopup({ onClose }:PollPopupProps) {
         initial={{ y: appHeight }}
         transition={{
           type: 'spring',
-          duration: 0.7,
+          duration: 0.5,
         }}
         category={categoryName}
       >

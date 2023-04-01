@@ -1,12 +1,12 @@
 import { screen } from '@testing-library/react';
 
 import RabbitState from '@/types/RabbitState';
-import { renderWithProviders } from '@/utils/testHelper';
+import { renderWithThemeProviders } from '@/utils/testHelper';
 
 import Rabbit from './Rabbit';
 
 describe('Rabbit', () => {
-  const rabbitRender = (rabbitState: RabbitState) => renderWithProviders(
+  const rabbitRender = (rabbitState: RabbitState) => renderWithThemeProviders(
     <Rabbit rabbitState={rabbitState} />,
   );
 
