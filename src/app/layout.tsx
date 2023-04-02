@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 
+import { Poppins } from 'next/font/google';
 import localFont from 'next/font/local';
 
 import dayjs from 'dayjs';
@@ -55,6 +56,29 @@ export const metadata = {
 
 const pretendard = localFont({
   src: '../../public/font/PretendardVariable.woff2',
+  fallback: [
+    'Pretendard',
+    '-apple-system',
+    'BlinkMacSystemFont',
+    'system-ui',
+    'Roboto',
+    'Helvetica Neue',
+    'Segoe UI',
+    'Apple SD Gothic Neo',
+    'Noto Sans KR',
+    'Malgun Gothic',
+    'Apple Color Emoji',
+    'Segoe UI Emoji',
+    'Segoe UI Symbol',
+    'sans-serif',
+  ],
+  variable: '--font-pretendard',
+});
+
+const poppins = Poppins({
+  weight: ['200', '400', '600'],
+  variable: '--font-poppins',
+  subsets: ['latin'],
 });
 
 export default function Layout({
@@ -63,7 +87,7 @@ export default function Layout({
   children: ReactNode
 }) {
   return (
-    <html lang="ko" className={pretendard.className}>
+    <html lang="ko" className={`${pretendard.variable} ${poppins.variable}`}>
       <head>
         <title>PoPo</title>
       </head>
