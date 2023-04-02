@@ -2,7 +2,7 @@ import { PropsWithChildren } from 'react';
 
 import styled from 'styled-components';
 
-import { getAppHeight, getAppWidth } from '@/utils/sizeHelper';
+import { getAppWidth } from '@/utils/sizeHelper';
 
 import Portal from './Portal';
 
@@ -21,6 +21,6 @@ const InnerContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: ${getAppWidth}px;
-  height: ${getAppHeight}px;
+  height: 100%;
   top: 0;
 `;

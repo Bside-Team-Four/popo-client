@@ -1,16 +1,21 @@
-import { render, screen } from '@testing-library/react';
+import { screen } from '@testing-library/react';
 
 import BottomNavigation from '@/components/common/BottomNavigation';
+import { renderWithThemeProviders } from '@/utils/testHelper';
+
+jest.mock('next/navigation', () => ({
+  usePathname: jest.fn(),
+}));
 
 describe('BottomNavigation', () => {
   it('navigation items render', () => {
-    render(<BottomNavigation />);
+    renderWithThemeProviders(<BottomNavigation />);
 
     expect(screen.getAllByRole('link')).toHaveLength(4);
 
-    expect(screen.getByText('PoPo')).toBeInTheDocument();
-    expect(screen.getByText('알림')).toBeInTheDocument();
-    expect(screen.getByText('친구추가')).toBeInTheDocument();
-    expect(screen.getByText('프로필')).toBeInTheDocument();
+    expect(screen.getByText('POPO')).toBeInTheDocument();
+    expect(screen.getByText('WHO')).toBeInTheDocument();
+    expect(screen.getByText('FRIEND')).toBeInTheDocument();
+    expect(screen.getByText('PROFILE')).toBeInTheDocument();
   });
 });

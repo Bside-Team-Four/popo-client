@@ -9,8 +9,8 @@ const GlobalStyle = createGlobalStyle`
     font-family: var(--font-pretendard);
   }
   body {
+    background-color: ${({ theme }) => theme.color.background};
     user-select: none;
-    box-sizing: border-box;
     overflow: hidden;
     -webkit-user-select: none;
     -moz-user-select: none;

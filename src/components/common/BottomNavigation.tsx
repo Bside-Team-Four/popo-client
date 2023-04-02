@@ -2,44 +2,37 @@
 
 import styled from 'styled-components';
 
-import NavItem from '@/types/NavItem';
+import Navigation from '@/types/Navigation';
 
 import NavigationItem from './NavigationItem';
 
-const NavItems: NavItem[] = [
+const NavItems: Navigation[] = [
   {
-    title: 'PoPo',
+    title: 'POPO',
     url: '/',
-    activeIcon: 'popo-active',
-    inactiveIcon: 'popo-inactive',
   },
   {
-    title: '알림',
+    title: 'WHO',
     url: '/alarm',
-    activeIcon: 'alarm-active',
-    inactiveIcon: 'alarm-inactive',
   },
   {
-    title: '친구추가',
+    title: 'FRIEND',
     url: '/search',
-    activeIcon: 'friends-active',
-    inactiveIcon: 'friends-inactive',
   },
   {
-    title: '프로필',
+    title: 'PROFILE',
     url: '/profile',
-    activeIcon: 'profile-active',
-    inactiveIcon: 'profile-inactive',
   },
 ];
 
 export default function BottomNavigation() {
   return (
     <Container>
-      {NavItems.map((item) => (
+      {NavItems.map(({ title, url }) => (
         <NavigationItem
-          key={item.title}
-          item={item}
+          key={title}
+          title={title}
+          url={url}
         />
       ))}
     </Container>
@@ -50,14 +43,11 @@ const Container = styled.div`
   position: fixed;
   bottom: 0;
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   width: 100%;
   max-width: 430px;
-  height: 84px;
-  padding: 0 48px;
-  background-color: #FBFBFB;
-  border-radius: 24px 24px 0 0;
-  border: 1px solid #EEEEEE;
+  height: 90px;
+  background-color: ${({ theme }) => theme.color.background};
+  border-top: 1px solid ${({ theme }) => theme.color.componentBackground.bg02};
   backdrop-filter: blur(15px);
 `;

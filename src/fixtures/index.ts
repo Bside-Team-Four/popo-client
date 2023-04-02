@@ -1,10 +1,8 @@
 import candidate from './candidate';
-import navItem from './navItem';
 import polls from './polls';
 import theme from './theme';
 
 export default {
-  navItem,
   theme,
   polls,
   candidate,

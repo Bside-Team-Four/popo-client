@@ -18,6 +18,6 @@ const Container = styled.div`
   overflow-x: hidden;
   overflow-y: auto;
   width: 100%;
-  height: calc(100% - 84px);
+  height: calc(100% - 90px);
   position: relative;
 `;

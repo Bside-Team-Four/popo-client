@@ -2,9 +2,9 @@ describe('Index Page', () => {
   it('successfully loads', () => {
     cy.visit('/');
 
-    cy.contains('PoPo');
-    cy.contains('알림');
-    cy.contains('친구추가');
-    cy.contains('프로필');
+    cy.contains('POPO');
+    cy.contains('WHO');
+    cy.contains('FRIEND');
+    cy.contains('PROFILE');
   });
 });

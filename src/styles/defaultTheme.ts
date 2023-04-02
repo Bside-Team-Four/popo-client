@@ -5,13 +5,17 @@ const defaultTheme = {
     ...basicColors,
     background: '#FAFAFA',
     primary: '#AF52DE',
-    componentBackground: {
-      bg01: '#F3F3F3',
-      bg02: '#F2F2F7',
+    textColor: '#000000',
+    text: {
+      title01: '#000000',
+      title02: '#3C3C43',
+      subTitle01: '#00000099',
+      subTitle02: '#3C3C4399',
     },
-    subTitle: {
-      title01: '#3C3C4399',
-      title02: '#838393',
+    componentBackground: {
+      bg01: '#FFFFFF',
+      bg02: '#F3F3F3',
+      bg03: '#F2F2F7',
     },
   },
 };
