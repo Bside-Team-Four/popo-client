@@ -30,7 +30,7 @@ const Container = styled.div`
   height: 100%;
   padding: 0;
   margin: 0;
-  background-color: ${({ theme }) => theme.color.grayscale.soft};
+  background-color: ${({ theme }) => theme.color.gray02};
 `;
 
 const ContentWrapper = styled.div`

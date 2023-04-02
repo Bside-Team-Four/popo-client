@@ -1,10 +1,9 @@
 import type { CSSProp } from 'styled-components';
 
+import defaultTheme from '@/styles/defaultTheme';
 import Size from '@/types/Size';
 
-import lightTheme from '../src/styles/theme';
-
-type ThemeType = typeof lightTheme;
+type ThemeType = typeof defaultTheme;
 
 declare module 'styled-components' {
   export interface DefaultTheme extends ThemeType {

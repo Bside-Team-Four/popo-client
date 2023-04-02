@@ -4,11 +4,11 @@ import { render } from '@testing-library/react';
 import { ThemeProvider } from 'styled-components';
 
 import fixtures from '@/fixtures';
-import lightTheme from '@/styles/theme';
+import defaultTheme from '@/styles/defaultTheme';
 
 export function renderWithThemeProviders(node: ReactNode) {
   return render((
-    <ThemeProvider theme={{ ...lightTheme, size: fixtures.theme.size }}>
+    <ThemeProvider theme={{ ...defaultTheme, size: fixtures.theme.size }}>
       {node}
     </ThemeProvider>
   ));

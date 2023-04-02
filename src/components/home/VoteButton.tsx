@@ -40,7 +40,7 @@ const Container = styled.button`
   border-radius: 20px;
   border: none;
   color: ${({ theme }) => theme.color.white};
-  background-color: ${({ theme }) => theme.color.main};
+  background-color: ${({ theme }) => theme.color.primary};
   &:active {
     background-color: #6A4ED7;
   }
