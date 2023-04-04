@@ -1,26 +1,21 @@
 import { useCallback, useState } from 'react';
 
-import Image from 'next/image';
-
 import styled from 'styled-components';
 
-import Timer from '@/components/home/Timer';
-import VoteButton from '@/components/home/VoteButton';
 import PollPopup from '@/components/popup/PollPopup';
-import RabbitState from '@/types/RabbitState';
-import { getRatioSizePX, useGetRatioSize } from '@/utils/sizeHelper';
+import PoPoState from '@/types/PoPoState';
 
-import Rabbit from './Rabbit';
+import PoPoImage from './PoPoImage';
+import PoPoTitle from './PoPoTitle';
+import VoteButton from './VoteButton';
 
 type HomeProps = {
-  currentRabbitState: RabbitState
+  currentPoPoState: PoPoState
 };
 
-export default function Home({ currentRabbitState }: HomeProps) {
-  const [rabbitState, setRabbitState] = useState<RabbitState>(currentRabbitState);
+export default function Home({ currentPoPoState }: HomeProps) {
+  const [popoState, setPopoState] = useState<PoPoState>(currentPoPoState);
   const [showPollPopup, setShowPollPopup] = useState(false);
-
-  const getRatioSize = useGetRatioSize();
 
   const openPollPopup = useCallback(() => {
     setShowPollPopup(true);
@@ -32,12 +27,9 @@ export default function Home({ currentRabbitState }: HomeProps) {
 
   return (
     <Container>
-      {rabbitState === 'start'
-        ? <TimerIcon width={getRatioSize(64)} height={getRatioSize(64)} />
-        : <EmptyDiv data-testid="empty div" />}
-      <Timer rabbitState={rabbitState} setRabbitState={setRabbitState} />
-      <VoteButton rabbitState={rabbitState} openPollPopup={openPollPopup} />
-      <Rabbit rabbitState={rabbitState} />
+      <PoPoTitle state={popoState} setState={setPopoState} />
+      <PoPoImage state={popoState} />
+      <VoteButton state={popoState} openPollPopup={openPollPopup} />
       {showPollPopup && <PollPopup onClose={onClosePollPopup} />}
     </Container>
   );
@@ -45,23 +37,11 @@ export default function Home({ currentRabbitState }: HomeProps) {
 
 const Container = styled.div`
   display: flex;
+  position: relative;
   height: 100%;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   overflow: hidden;
   padding: 0 24px;
-`;
-
-const TimerIcon = styled(Image).attrs({
-  src: '/images/timer-icon.svg',
-  alt: 'timer icon',
-  priority: true,
-})`
-  margin-top: ${getRatioSizePX(59)};
-`;
-
-const EmptyDiv = styled.div`
-  margin-top: ${getRatioSizePX(59)};
-  width: ${getRatioSizePX(64)};
-  height: ${getRatioSizePX(64)};
 `;

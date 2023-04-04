@@ -5,12 +5,12 @@ const darkTheme = {
     ...basicColors,
     background: '#1D1D1D',
     primary: '#BF5AF2',
-    textColor: '#FFFFFF',
     text: {
       title01: '#FFFFFF',
       title02: '#FFFFFF99',
       subTitle01: '#838393',
       subTitle02: '#83839399',
+      reverseText: '#000000',
     },
     componentBackground: {
       bg01: '#2C2C2E',

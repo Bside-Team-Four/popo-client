@@ -1,34 +1,27 @@
 import { screen } from '@testing-library/react';
 
-import RabbitState from '@/types/RabbitState';
+import PoPoState from '@/types/PoPoState';
 import { renderWithThemeProviders } from '@/utils/testHelper';
 
 import VoteButton from './VoteButton';
 
 describe('VoteButton', () => {
-  const renderVoteButton = (rabbitState: RabbitState) => renderWithThemeProviders(
-    <VoteButton openPollPopup={jest.fn()} rabbitState={rabbitState} />,
+  const renderVoteButton = (state: PoPoState) => renderWithThemeProviders(
+    <VoteButton openPollPopup={jest.fn()} state={state} />,
   );
 
-  context('when rabbitState is sleep', () => {
-    it('render PoPo 자는 중 text', () => {
-      renderVoteButton('sleep');
-
-      expect(screen.getByRole('button', { name: 'PoPo 자는 중' })).toBeInTheDocument();
-    });
-  });
-  context('when rabbitState is done', () => {
-    it('render PoPo 쉬는 중 text', () => {
-      renderVoteButton('done');
-
-      expect(screen.getByRole('button', { name: 'PoPo 쉬는 중' })).toBeInTheDocument();
-    });
-  });
-  context('when rabbitState is start', () => {
-    it('render 시작하기 text', () => {
+  context('state 가 start 상태일 때', () => {
+    it('시작하기 text를 렌더링한다.', () => {
       renderVoteButton('start');
 
       expect(screen.getByRole('button', { name: '시작하기' })).toBeInTheDocument();
+    });
+  });
+  context('state 가 start 상태가 아닐 때', () => {
+    it('아무것도 렌더링하지 않는다.', () => {
+      const { container } = renderVoteButton('done');
+
+      expect(container).toBeEmptyDOMElement();
     });
   });
 });

@@ -1,51 +1,33 @@
 import styled from 'styled-components';
 
-import RabbitState from '@/types/RabbitState';
-import { getRatioSizePX } from '@/utils/sizeHelper';
+import PoPoState from '@/types/PoPoState';
 
 type VoteButtonProps = {
-  rabbitState: RabbitState;
+  state: PoPoState;
   openPollPopup:() => void;
 };
 
-const getButtonText = (state: RabbitState) => {
-  if (state === 'sleep') {
-    return 'PoPo 자는 중';
+export default function VoteButton({ state, openPollPopup }: VoteButtonProps) {
+  if (state !== 'start') {
+    return null;
   }
-  if (state === 'done') {
-    return 'PoPo 쉬는 중';
-  }
-  return '시작하기';
-};
-
-export default function VoteButton({ rabbitState, openPollPopup }: VoteButtonProps) {
-  const buttonText = getButtonText(rabbitState);
 
   return (
-    <Container
-      type="button"
-      disabled={rabbitState !== 'start'}
-      onClick={openPollPopup}
-    >
-      {buttonText}
+    <Container type="button" onClick={openPollPopup}>
+      시작하기
     </Container>
   );
 }
 
 const Container = styled.button`
-  font-size: 18px;
-  font-weight: 600;
-  width: 100%;
-  height: ${getRatioSizePX(67)};
-  border-radius: 20px;
+  position: absolute;
+  bottom: 24px;
+  width: calc(100% - 48px);
+  height: 56px;
   border: none;
-  color: ${({ theme }) => theme.color.white};
-  background-color: ${({ theme }) => theme.color.primary};
-  &:active {
-    background-color: #6A4ED7;
-  }
-  &:disabled {
-    background-color: #F9F8F9;
-    color: #B3B3B3;
-  }
+  border-radius: 218px;
+  background-color: ${({ theme }) => theme.color.text.title01};
+  font-size: 16px;
+  font-weight: 500;
+  color: ${({ theme }) => theme.color.text.reverseText};
 `;

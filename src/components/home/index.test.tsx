@@ -1,35 +1,17 @@
-import {
-  fireEvent, screen, waitFor,
-} from '@testing-library/react';
+import { fireEvent, screen, waitFor } from '@testing-library/react';
 
 import MockTheme from '@/test/MockTheme';
-import RabbitState from '@/types/RabbitState';
+import PoPoState from '@/types/PoPoState';
 import { renderWithPortal } from '@/utils/testHelper';
 
 import Home from './index';
 
 describe('Home', () => {
-  const renderHome = (currentRabbitState: RabbitState) => renderWithPortal(
+  const renderHome = (currentPoPoState: PoPoState) => renderWithPortal(
     <MockTheme>
-      <Home currentRabbitState={currentRabbitState} />
+      <Home currentPoPoState={currentPoPoState} />
     </MockTheme>,
   );
-
-  context('currentRabbitState가 start일 때', () => {
-    it('Timer icon을 출력한다.', () => {
-      renderHome('start');
-
-      expect(screen.getByAltText('timer icon')).toBeInTheDocument();
-    });
-  });
-
-  context('currentRabbitState가 start가 아닐 때', () => {
-    it('Empty div를 출력한다.', () => {
-      renderHome('done');
-
-      expect(screen.getByTestId('empty div')).toBeInTheDocument();
-    });
-  });
 
   it('opens the PollPopup component when the VoteButton is clicked', async () => {
     renderHome('start');

@@ -57,15 +57,15 @@ const ItemText = styled.div<{ $isActive: boolean }>`
   font-weight: ${({ $isActive }) => ($isActive ? '600' : '400')};
   font-size: 12px;
   line-height: 12px;
-  color: ${({ theme }) => theme.color.textColor};
+  color: ${({ theme }) => theme.color.text.title01};
 `;
 
 const IconStyle = css<{ $isActive?: boolean }>`
   margin-top: 8px;
   margin-bottom: 6.24px;
-  fill: ${({ $isActive, theme }) => ($isActive ? theme.color.textColor : 'none')};
+  fill: ${({ $isActive, theme }) => ($isActive ? theme.color.text.title01 : 'none')};
   path{
-    stroke: ${({ theme }) => theme.color.textColor}
+    stroke: ${({ theme }) => theme.color.text.title01}
   };
 `;
 
