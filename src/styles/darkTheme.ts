@@ -5,6 +5,7 @@ const darkTheme = {
     ...basicColors,
     background: '#1D1D1D',
     primary: '#BF5AF2',
+    btnPress: '#141414',
     text: {
       title01: '#FFFFFF',
       title02: '#FFFFFF99',
@@ -16,6 +17,7 @@ const darkTheme = {
       bg01: '#2C2C2E',
       bg02: '#3C3C43',
       bg03: '#1C1C1E',
+      boxShadow: '#36363840',
     },
   },
 };

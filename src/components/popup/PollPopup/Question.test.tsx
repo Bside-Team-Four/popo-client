@@ -4,6 +4,10 @@ import { renderWithThemeProviders } from '@/utils/testHelper';
 
 import Question from './Question';
 
+jest.mock('usehooks-ts', () => ({
+  useDarkMode: () => ({ isDarkMode: false }),
+}));
+
 describe('Question', () => {
   const renderQuestion = () => renderWithThemeProviders(<Question category="romance" content="질문" />);
 

@@ -2,9 +2,11 @@ import { useCallback, useState } from 'react';
 
 import { motion, useAnimate } from 'framer-motion';
 import styled from 'styled-components';
+import { useDarkMode } from 'usehooks-ts';
 
 import FullPopup from '@/components/popup/FullPopup';
 import fixtures from '@/fixtures';
+import getCategoryColor from '@/styles/getCategoryColor';
 import { useAppHeight } from '@/utils/sizeHelper';
 
 import CandidateList from './CandidateList';
@@ -17,14 +19,13 @@ type PollPopupProps = {
 };
 
 export default function PollPopup({ onClose }:PollPopupProps) {
-  // TODO /vote get
   const { polls } = fixtures;
 
   const [currentStep, setCurrentStep] = useState(0);
   const [isChanged, setIsChanged] = useState(false);
 
   const [divRef, animate] = useAnimate();
-
+  const { isDarkMode } = useDarkMode();
   const appHeight = useAppHeight();
 
   const { categoryName, content, candidates } = polls[currentStep];
@@ -50,13 +51,14 @@ export default function PollPopup({ onClose }:PollPopupProps) {
     <FullPopup>
       <Container
         ref={divRef}
+        $category={categoryName}
+        $isDarkMode={isDarkMode}
         animate={{ y: 0 }}
         initial={{ y: appHeight }}
         transition={{
           type: 'spring',
           duration: 0.5,
         }}
-        category={categoryName}
       >
         <PollHeader
           currentStep={currentStep}
@@ -79,19 +81,7 @@ export default function PollPopup({ onClose }:PollPopupProps) {
   );
 }
 
-const categoryBackgroundColor: { [k: string]: string } = {
-  romance: '#F7686E',
-  friendship: '#EB805D',
-  looks: '#ED9A9E',
-  school_life: '#45CE8F',
-  speciality: '#45CEB9',
-  personality: '#24BBC3',
-  private: '#5087DE',
-  ect02: '#3367D6',
-};
-const getBackgroundColor = (category: string) => categoryBackgroundColor[category];
-
-const Container = styled(motion.div)<{ category: string }>`
+const Container = styled(motion.div)<{ $isDarkMode:boolean, $category: string }>`
   display: flex;
   width: 100%;
   height: 100%;
@@ -99,5 +89,5 @@ const Container = styled(motion.div)<{ category: string }>`
   align-items: center;
   overflow: hidden;
   padding: 0 24px;
-  background-color: ${({ category }) => getBackgroundColor(category)};
+  background-color: ${getCategoryColor('backgroundColor')};
 `;

@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 import styled from 'styled-components';
 
-import { getRatioSizePX } from '@/utils/sizeHelper';
+import { getCalAppWidth, getRatioSizePX } from '@/utils/sizeHelper';
 
 type PollHeaderProps = {
   currentStep: number;
@@ -30,29 +30,30 @@ const Container = styled.div`
   align-items: center;
   width: 100%;
   margin-top: 16px;
-  height: ${getRatioSizePX(44)};
-  margin-bottom: 76px;
+  height: ${getRatioSizePX(60)};
 `;
 
 const StepCheckText = styled.span`
   display: flex;
-  height: 44px;
   align-items: center;
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 20px;
   color: ${({ theme }) => theme.color.white};
 `;
 
 const CloseIcon = styled(Image).attrs({
   src: '/images/close-icon.svg',
-  width: 36,
-  height: 36,
+  width: 30,
+  height: 30,
   priority: true,
   alt: 'close icon',
-})``;
+})`
+  transform: scale(${getCalAppWidth((w) => w / 420)});
+`;
 
 const EmptyDiv = styled.div`
-  width: 36px;
-  height: 36px;
+  width: 30px;
+  height: 30px;
+  transform: scale(${getCalAppWidth((w) => w / 420)});
 `;

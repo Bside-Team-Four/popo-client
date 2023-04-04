@@ -7,6 +7,11 @@ import PollPopup from './index';
 
 jest.useFakeTimers();
 
+jest.mock('usehooks-ts', () => ({
+  useDarkMode: () => ({ isDarkMode: false }),
+  useIsMounted: () => true,
+}));
+
 describe('PollPopup', () => {
   const onClose = jest.fn();
 

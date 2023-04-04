@@ -13,7 +13,7 @@ export const getAppWidth = (props: ThemeProps) => props.theme.size.width;
 
 export const getAppHeight = (props: ThemeProps) => props.theme.size.height;
 
-const getCalAppWidth = (func: (num: number) => number) => _.pipe(_.get('theme.size.width'), func);
+export const getCalAppWidth = (func: (num: number) => number) => _.pipe(_.get('theme.size.width'), func);
 
 export const getRatioSizePX = (px: number): (() => string) => _.pipe(
   getCalAppWidth((width) => (width * px) / 430),

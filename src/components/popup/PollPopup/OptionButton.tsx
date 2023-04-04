@@ -35,7 +35,7 @@ const Wrapper = styled.button`
   align-items: center;
   background: none;
   border: none;
-  color: ${({ theme }) => theme.color.black};
+  color: ${({ theme }) => theme.color.text.title01};
   &:disabled{
     opacity: 0.3;
   };

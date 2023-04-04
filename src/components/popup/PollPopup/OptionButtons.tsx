@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 
 import styled from 'styled-components';
+import { useDarkMode } from 'usehooks-ts';
 
 import { getRatioSizePX } from '@/utils/sizeHelper';
 
@@ -15,26 +16,27 @@ type OptionButtonsProps = {
 export default function OptionButtons({
   isChanged, setIsChanged, goNextStep,
 }:OptionButtonsProps) {
+  const { isDarkMode } = useDarkMode();
+
   const onClickShuffle = useCallback(() => {
     setIsChanged(true);
   }, [setIsChanged]);
 
   const onClickSkip = useCallback(() => {
-    // TODO: /vote/skip post
     goNextStep();
   }, [goNextStep]);
 
   return (
     <ButtonsContainer>
       <OptionButton
-        imgSrc="/images/shuffle_icon.svg"
+        imgSrc={isDarkMode ? '/images/shuffle-icon-dark.svg' : '/images/shuffle-icon.svg'}
         size={{ width: 48, height: 48 }}
         disabled={isChanged}
         text="바꾸기"
         onClick={onClickShuffle}
       />
       <OptionButton
-        imgSrc="/images/skip_icon.svg"
+        imgSrc={isDarkMode ? '/images/skip-icon-dark.svg' : '/images/skip-icon.svg'}
         size={{ width: 28, height: 28 }}
         text="건너뛰기"
         onClick={onClickSkip}
@@ -49,5 +51,5 @@ const ButtonsContainer = styled.div`
   height: ${getRatioSizePX(76)};
   align-items: center;
   justify-content: space-between;
-  padding: 14px;
+  padding: 0 16px;
 `;

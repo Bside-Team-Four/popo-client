@@ -69,5 +69,5 @@ const Container = styled.div`
   flex-wrap: wrap;
   flex-direction: row;
   justify-content: space-between;
-  margin-bottom: 16px;
+  margin-bottom: ${getRatioSizePX(16)};
 `;

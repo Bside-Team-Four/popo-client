@@ -5,6 +5,7 @@ const defaultTheme = {
     ...basicColors,
     background: '#FAFAFA',
     primary: '#AF52DE',
+    btnPress: '#FBFBFB99',
     text: {
       title01: '#000000',
       title02: '#3C3C43',
@@ -16,6 +17,7 @@ const defaultTheme = {
       bg01: '#FFFFFF',
       bg02: '#F3F3F3',
       bg03: '#F2F2F7',
+      boxShadow: '#FFFFFF40',
     },
   },
 };
