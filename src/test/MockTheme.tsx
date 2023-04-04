@@ -3,17 +3,17 @@ import { ReactElement, ReactNode } from 'react';
 import { ThemeProvider } from 'styled-components';
 
 import fixtures from '@/fixtures';
-import lightTheme from '@/styles/theme';
+import defaultTheme from '@/styles/defaultTheme';
 import Size from '@/types/Size';
 
 interface Props {
-  theme?: typeof lightTheme;
+  theme?: typeof defaultTheme;
   size?: Size
   children: ReactNode;
 }
 
 function MockTheme({
-  theme = lightTheme,
+  theme = defaultTheme,
   size = fixtures.theme.size,
   children,
 }: Props): ReactElement {

@@ -21,20 +21,21 @@ const Wrapper = styled.button`
   font-size: 16px;
   font-weight: 700;
   line-height: 24px;
-  color: ${({ theme }) => theme.color.black}; 
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 49%;
+  width: 48%;
   height: 76px;
-  background-color: ${({ theme }) => theme.color.white};
-  border-width: 0;
-  border-radius: 20px;
-  margin-bottom: 12px;
+  border: none;
+  border-radius: 8px;
+  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+  box-shadow: inset 0 4px 2px ${({ theme }) => theme.color.componentBackground.boxShadow};
+  color: ${({ theme }) => theme.color.text.title01};
+  background-color: ${({ theme }) => theme.color.componentBackground.bg01};
   &:active {
-    background: rgba(251, 251, 251, 0.6);
-    opacity: 0.6;
-  }
+    background: ${({ theme }) => theme.color.btnPress};
+    opacity: 0.3;
+  };
 `;
 
 const CandidateDefaultIcon = styled(Image).attrs({

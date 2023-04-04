@@ -4,7 +4,8 @@ import fixtures from '@/fixtures';
 import MockTheme from '@/test/MockTheme';
 
 import {
-  getAppHeight, getAppWidth, getRatioSizePX, useAppHeight, useAppWidth, useGetRatioSize,
+  getAppHeight, getAppWidth, getCalAppWidth,
+  getRatioSizePX, useAppHeight, useAppWidth, useGetRatioSize,
 } from './sizeHelper';
 
 describe('sizeHelper', () => {
@@ -67,6 +68,12 @@ describe('sizeHelper', () => {
       );
 
       expect(result.current(100)).toBe(74.4186046511628);
+    });
+  });
+  context('getCalAppWidth', () => {
+    it('returns cal appwidth', () => {
+      const result = getCalAppWidth((width) => width / 430)({ theme: fixtures.theme });
+      expect(result).toBe(0.7441860465116279);
     });
   });
 });

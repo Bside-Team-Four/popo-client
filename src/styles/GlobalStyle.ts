@@ -6,11 +6,11 @@ const GlobalStyle = createGlobalStyle`
   
   * {
     box-sizing: border-box;
+    font-family: var(--font-pretendard);
   }
   body {
-    font-family: Pretendard,sans-serif;
+    background-color: ${({ theme }) => theme.color.background};
     user-select: none;
-    box-sizing: border-box;
     overflow: hidden;
     -webkit-user-select: none;
     -moz-user-select: none;

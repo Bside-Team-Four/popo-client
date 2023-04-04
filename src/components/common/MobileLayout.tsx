@@ -4,11 +4,7 @@ import { PropsWithChildren } from 'react';
 
 import styled from 'styled-components';
 
-import useResizeViewportHeight from '@/hooks/useResizeViewportHeight';
-
 export default function MobileLayout({ children }:PropsWithChildren) {
-  useResizeViewportHeight();
-
   return (
     <Container>
       <ContentWrapper>
@@ -30,7 +26,7 @@ const Container = styled.div`
   height: 100%;
   padding: 0;
   margin: 0;
-  background-color: ${({ theme }) => theme.color.grayscale.soft};
+  background-color: ${({ theme }) => theme.color.gray02};
 `;
 
 const ContentWrapper = styled.div`
@@ -40,8 +36,7 @@ const ContentWrapper = styled.div`
   width: 430px;
   max-width: 430px;
   height: auto;
-  min-height: calc(var(--vh, 1vh) * 100);
   position: relative;
-  background-color: ${({ theme }) => theme.color.white};
+  background-color: ${({ theme }) => theme.color.background};
   margin: 0 auto;
 `;

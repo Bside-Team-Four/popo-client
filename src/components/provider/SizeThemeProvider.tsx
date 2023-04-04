@@ -4,9 +4,11 @@ import { ReactNode, useEffect, useState } from 'react';
 
 import _ from 'lodash/fp';
 import { ThemeProvider } from 'styled-components';
+import { useDarkMode } from 'usehooks-ts';
 
+import darkTheme from '@/styles/darkTheme';
+import defaultTheme from '@/styles/defaultTheme';
 import GlobalStyle from '@/styles/GlobalStyle';
-import lightTheme from '@/styles/theme';
 import Size from '@/types/Size';
 
 const iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
@@ -32,6 +34,8 @@ const getSize = ():Size => ({
 function SizeThemeProvider({ children }: { children: ReactNode }) {
   const [size, setSize] = useState<Size>(getSize());
 
+  const { isDarkMode } = useDarkMode();
+
   useEffect(() => {
     const handleSize = _.debounce(100, () => {
       setSize(getSize());
@@ -46,8 +50,10 @@ function SizeThemeProvider({ children }: { children: ReactNode }) {
     };
   }, []);
 
+  const theme = isDarkMode ? darkTheme : defaultTheme;
+
   return (
-    <ThemeProvider theme={{ ...lightTheme, size }}>
+    <ThemeProvider theme={{ ...theme, size }}>
       <GlobalStyle />
       {children}
     </ThemeProvider>
