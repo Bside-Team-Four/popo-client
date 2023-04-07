@@ -43,7 +43,7 @@ const getTitleText = (state:PoPoState) => {
   const { hour } = getNowTime();
 
   if (state === 'start') {
-    const timeText = hour < 12 ? `오전 ${hour}시` : `오후 ${hour - 12}시`;
+    const timeText = hour <= 12 ? `오전 ${hour}시` : `오후 ${hour - 12}시`;
 
     return `POPO_${timeText}`;
   }
