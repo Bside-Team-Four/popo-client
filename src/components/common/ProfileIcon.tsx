@@ -14,10 +14,10 @@ export default function ProfileIcon({ gender }: ProfileImgProps) {
        * 혹은 디폴트 프로필이미지를 넣어줌(profile-red.svg 혹은 profile-blue.svg)
        */}
       <ProfileImg
-        src={`/images/profile-${gender.toLowerCase()}.svg`}
+        src={`/images/profile-${gender}.svg`}
         alt="user profile picture"
-        width={44}
-        height={44}
+        width={15}
+        height={15}
       />
     </ImgContainer>
   );
@@ -25,7 +25,12 @@ export default function ProfileIcon({ gender }: ProfileImgProps) {
 
 const ImgContainer = styled.div`
   display: flex;
+  justify-content: center;
   align-items: center;
+  width: 30px;
+  height: 30px;
+  background-color: ${(props) => props.theme.color.componentBackground.bg03};
+  border-radius: 50%;
 `;
 
 const ProfileImg = styled(Image)``;

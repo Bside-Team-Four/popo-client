@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import styled from 'styled-components';
 
-import Button from '@/components/common/Button';
+// import Button from '@/components/common/Button';
 import { b1Font } from '@/styles/fontStyles';
 
 type HintProps = {
@@ -15,7 +15,7 @@ type HintProps = {
 
 export default function HintBox({ hintData }: { hintData: HintProps[] }) {
   const HINT_SIZE = hintData.length;
-  const [curHintIdx, setCurHintIdx] = useState(1);
+  const [curHintIdx, setCurHintIdx] = useState(0);
 
   const handleShowMore = (): void => {
     setCurHintIdx((prevCount) => (prevCount < HINT_SIZE ? prevCount + 1 : prevCount));
@@ -26,31 +26,30 @@ export default function HintBox({ hintData }: { hintData: HintProps[] }) {
   });
 
   const moreButtonStyle = {
-    display: curHintIdx === HINT_SIZE ? 'none' : 'block',
+    display: curHintIdx === 0 || curHintIdx === HINT_SIZE ? 'none' : 'block',
   };
 
   return (
     <Container>
+      <B1Primary onClick={handleShowMore}>힌트 보기</B1Primary>
       {hintData.map((hintItem: HintProps, i: number) => (
         <B1 key={hintItem.hintId} style={hintDisplayStyle(i)}>
           {`${hintItem.hintTitle} : ${hintItem.hintContent}`}
         </B1>
       ))}
-      <Button onClick={handleShowMore} customStyle={moreButtonStyle}>더보기</Button>
+      <MoreButton onClick={handleShowMore} style={moreButtonStyle}>
+        더보기...
+      </MoreButton>
     </Container>
   );
 }
 
 const Container = styled.div`
-  margin: 12px 24px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 24px 18px;
   gap: 12px;
-
-  border: 1px solid #e4e4e4;
   filter: drop-shadow(2px 2px 20px rgba(0, 0, 0, 0.06));
   border-radius: 8px;
 `;
@@ -58,6 +57,15 @@ const Container = styled.div`
 const B1 = styled.div`
   ${b1Font};
   color: ${({ theme }) => theme.color.black};
+`;
+
+const B1Primary = styled.div`
+  ${b1Font};
+  color: ${({ theme }) => theme.color.primary};
+`;
+
+const MoreButton = styled.div`
+  
 `;
 
 Container.defaultProps = {
