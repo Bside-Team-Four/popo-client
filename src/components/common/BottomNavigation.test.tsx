@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react';
 
 import BottomNavigation from '@/components/common/BottomNavigation';
-import { renderWithThemeProviders } from '@/utils/testHelper';
+import { renderWithProviders } from '@/utils/testHelper';
 
 jest.mock('next/navigation', () => ({
   usePathname: jest.fn(),
@@ -9,7 +9,7 @@ jest.mock('next/navigation', () => ({
 
 describe('BottomNavigation', () => {
   it('navigation items render', () => {
-    renderWithThemeProviders(<BottomNavigation />);
+    renderWithProviders(<BottomNavigation />);
 
     expect(screen.getAllByRole('link')).toHaveLength(4);
 

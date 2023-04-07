@@ -1,14 +1,16 @@
 import styled from 'styled-components';
 
-import PoPoState from '@/types/PoPoState';
+import usePoPoState from '@/hooks/recoil/usePoPoState';
 
 type VoteButtonProps = {
-  state: PoPoState;
+
   openPollPopup:() => void;
 };
 
-export default function VoteButton({ state, openPollPopup }: VoteButtonProps) {
-  if (state !== 'start') {
+export default function VoteButton({ openPollPopup }: VoteButtonProps) {
+  const { popoState } = usePoPoState();
+
+  if (popoState !== 'start') {
     return null;
   }
 

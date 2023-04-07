@@ -2,18 +2,16 @@ import Image from 'next/image';
 
 import styled from 'styled-components';
 
-import PoPoState from '@/types/PoPoState';
+import usePoPoState from '@/hooks/recoil/usePoPoState';
 
-type PoPoImageProps = {
-  state: PoPoState
-};
+export default function PoPoImage() {
+  const { popoState } = usePoPoState();
 
-export default function PoPoImage({ state }:PoPoImageProps) {
-  if (state === 'sleep') {
+  if (popoState === 'sleep') {
     return <SleepImage src="/images/popo-sleep.svg" width={272} height={212} alt="popo-sleep-image" priority />;
   }
 
-  if (state === 'done') {
+  if (popoState === 'done') {
     return <DoneImage src="/images/popo-done.svg" width={256} height={151} alt="popo-done-image" priority />;
   }
 

@@ -1,7 +1,8 @@
 import { fireEvent, screen, waitFor } from '@testing-library/react';
+import { RecoilRoot } from 'recoil';
 
+import popoState from '@/store/popo';
 import MockTheme from '@/test/MockTheme';
-import PoPoState from '@/types/PoPoState';
 import { renderWithPortal } from '@/utils/testHelper';
 
 import Home from './index';
@@ -13,14 +14,16 @@ jest.mock('usehooks-ts', () => ({
 }));
 
 describe('Home', () => {
-  const renderHome = (currentPoPoState: PoPoState) => renderWithPortal(
-    <MockTheme>
-      <Home currentPoPoState={currentPoPoState} />
-    </MockTheme>,
+  const renderHome = () => renderWithPortal(
+    <RecoilRoot initializeState={({ set }) => set(popoState, 'start')}>
+      <MockTheme>
+        <Home />
+      </MockTheme>
+    </RecoilRoot>,
   );
 
   it('opens the PollPopup component when the VoteButton is clicked', async () => {
-    renderHome('start');
+    renderHome();
 
     const voteButton = screen.getByRole('button', { name: '시작하기' });
 
@@ -30,7 +33,7 @@ describe('Home', () => {
   });
 
   it('closes the PollPopup component when the onClose function is called', async () => {
-    renderHome('start');
+    renderHome();
 
     const voteButton = screen.getByRole('button', { name: '시작하기' });
 

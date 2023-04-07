@@ -2,12 +2,12 @@ import { screen } from '@testing-library/react';
 
 import fixtures from '@/fixtures';
 import Candidate from '@/types/Candidate';
-import { renderWithThemeProviders } from '@/utils/testHelper';
+import { renderWithProviders } from '@/utils/testHelper';
 
 import CandidateItem from './CandidateItem';
 
 describe('CandidateItem', () => {
-  const renderCandidateItem = (candidate: Candidate) => renderWithThemeProviders(
+  const renderCandidateItem = (candidate: Candidate) => renderWithProviders(
     <CandidateItem
       candidate={candidate}
       onClick={jest.fn()}

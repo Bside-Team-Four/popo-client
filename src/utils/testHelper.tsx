@@ -1,17 +1,21 @@
 import { JSXElementConstructor, ReactElement, ReactNode } from 'react';
 
 import { render } from '@testing-library/react';
-import { ThemeProvider } from 'styled-components';
+import { RecoilRoot } from 'recoil';
 
-import fixtures from '@/fixtures';
-import defaultTheme from '@/styles/defaultTheme';
+import MockTheme from '@/test/MockTheme';
+import ReactQueryWrapper from '@/test/ReactQueryWrapper';
 
-export function renderWithThemeProviders(node: ReactNode) {
-  return render((
-    <ThemeProvider theme={{ ...defaultTheme, size: fixtures.theme.size }}>
-      {node}
-    </ThemeProvider>
-  ));
+export function renderWithProviders(node:ReactNode) {
+  return render(
+    <ReactQueryWrapper>
+      <RecoilRoot>
+        <MockTheme>
+          {node}
+        </MockTheme>
+      </RecoilRoot>
+    </ReactQueryWrapper>,
+  );
 }
 
 export function renderWithPortal<P>(ui: ReactElement<P, string | JSXElementConstructor<P>>, elementId = 'popup-portal') {

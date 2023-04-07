@@ -4,7 +4,7 @@ import { fireEvent, screen } from '@testing-library/react';
 import { useAnimate } from 'framer-motion';
 
 import fixtures from '@/fixtures';
-import { renderWithThemeProviders } from '@/utils/testHelper';
+import { renderWithProviders } from '@/utils/testHelper';
 
 import CandidateList from './CandidateList';
 
@@ -21,7 +21,7 @@ describe('CandidateList', () => {
     jest.clearAllMocks();
     (useAnimate as jest.Mock).mockImplementation(() => [ref, jest.fn()]);
   });
-  const renderCandidateList = () => renderWithThemeProviders(
+  const renderCandidateList = () => renderWithProviders(
     <CandidateList
       isChanged={given.isChanged}
       candidates={given.candidates}

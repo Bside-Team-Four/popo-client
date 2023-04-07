@@ -3,18 +3,12 @@ import { useCallback, useState } from 'react';
 import styled from 'styled-components';
 
 import PollPopup from '@/components/popup/PollPopup';
-import PoPoState from '@/types/PoPoState';
 
 import PoPoImage from './PoPoImage';
 import PoPoTitle from './PoPoTitle';
 import VoteButton from './VoteButton';
 
-type HomeProps = {
-  currentPoPoState: PoPoState
-};
-
-export default function Home({ currentPoPoState }: HomeProps) {
-  const [popoState, setPopoState] = useState<PoPoState>(currentPoPoState);
+export default function Home() {
   const [showPollPopup, setShowPollPopup] = useState(false);
 
   const openPollPopup = useCallback(() => {
@@ -27,9 +21,9 @@ export default function Home({ currentPoPoState }: HomeProps) {
 
   return (
     <Container>
-      <PoPoTitle state={popoState} setState={setPopoState} />
-      <PoPoImage state={popoState} />
-      <VoteButton state={popoState} openPollPopup={openPollPopup} />
+      <PoPoTitle />
+      <PoPoImage />
+      <VoteButton openPollPopup={openPollPopup} />
       {showPollPopup && <PollPopup onClose={onClosePollPopup} />}
     </Container>
   );
