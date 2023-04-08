@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react';
 
-import BottomNavigation from '@/components/common/BottomNavigation';
+import BottomNavigation from '@/components/layout/BottomNavigation';
 import { renderWithProviders } from '@/utils/testHelper';
 
 jest.mock('next/navigation', () => ({

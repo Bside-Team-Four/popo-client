@@ -1,9 +1,9 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 
-import ApiErrorScheme from '@/exceptions/ApiErrorScheme';
-import ApiException from '@/exceptions/ApiException';
-import CustomException from '@/exceptions/CustomException';
-import errorMessage from '@/exceptions/errorMessage';
+import ApiErrorScheme from '@/lib/api/exceptions/ApiErrorScheme';
+import ApiException from '@/lib/api/exceptions/ApiException';
+import CustomException from '@/lib/api/exceptions/CustomException';
+import errorMessage from '@/lib/api/exceptions/errorMessage';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 

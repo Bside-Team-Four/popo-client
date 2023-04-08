@@ -7,7 +7,7 @@ import dynamic from 'next/dynamic';
 import { AnimatePresence } from 'framer-motion';
 import { RecoilRoot } from 'recoil';
 
-import MobileLayout from '@/components/common/MobileLayout';
+import MobileLayout from '@/components/layout/MobileLayout';
 import ReactQueryProvider from '@/components/provider/ReactQueryProvider';
 import StyledComponentsRegistry from '@/components/provider/StyledComponentsRegistry';
 

@@ -3,10 +3,10 @@ import { usePathname } from 'next/navigation';
 
 import styled, { css } from 'styled-components';
 
-import FriendSVG from '@/assets/freind-icon.svg';
-import MySVG from '@/assets/my-icon.svg';
-import PoPoSVG from '@/assets/popo-icon.svg';
-import WhoSVG from '@/assets/who-icon.svg';
+import FriendSVG from '@/lib/assets/freind-icon.svg';
+import MySVG from '@/lib/assets/my-icon.svg';
+import PoPoSVG from '@/lib/assets/popo-icon.svg';
+import WhoSVG from '@/lib/assets/who-icon.svg';
 import { getRatioSizePX } from '@/utils/sizeHelper';
 
 type NavigationItemProps = {

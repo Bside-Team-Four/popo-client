@@ -52,11 +52,14 @@
  ┃ ┣ 📂 app
  ┃ ┃ ┣ 📂 (main)
  ┃ ┃ ┣ 📜 layout.tsx
- ┃ ┃ ┣ 📜 SizeThemeProvider.tsx
- ┃ ┃ ┣ 📜 StyledComponentsRegistry.tsx
+ ┃ ┃ ┣ 📜 LayoutProvider.tsx
  ┃ ┣ 📂 components
  ┃ ┣ 📂 fixtures
  ┃ ┣ 📂 hooks
+ ┃ ┣ 📂 lib
+ ┃ ┃ ┣ 📂 api
+ ┃ ┃ ┣ 📂 assets
+ ┃ ┣ 📂 store  
  ┃ ┣ 📂 styles  
  ┃ ┣ 📂 test
  ┃ ┣ 📂 types
@@ -87,6 +90,12 @@
 </a>
 <a href="#">
   <img src="https://img.shields.io/github/package-json/dependency-version/Bside-Team-Four/popo-client/react?logo=react&style=for-the-badge">
+</a>
+<a href="#">
+  <img src="https://img.shields.io/github/package-json/dependency-version/Bside-Team-Four/popo-client/@tanstack/react-query?logo=react-query&style=for-the-badge">
+</a>
+<a href="#">
+  <img src="https://img.shields.io/github/package-json/dependency-version/Bside-Team-Four/popo-client/recoil?style=for-the-badge">
 </a>
 <a href="#">
   <img src="https://img.shields.io/github/package-json/dependency-version/Bside-Team-Four/popo-client/styled-components?logo=styled-components&label=styled-components&style=for-the-badge">
