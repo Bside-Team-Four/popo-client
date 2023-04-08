@@ -1,11 +1,11 @@
 import { screen } from '@testing-library/react';
 
-import { renderWithThemeProviders } from '@/utils/testHelper';
+import { renderWithProviders } from '@/utils/testHelper';
 
 import OptionButton from './OptionButton';
 
 describe('OptionButton', () => {
-  const renderOptionButton = () => renderWithThemeProviders(<OptionButton
+  const renderOptionButton = () => renderWithProviders(<OptionButton
     text="바꾸기"
     imgSrc="/images/poll/poll_change.png"
     size={{ width: 24, height: 24 }}

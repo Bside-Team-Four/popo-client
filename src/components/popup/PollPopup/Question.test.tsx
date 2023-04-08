@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react';
 
-import { renderWithThemeProviders } from '@/utils/testHelper';
+import { renderWithProviders } from '@/utils/testHelper';
 
 import Question from './Question';
 
@@ -9,7 +9,7 @@ jest.mock('usehooks-ts', () => ({
 }));
 
 describe('Question', () => {
-  const renderQuestion = () => renderWithThemeProviders(<Question category="romance" content="질문" />);
+  const renderQuestion = () => renderWithProviders(<Question category="romance" content="질문" />);
 
   it('category icon 을 category에 맞게 렌더링한다.', () => {
     renderQuestion();

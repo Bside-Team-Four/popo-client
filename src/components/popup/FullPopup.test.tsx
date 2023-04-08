@@ -1,4 +1,4 @@
-import MockTheme from '@/test/MockTheme';
+import MockProvider from '@/test/MockProvider';
 import { renderWithPortal } from '@/utils/testHelper';
 
 import FullPopup from './FullPopup';
@@ -6,11 +6,11 @@ import FullPopup from './FullPopup';
 describe('FullPopup', () => {
   const childText = 'PoPo';
   const renderFullPopup = () => renderWithPortal((
-    <MockTheme>
+    <MockProvider>
       <FullPopup>
         <div>{childText}</div>
       </FullPopup>
-    </MockTheme>
+    </MockProvider>
   ));
 
   it('자식 컴포넌트가 나타나야만 한다', () => {

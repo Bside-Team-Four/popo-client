@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 import _ from 'lodash/fp';
 import { useInterval } from 'usehooks-ts';
 
+import usePoPoState from '@/hooks/recoil/usePoPoState';
 import PoPoState from '@/types/PoPoState';
 
 const padInt = (length: number): ((a1: number) => string) => _.flow(
@@ -43,7 +44,7 @@ const getTitleText = (state:PoPoState) => {
   const { hour } = getNowTime();
 
   if (state === 'start') {
-    const timeText = hour < 12 ? `오전 ${hour}시` : `오후 ${hour - 12}시`;
+    const timeText = hour <= 12 ? `오전 ${hour}시` : `오후 ${hour - 12}시`;
 
     return `POPO_${timeText}`;
   }
@@ -51,22 +52,24 @@ const getTitleText = (state:PoPoState) => {
   return 'POPO';
 };
 
-const usePoPoText = (state: PoPoState, setState: (state: PoPoState) => void) => {
-  const [titleText, setTitleText] = useState(getTitleText(state));
-  const [timer, setTimer] = useState(getTimerText(state));
+const usePoPoText = () => {
+  const { popoState, setPoPoState } = usePoPoState();
+
+  const [titleText, setTitleText] = useState(getTitleText(popoState));
+  const [timer, setTimer] = useState(getTimerText(popoState));
 
   useInterval(() => {
     const { hour, minute, second } = getNowTime();
 
-    setTitleText(getTitleText(state));
-    setTimer(getTimerText(state));
+    setTitleText(getTitleText(popoState));
+    setTimer(getTimerText(popoState));
 
     if (hour === 3 && minute + second === 0) {
-      setState('sleep');
+      setPoPoState('sleep');
     }
 
     if (!(hour >= 3 && hour < 7) && (minute + second === 0)) {
-      setState('start');
+      setPoPoState('start');
     }
   }, 1000);
 

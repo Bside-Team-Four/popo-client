@@ -3,8 +3,9 @@
 import Home from '@/components/home';
 
 export default function PoPo() {
-  // TODO: Server 통신 후 데이터 받아서 넘겨주기 (useOOO)
+  // fetch 후 recoil 저장까지
+
   return (
-    <Home currentPoPoState="start" />
+    <Home />
   );
 }

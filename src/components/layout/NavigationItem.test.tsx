@@ -2,7 +2,7 @@ import { usePathname } from 'next/navigation';
 
 import { screen } from '@testing-library/react';
 
-import { renderWithThemeProviders } from '@/utils/testHelper';
+import { renderWithProviders } from '@/utils/testHelper';
 
 import NavigationItem from './NavigationItem';
 
@@ -16,7 +16,7 @@ describe('NavigationItem', () => {
 
     (usePathname as jest.Mock).mockImplementation(() => given.pathname);
   });
-  const renderNavigationItem = () => renderWithThemeProviders(
+  const renderNavigationItem = () => renderWithProviders(
     <NavigationItem url={given.url} title={given.title} />,
   );
 

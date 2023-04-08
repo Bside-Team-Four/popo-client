@@ -2,7 +2,7 @@ import { fireEvent, screen } from '@testing-library/react';
 import { useDarkMode } from 'usehooks-ts';
 
 import OptionButtons from '@/components/popup/PollPopup/OptionButtons';
-import { renderWithThemeProviders } from '@/utils/testHelper';
+import { renderWithProviders } from '@/utils/testHelper';
 
 jest.mock('usehooks-ts', () => ({
   useDarkMode: jest.fn(),
@@ -17,7 +17,7 @@ describe('OptionButtons', () => {
     (useDarkMode as jest.Mock).mockImplementation(() => ({ isDarkMode: given.isDarkMode }));
   });
 
-  const renderOptionButtons = () => renderWithThemeProviders(
+  const renderOptionButtons = () => renderWithProviders(
     <OptionButtons
       isChanged={given.isChanged}
       setIsChanged={setIsChanged}
