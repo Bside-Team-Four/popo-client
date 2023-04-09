@@ -26,7 +26,7 @@ const Container = styled.div`
   height: 100%;
   padding: 0;
   margin: 0;
-  background-color: ${({ theme }) => theme.color.gray02};
+  background-color: ${({ theme }) => theme.color.gray01};
 `;
 
 const ContentWrapper = styled.div`
