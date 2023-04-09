@@ -17,6 +17,7 @@ const darkTheme = {
       bg01: '#2C2C2E',
       bg02: '#3C3C43',
       bg03: '#1C1C1E',
+      bg04: '#80808633',
       boxShadow: '#36363840',
     },
   },

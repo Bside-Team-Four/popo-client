@@ -17,6 +17,7 @@ const defaultTheme = {
       bg01: '#FFFFFF',
       bg02: '#F3F3F3',
       bg03: '#F2F2F7',
+      bg04: '#80808633',
       boxShadow: '#FFFFFF40',
     },
   },
