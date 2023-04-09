@@ -3,7 +3,7 @@
 import styled from 'styled-components';
 
 import AlarmItemBox from '@/components/alarm/AlarmItemBox';
-import alarms from '@/fixtures/alarms';
+import alarm from '@/fixtures/alarm';
 import { h1Font } from '@/styles/fontStyles';
 import Alarm from '@/types/Alarm';
 
@@ -13,7 +13,7 @@ export default function AlarmPage() {
       <TitleContainer>
         <H1>나를 뽑은 사람</H1>
       </TitleContainer>
-      {alarms.map((item: Alarm) => (
+      {alarm.map((item: Alarm) => (
         <AlarmItemBox key={item.title + item.createdAt} item={item} />
       ))}
     </Container>

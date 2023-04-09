@@ -29,7 +29,7 @@ export default function AlarmItemBox({ item }: { item: Alarm }) {
       </MiddleContainer>
       <div>
         {item.hints && (
-          <HintBox key={item.hints + item.createdAt} hintData={item?.hints} />
+          <HintBox key={item.hints + item.createdAt} hintData={item?.hints} test-id="hint-box" />
         )}
       </div>
     </Container>

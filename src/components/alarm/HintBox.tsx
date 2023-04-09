@@ -31,7 +31,9 @@ export default function HintBox({ hintData }: { hintData: HintProps[] }) {
 
   return (
     <Container>
-      <B1Primary onClick={handleShowMore}>힌트 보기</B1Primary>
+      <B1Primary data-testid="hint-button" onClick={handleShowMore}>
+        힌트 보기
+      </B1Primary>
       {hintData.map((hintItem: HintProps, i: number) => (
         <B1 key={hintItem.hintId} style={hintDisplayStyle(i)}>
           {`${hintItem.hintTitle} : ${hintItem.hintContent}`}
@@ -59,14 +61,13 @@ const B1 = styled.div`
   color: ${({ theme }) => theme.color.black};
 `;
 
-const B1Primary = styled.div`
+const B1Primary = styled.button`
   ${b1Font};
   color: ${({ theme }) => theme.color.primary};
+  cursor: pointer;
 `;
 
-const MoreButton = styled.div`
-  
-`;
+const MoreButton = styled.div``;
 
 Container.defaultProps = {
   onClick: () => {},
