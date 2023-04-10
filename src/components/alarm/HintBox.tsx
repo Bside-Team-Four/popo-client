@@ -6,42 +6,29 @@ import styled from 'styled-components';
 
 // import Button from '@/components/common/Button';
 import { b1Font } from '@/styles/fontStyles';
+import Hint from '@/types/Hint';
 
-type HintProps = {
-  hintTitle: string;
-  hintContent: string;
-  hintId: number;
-};
-
-export default function HintBox({ hintData }: { hintData: HintProps[] }) {
+export default function HintBox({ hintData }: { hintData: Hint[] }) {
   const HINT_SIZE = hintData.length;
   const [curHintIdx, setCurHintIdx] = useState(0);
 
-  const handleShowMore = (): void => {
+  const handleIsVisible = (): void => {
     setCurHintIdx((prevCount) => (prevCount < HINT_SIZE ? prevCount + 1 : prevCount));
-  };
-
-  const hintDisplayStyle = (i: number) => ({
-    display: curHintIdx <= i ? 'none' : 'block',
-  });
-
-  const moreButtonStyle = {
-    display: curHintIdx === 0 || curHintIdx === HINT_SIZE ? 'none' : 'block',
   };
 
   return (
     <Container>
-      <B1Primary data-testid="hint-button" onClick={handleShowMore}>
-        힌트 보기
-      </B1Primary>
-      {hintData.map((hintItem: HintProps, i: number) => (
-        <B1 key={hintItem.hintId} style={hintDisplayStyle(i)}>
+      <B1Primary onClick={handleIsVisible}>힌트 보기</B1Primary>
+      {hintData.map(
+        (hintItem: Hint, i: number) => curHintIdx > i && (
+        <B1 data-testid="hint-button" key={hintItem.hintId}>
           {`${hintItem.hintTitle} : ${hintItem.hintContent}`}
         </B1>
-      ))}
-      <MoreButton onClick={handleShowMore} style={moreButtonStyle}>
-        더보기...
-      </MoreButton>
+        ),
+      )}
+      {curHintIdx !== 0 && curHintIdx !== HINT_SIZE && (
+        <MoreButton onClick={handleIsVisible}>더보기...</MoreButton>
+      )}
     </Container>
   );
 }
@@ -62,14 +49,14 @@ const B1 = styled.div`
 `;
 
 const B1Primary = styled.button`
+  all: unset;
   ${b1Font};
   color: ${({ theme }) => theme.color.primary};
   cursor: pointer;
 `;
 
-const MoreButton = styled.div``;
-
-Container.defaultProps = {
-  onClick: () => {},
-  style: {},
-};
+const MoreButton = styled.button`
+  all: unset;
+  color: ${({ theme }) => theme.color.primary};
+  cursor: pointer;
+`;
