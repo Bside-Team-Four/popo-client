@@ -131,5 +131,6 @@ module.exports = {
     'lodash-fp/no-unused-result': 'warn',
     'lodash-fp/no-extraneous-function-wrapping': 'warn',
     'react/no-array-index-key': 'off',
+    'react/jsx-props-no-spreading': 'off',
   },
 };

@@ -1,6 +1,6 @@
 import { JSXElementConstructor, ReactElement, ReactNode } from 'react';
 
-import { render } from '@testing-library/react';
+import { act, render } from '@testing-library/react';
 import { RecoilRoot } from 'recoil';
 
 import MockTheme from '@/test/MockTheme';
@@ -26,3 +26,13 @@ export function renderWithPortal<P>(ui: ReactElement<P, string | JSXElementConst
     container: document.body.appendChild(portalContainer),
   });
 }
+
+function wait(ms:number) {
+  // eslint-disable-next-line no-promise-executor-return
+  return act(() => new Promise((r) => setTimeout(r, ms)));
+}
+
+export const fireTimeEvent = (func: () => void, ms: number) => {
+  func();
+  return wait(ms);
+};

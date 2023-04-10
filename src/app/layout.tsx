@@ -12,6 +12,13 @@ dayjs.locale('ko');
 dayjs.extend(utc);
 
 export const metadata = {
+  metadataBase: new URL('https://popo-client.vercel.app'),
+  viewport: {
+    width: 'device-width',
+    initalScale: 1,
+    maximumScale: 1,
+    userScalable: 'no',
+  },
   applicationName: 'PoPo',
   title: 'PoPo',
   authors: [
