@@ -33,27 +33,22 @@ export default function AlarmItemBox({ item }: { item: Alarm }) {
         )}
       </div>
     </Container>
-    // <Container>PoPo</Container>
   );
 }
 const Flexbox = styled.div`
   display: flex;
 `;
+
 const Container = styled(Flexbox)`
-  /* padding: 10px 24px; */
   background: ${(props) => props.theme.white};
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 35px;
-
   padding: 16px 14px;
   gap: 8px;
-
   box-shadow: 0px 8px 40px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(40px);
-  /* Note: backdrop-filter has minimal browser support */
-
   border-radius: 34px;
   width: 100%
 `;
@@ -84,16 +79,12 @@ const TimeContainer = styled(Flexbox)`
 
 const QuestionBox = styled.div`
   ${b2Font};
-  /* Auto layout */
-
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
   padding: 6px 12px;
-
   width: 100%;
-
   background: ${(props) => props.theme.color.componentBackground.bg02};
   border-radius: 18px;
 
@@ -101,7 +92,6 @@ const QuestionBox = styled.div`
     content: '';
     position: absolute;
     left: 0;
-    /* top: 77%; */
     width: 0;
     height: 0;
     border: 15px solid transparent;
@@ -112,17 +102,12 @@ const QuestionBox = styled.div`
     margin-left: 45px;
   }
 `;
-/*
-const B2 = styled.div`
-  ${b2Font};
-  color: ${({ theme }) => theme.color.black};
-`; */
 
 const B3 = styled.div`
   ${b3Font};
 `;
+
 const B3Gray = styled.div`
   ${b3Font};
-  /* color: ${({ theme }) => theme.color.gray01}; */
   color: rgba(0, 0, 0, 0.4);
 `;

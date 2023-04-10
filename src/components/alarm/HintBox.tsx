@@ -4,7 +4,6 @@ import { useState } from 'react';
 
 import styled from 'styled-components';
 
-// import Button from '@/components/common/Button';
 import { b1Font } from '@/styles/fontStyles';
 import Hint from '@/types/Hint';
 
