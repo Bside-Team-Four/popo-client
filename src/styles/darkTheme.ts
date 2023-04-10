@@ -6,6 +6,7 @@ const darkTheme = {
     background: '#1D1D1D',
     primary: '#BF5AF2',
     btnPress: '#141414',
+    error: '#FF3B30',
     text: {
       title01: '#FFFFFF',
       title02: '#FFFFFF99',

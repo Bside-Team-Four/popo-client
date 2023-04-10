@@ -4,6 +4,7 @@ import { ReactNode, useEffect, useState } from 'react';
 
 import _ from 'lodash/fp';
 import { ThemeProvider } from 'styled-components';
+import { Reset } from 'styled-reset';
 import { useDarkMode } from 'usehooks-ts';
 
 import darkTheme from '@/styles/darkTheme';
@@ -54,6 +55,7 @@ function SizeThemeProvider({ children }: { children: ReactNode }) {
 
   return (
     <ThemeProvider theme={{ ...theme, size }}>
+      <Reset />
       <GlobalStyle />
       {children}
     </ThemeProvider>

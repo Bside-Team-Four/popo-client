@@ -3,6 +3,7 @@ const basicColors = {
   black: '#000000',
   gray01: '#3C3C43',
   gray02: '#838393',
+  gray03: '#C1C1C1',
   category: {
     romance: '#FF3B30',
     friendship: '#FF9500',

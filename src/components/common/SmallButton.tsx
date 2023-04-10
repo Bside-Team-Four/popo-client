@@ -4,7 +4,7 @@ const SmallButton = styled.button.attrs({ type: 'button' })`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 71px;
+  width: 112px;
   height: 36px;
   font-size: 14px;
   font-weight: 500;

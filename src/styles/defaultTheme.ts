@@ -6,6 +6,7 @@ const defaultTheme = {
     background: '#FAFAFA',
     primary: '#AF52DE',
     btnPress: '#FBFBFB99',
+    error: '#F05C2E',
     text: {
       title01: '#000000',
       title02: '#3C3C43',

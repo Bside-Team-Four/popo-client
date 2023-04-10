@@ -2,16 +2,11 @@ import { act, renderHook } from '@testing-library/react';
 import { RecoilRoot } from 'recoil';
 
 import usePoPoState from '@/hooks/recoil/usePoPoState';
-import popoState from '@/store/popo';
-import RecoilObserver from '@/test/RecoilObserver';
 
 describe('usePoPoState', () => {
-  const onChange = jest.fn();
-
   const renderUsePoPoStateHook = () => renderHook(() => usePoPoState(), {
     wrapper: ({ children }) => (
       <RecoilRoot>
-        <RecoilObserver node={popoState} onChange={onChange} />
         {children}
       </RecoilRoot>
     ),
@@ -30,6 +25,6 @@ describe('usePoPoState', () => {
       result.current.setPoPoState('done');
     });
 
-    expect(onChange).toHaveBeenCalledWith('done');
+    expect(result.current.popoState).toBe('done');
   });
 });
