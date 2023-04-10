@@ -1,16 +1,17 @@
 import { fireEvent, screen } from '@testing-library/react';
 
-import LoginForm from '@/components/signin/LoginForm';
-import fixtures from '@/fixtures';
+import testRegister from '@/fixtures/testRegister';
 import { renderWithProviders } from '@/utils/testHelper';
 
+import LoginForm from './LoginForm';
+
 const password = {
-  register: { ...fixtures.register, name: 'password' },
+  register: { ...testRegister, name: 'password' },
   value: 'password',
 };
 
 const email = {
-  register: { ...fixtures.register, name: 'email' },
+  register: { ...testRegister, name: 'email' },
   value: 'email',
 };
 

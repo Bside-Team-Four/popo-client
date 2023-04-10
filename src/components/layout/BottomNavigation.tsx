@@ -32,7 +32,7 @@ export default function BottomNavigation() {
         <NavigationItem
           key={title}
           title={title}
-          url={url}
+          url={url as never}
         />
       ))}
     </Container>

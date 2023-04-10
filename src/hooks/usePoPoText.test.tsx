@@ -1,11 +1,10 @@
 import { act, renderHook } from '@testing-library/react';
 import { RecoilRoot } from 'recoil';
 
-import usePoPoState from '@/hooks/recoil/usePoPoState';
-import usePoPoText from '@/hooks/usePoPoText';
+import usePoPoState from './recoil/usePoPoState';
+import usePoPoText from './usePoPoText';
 
-jest.mock('@/hooks/recoil/usePoPoState');
-
+jest.mock('./recoil/usePoPoState');
 jest.useFakeTimers();
 
 describe('usePoPoText', () => {
@@ -97,7 +96,6 @@ describe('usePoPoText', () => {
       jest.advanceTimersByTime(1000);
     });
 
-    expect(setState).toHaveBeenCalled();
     expect(setState).toHaveBeenCalledWith('sleep');
   });
 
@@ -109,7 +107,6 @@ describe('usePoPoText', () => {
       jest.advanceTimersByTime(1000);
     });
 
-    expect(setState).toHaveBeenCalled();
     expect(setState).toHaveBeenCalledWith('start');
   });
 });

@@ -12,7 +12,7 @@ import { getRatioSizePX } from '@/utils/sizeHelper';
 type NavigationItemProps = {
 
   title: string;
-  url: string;
+  url: never;
 };
 
 const renderIcon = (title: string, isActive: boolean) => {
@@ -35,16 +35,14 @@ export default function NavigationItem({ title, url }:NavigationItemProps) {
   const isActive = pathname === url;
 
   return (
-    <Link href={url}>
-      <Container>
-        {renderIcon(title, isActive)}
-        <ItemText $isActive={isActive}>{title}</ItemText>
-      </Container>
-    </Link>
+    <Container href={url}>
+      {renderIcon(title, isActive)}
+      <ItemText $isActive={isActive}>{title}</ItemText>
+    </Container>
   );
 }
 
-const Container = styled.div`
+const Container = styled(Link)`
   display: flex;
   height: 56px;
   width: ${getRatioSizePX(93.75)};

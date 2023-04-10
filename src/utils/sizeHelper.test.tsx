@@ -20,60 +20,54 @@ describe('sizeHelper', () => {
     },
   );
 
-  context('getAppWidth', () => {
-    it('returns app width', () => {
-      expect(getAppWidth({ theme: fixtures.theme })).toBe(320);
-    });
+  it('getAppWidth returns app width', () => {
+    expect(getAppWidth({ theme: fixtures.theme })).toBe(320);
   });
-  context('getAppHeight', () => {
-    it('returns app height', () => {
-      expect(getAppHeight({ theme: fixtures.theme })).toBe(480);
-    });
-  });
-  context('getRatioSizePX', () => {
-    it('returns ratio size px', () => {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      const result = getRatioSizePX(100)({ theme: fixtures.theme });
-      expect(result).toBe('74.4186046511628px');
-    });
-  });
-  context('useAppWidth', () => {
-    it('returns app width', () => {
-      const { result } = renderMockThemeHook(useAppWidth);
 
-      expect(result.current).toBe(320);
-    });
+  it('getAppHeight returns app height', () => {
+    expect(getAppHeight({ theme: fixtures.theme })).toBe(480);
   });
-  context('useAppHeight', () => {
-    it('returns app height', () => {
-      const { result } = renderMockThemeHook(useAppHeight);
 
-      expect(result.current).toBe(480);
-    });
-  });
-  context('useAppRatioSize', () => {
-    it('returns app height', () => {
-      const { result } = renderHook(
-        () => useGetRatioSize(),
-        {
-          wrapper: ({ children }) => (
-            <MockTheme
-              size={fixtures.theme.size}
-            >
-              {children}
-            </MockTheme>
-          ),
-        },
-      );
+  it('getRatioSizePX returns ratio size px', () => {
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const result = getRatioSizePX(100)({ theme: fixtures.theme });
 
-      expect(result.current(100)).toBe(74.4186046511628);
-    });
+    expect(result).toBe('74.4186046511628px');
   });
-  context('getCalAppWidth', () => {
-    it('returns cal appwidth', () => {
-      const result = getCalAppWidth((width) => width / 430)({ theme: fixtures.theme });
-      expect(result).toBe(0.7441860465116279);
-    });
+
+  it('useAppWidth returns app width', () => {
+    const { result } = renderMockThemeHook(useAppWidth);
+
+    expect(result.current).toBe(320);
+  });
+
+  it('useAppHeight returns app height', () => {
+    const { result } = renderMockThemeHook(useAppHeight);
+
+    expect(result.current).toBe(480);
+  });
+
+  it('useAppRatioSize returns app height', () => {
+    const { result } = renderHook(
+      () => useGetRatioSize(),
+      {
+        wrapper: ({ children }) => (
+          <MockTheme
+            size={fixtures.theme.size}
+          >
+            {children}
+          </MockTheme>
+        ),
+      },
+    );
+
+    expect(result.current(100)).toBe(74.4186046511628);
+  });
+
+  it('getCalAppWidth returns cal appwidth', () => {
+    const result = getCalAppWidth((width) => width / 430)({ theme: fixtures.theme });
+
+    expect(result).toBe(0.7441860465116279);
   });
 });

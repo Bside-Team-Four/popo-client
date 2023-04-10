@@ -4,9 +4,10 @@ import { useRouter } from 'next/navigation';
 
 import { fireEvent, screen } from '@testing-library/react';
 
-import SignIn from '@/components/signin/index';
-import fixtures from '@/fixtures';
+import testRegister from '@/fixtures/testRegister';
 import { renderWithProviders } from '@/utils/testHelper';
+
+import SignIn from './index';
 
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
@@ -17,10 +18,10 @@ jest.mock('react-hook-form', () => ({
 }));
 
 describe('SignIn', () => {
-  const register = (name: string) => ({ ...fixtures.register, name });
+  const register = (name: string) => ({ ...testRegister, name });
   const watch = (name: string) => name;
-  const resetField = jest.fn();
   const formState = { errors: {} };
+  const resetField = jest.fn();
   const setError = jest.fn();
   const setFocus = jest.fn();
   const handleSubmit = (onValid: (data:{ email: string, password:string })=>void) => {
@@ -51,6 +52,7 @@ describe('SignIn', () => {
 
   it('Title render', () => {
     renderSignIn();
+
     expect(screen.getByText(/이메일로 로그인 할게요/)).toBeInTheDocument();
   });
 

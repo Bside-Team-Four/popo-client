@@ -2,12 +2,13 @@ import { FieldError } from 'react-hook-form';
 
 import { fireEvent, screen } from '@testing-library/react';
 
-import TextField from '@/components/common/TextField';
-import fixtures from '@/fixtures';
+import testRegister from '@/fixtures/testRegister';
 import { fireTimeEvent, renderWithProviders } from '@/utils/testHelper';
 
+import TextField from './TextField';
+
 const fixturesItem = {
-  register: { ...fixtures.register, name: 'name' },
+  register: { ...testRegister, name: 'name' },
   label: '이름',
   type: 'text',
 };
@@ -44,6 +45,7 @@ describe('TextField', () => {
   context('error props가 주어지면', () => {
     it('error message를 렌더링한다.', () => {
       renderTextField({ error: { type: '', message: '테스트 error입니다.' } });
+
       expect(screen.getByText(/테스트 error입니다./)).toBeInTheDocument();
     });
 

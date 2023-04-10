@@ -1,7 +1,8 @@
 import { screen } from '@testing-library/react';
 
-import LoginButtons from '@/components/signin/LoginButtons';
 import { renderWithProviders } from '@/utils/testHelper';
+
+import LoginButtons from './LoginButtons';
 
 describe('LoginButtons', () => {
   it('renders buttons', () => {
