@@ -12,7 +12,7 @@ import { getRatioSizePX } from '@/utils/sizeHelper';
 type NavigationItemProps = {
 
   title: string;
-  url: never;
+  url: __next_route_internal_types__.RouteImpl<string>;
 };
 
 const renderIcon = (title: string, isActive: boolean) => {
