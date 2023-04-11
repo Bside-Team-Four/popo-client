@@ -1,6 +1,10 @@
 import styled from 'styled-components';
 
-const Button = styled.button.attrs({ type: 'button' })`
+type ButtonProps = {
+  type?: 'button' | 'submit' | 'reset';
+};
+
+const Button = styled.button.attrs<ButtonProps>((props) => ({ type: props.type ?? 'button' }))`
   width: 100%;
   height: 56px;
   border: none;
