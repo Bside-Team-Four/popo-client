@@ -4,26 +4,22 @@ import { useRouter } from 'next/navigation';
 
 import { fireEvent, screen } from '@testing-library/react';
 
-import testRegister from '@/fixtures/testRegister';
-import { renderWithProviders } from '@/utils/testHelper';
+import { getTestForm, renderWithProviders } from '@/utils/testHelper';
 
 import SignIn from './index';
 
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
 }));
-
 jest.mock('react-hook-form', () => ({
   useForm: jest.fn(),
 }));
 
 describe('SignIn', () => {
-  const register = (name: string) => ({ ...testRegister, name });
-  const watch = (name: string) => name;
-  const formState = { errors: {} };
-  const resetField = jest.fn();
-  const setError = jest.fn();
-  const setFocus = jest.fn();
+  const {
+    register, watch, resetField, formState, setError, setFocus,
+  } = getTestForm();
+
   const handleSubmit = (onValid: (data:{ email: string, password:string })=>void) => {
     onValid({ email: given.emailValue, password: given.passwordValue });
   };

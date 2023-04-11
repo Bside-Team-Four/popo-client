@@ -3,10 +3,6 @@ import { screen } from '@testing-library/react';
 import BottomNavigation from '@/components/layout/BottomNavigation';
 import { renderWithProviders } from '@/utils/testHelper';
 
-jest.mock('next/navigation', () => ({
-  usePathname: jest.fn(),
-}));
-
 describe('BottomNavigation', () => {
   it('navigation items render', () => {
     renderWithProviders(<BottomNavigation />);

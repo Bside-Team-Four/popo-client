@@ -27,6 +27,7 @@ describe('VoteButton', () => {
       expect(screen.getByRole('button', { name: '시작하기' })).toBeInTheDocument();
     });
   });
+
   context('state 가 start 상태가 아닐 때', () => {
     given('popoState', () => 'sleep');
     it('아무것도 렌더링하지 않는다.', () => {

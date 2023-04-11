@@ -8,9 +8,9 @@ import { renderWithPortal } from '@/utils/testHelper';
 import Home from './index';
 
 jest.mock('usehooks-ts', () => ({
+  ...jest.requireActual('usehooks-ts'),
   useDarkMode: () => ({ isDarkMode: false }),
   useInterval: jest.fn(),
-  useIsMounted: () => true,
 }));
 
 describe('Home', () => {

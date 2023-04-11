@@ -65,7 +65,7 @@ describe('sizeHelper', () => {
     expect(result.current(100)).toBe(74.4186046511628);
   });
 
-  it('getCalAppWidth returns cal appwidth', () => {
+  it('getCalAppWidth returns cal app width', () => {
     const result = getCalAppWidth((width) => width / 430)({ theme: fixtures.theme });
 
     expect(result).toBe(0.7441860465116279);
