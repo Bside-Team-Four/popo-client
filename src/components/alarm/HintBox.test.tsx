@@ -2,7 +2,7 @@ import { fireEvent, screen } from '@testing-library/react';
 
 import fixtures from '@/fixtures';
 import Hint from '@/types/Hint';
-import { renderWithThemeProviders } from '@/utils/testHelper';
+import { renderWithProviders } from '@/utils/testHelper';
 
 import HintBox from './HintBox';
 
@@ -10,7 +10,7 @@ describe('HintBox', () => {
   const { hint } = fixtures;
 
   const renderHintBox = (hintdata: Hint[]) => {
-    renderWithThemeProviders(<HintBox hintData={hintdata} />);
+    renderWithProviders(<HintBox hintData={hintdata} />);
   };
 
   context('"힌트 보기" 버튼이 있을 경우', () => {

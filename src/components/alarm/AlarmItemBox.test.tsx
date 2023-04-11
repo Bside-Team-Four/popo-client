@@ -2,7 +2,7 @@ import { screen } from '@testing-library/react';
 
 import fixtures from '@/fixtures';
 import Alarm from '@/types/Alarm';
-import { renderWithThemeProviders } from '@/utils/testHelper';
+import { renderWithProviders } from '@/utils/testHelper';
 
 import AlarmItemBox from './AlarmItemBox';
 
@@ -10,7 +10,7 @@ describe('AlarmItemBox', () => {
   const item = fixtures.alarm;
 
   const renderAlarmItem = (alarm: Alarm) => {
-    renderWithThemeProviders(<AlarmItemBox item={alarm} />);
+    renderWithProviders(<AlarmItemBox item={alarm} />);
   };
 
   context('alarm 객체의 첫번째 항목에 title이 있을 경우', () => {
