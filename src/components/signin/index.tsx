@@ -10,7 +10,7 @@ import useSignInForm from '@/hooks/useSignInForm';
 
 export default function SignIn() {
   const {
-    email, password, reset, onSubmit, isActive,
+    email, password, onSubmit, isActive,
   } = useSignInForm();
 
   const router = useRouter();
@@ -25,7 +25,6 @@ export default function SignIn() {
       <LoginForm
         email={email}
         password={password}
-        reset={reset}
       />
       <SmallButton onClick={goToFindPassword}>비밀번호 찾기</SmallButton>
       <LoginButtons isActive={isActive} />

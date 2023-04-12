@@ -1,32 +1,24 @@
-import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
-
 import styled from 'styled-components';
 
 import TextField from '@/components/common/TextField';
-
-type InputItem = {
-  register: UseFormRegisterReturn;
-  value: string;
-  error?: FieldError;
-};
+import InputItem from '@/types/InputForm';
 
 type LoginFormProps = {
   email:InputItem;
   password: InputItem;
-  reset: (name: 'email' | 'password') => void;
 };
 
-export default function LoginForm({ email, password, reset }:LoginFormProps) {
+export default function LoginForm({ email, password }:LoginFormProps) {
   return (
     <Container>
       <EmailInput
         label="이메일"
-        type="email"
         placeholder="이메일"
+        type="text"
         register={email.register}
         value={email.value}
         error={email.error}
-        onClickReset={() => reset('email')}
+        onClickReset={email.onClickReset}
       />
       <PasswordInput
         label="비밀번호"
@@ -35,7 +27,7 @@ export default function LoginForm({ email, password, reset }:LoginFormProps) {
         register={password.register}
         value={password.value}
         error={password.error}
-        onClickReset={() => reset('password')}
+        onClickReset={password.onClickReset}
       />
     </Container>
   );

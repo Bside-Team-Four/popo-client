@@ -2,6 +2,10 @@ import { useForm } from 'react-hook-form';
 
 import { useRouter } from 'next/navigation';
 
+import useValidationPattern from '@/hooks/useValidationPattern';
+
+type FormName = 'email' | 'password';
+
 type SignInForm = {
   email: string;
   password: string;
@@ -10,13 +14,15 @@ type SignInForm = {
 const useSignInForm = () => {
   const router = useRouter();
 
+  const { emailPattern } = useValidationPattern();
+
   const {
     register, watch, formState, resetField, setFocus, setError, handleSubmit,
   } = useForm<SignInForm>();
 
   const { errors } = formState;
 
-  const reset = (name: 'email' | 'password') => {
+  const reset = (name: FormName) => {
     resetField(name);
     setFocus(name);
   };
@@ -35,17 +41,17 @@ const useSignInForm = () => {
   return {
     email: {
       register: register('email', {
-        required: '이메일을 입력해주세요.',
+        pattern: emailPattern,
       }),
       value: watch('email'),
       error: errors.email,
+      onClickReset: () => reset('email'),
     },
     password: {
-      register: register('password', {
-        required: '비밀번호를 입력해주세요.',
-      }),
+      register: register('password'),
       value: watch('password'),
       error: errors.password,
+      onClickReset: () => reset('password'),
     },
     reset,
     onSubmit,

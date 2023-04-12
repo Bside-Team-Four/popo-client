@@ -52,7 +52,7 @@ describe('SignIn', () => {
     expect(screen.getByText(/이메일로 로그인 할게요/)).toBeInTheDocument();
   });
 
-  it('reset event check', () => {
+  it('reset email check', () => {
     renderSignIn();
 
     fireEvent.focus(screen.getByTestId('email-test-input'));
@@ -60,11 +60,22 @@ describe('SignIn', () => {
     const emailResetIcon = screen.getByAltText('email reset icon');
 
     expect(emailResetIcon).toBeInTheDocument();
-
     fireEvent.click(emailResetIcon);
-
     expect(resetField).toHaveBeenCalledWith('email');
     expect(setFocus).toHaveBeenCalledWith('email');
+  });
+
+  it('reset password check', () => {
+    renderSignIn();
+
+    fireEvent.focus(screen.getByTestId('password-test-input'));
+
+    const passwordResetIcon = screen.getByAltText('password reset icon');
+
+    expect(passwordResetIcon).toBeInTheDocument();
+    fireEvent.click(passwordResetIcon);
+    expect(resetField).toHaveBeenCalledWith('password');
+    expect(setFocus).toHaveBeenCalledWith('password');
   });
 
   it('비밀번호 찾기 버튼 클릭시 router push', () => {

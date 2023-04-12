@@ -16,13 +16,13 @@ const email = {
 };
 
 describe('LoginForm', () => {
-  const reset = jest.fn();
+  const emailReset = jest.fn();
+  const passwordReset = jest.fn();
 
   const renderLoginForm = () => renderWithProviders(
     <LoginForm
-      password={password}
-      email={email}
-      reset={reset}
+      password={{ ...password, onClickReset: passwordReset }}
+      email={{ ...email, onClickReset: emailReset }}
     />,
   );
 
@@ -44,7 +44,7 @@ describe('LoginForm', () => {
 
     fireEvent.click(emailResetIcon);
 
-    expect(reset).toHaveBeenCalledWith('email');
+    expect(emailReset).toHaveBeenCalled();
   });
 
   it('call password reset event', () => {
@@ -58,6 +58,6 @@ describe('LoginForm', () => {
 
     fireEvent.click(passwordResetIcon);
 
-    expect(reset).toHaveBeenCalledWith('password');
+    expect(passwordReset).toHaveBeenCalled();
   });
 });
