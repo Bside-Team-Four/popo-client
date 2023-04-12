@@ -8,6 +8,7 @@ import PollPopup from './index';
 jest.useFakeTimers();
 
 jest.mock('usehooks-ts', () => ({
+  ...jest.requireActual('usehooks-ts'),
   useDarkMode: () => ({ isDarkMode: false }),
   useIsMounted: () => true,
 }));
@@ -37,12 +38,9 @@ describe('PollPopup', () => {
 
       expect(screen.getByText('1 / 7')).toBeInTheDocument();
 
-      fireEvent.click(screen.getByTestId('건너뛰기 button'));
-      fireEvent.click(screen.getByTestId('건너뛰기 button'));
-      fireEvent.click(screen.getByTestId('건너뛰기 button'));
-      fireEvent.click(screen.getByTestId('건너뛰기 button'));
-      fireEvent.click(screen.getByTestId('건너뛰기 button'));
-      fireEvent.click(screen.getByTestId('건너뛰기 button'));
+      Array.from({ length: 7 }).forEach(() => {
+        fireEvent.click(screen.getByTestId('건너뛰기 button'));
+      });
 
       expect(screen.getByText('7 / 7')).toBeInTheDocument();
 

@@ -4,10 +4,14 @@ import styled from 'styled-components';
 
 import Button from '@/components/common/Button';
 
-export default function LoginButtons() {
+type LoginButtonsProps = {
+  isActive: boolean;
+};
+
+export default function LoginButtons({ isActive }: LoginButtonsProps) {
   return (
     <Container>
-      <SubmitButton>로그인</SubmitButton>
+      <SubmitButton disabled={!isActive}>로그인</SubmitButton>
       <SignUpLink href="/signup">이메일로 회원가입</SignUpLink>
     </Container>
   );

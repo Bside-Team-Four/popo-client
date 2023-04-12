@@ -91,8 +91,8 @@ export default function TextField({
           )}
         </IconWrapper>
       </InputWrapper>
-      {(message) && <HelpMessage>{message}</HelpMessage>}
-      {($error) && <ErrorMessage>{error.message}</ErrorMessage>}
+      {($error) ? <ErrorMessage>{error.message}</ErrorMessage>
+        : (message) && <HelpMessage>{message}</HelpMessage>}
     </Container>
   );
 }

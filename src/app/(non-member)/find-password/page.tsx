@@ -1,7 +1,9 @@
+'use client';
+
+import FindPassword from '@/components/find-password';
+
 export default function FindPasswordPage() {
   return (
-    <div>
-      <h1>Find Password</h1>
-    </div>
+    <FindPassword />
   );
 }

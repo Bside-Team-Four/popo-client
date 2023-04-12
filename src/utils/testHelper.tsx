@@ -3,6 +3,7 @@ import { JSXElementConstructor, ReactElement, ReactNode } from 'react';
 import { act, render } from '@testing-library/react';
 import { RecoilRoot } from 'recoil';
 
+import testRegister from '@/fixtures/testRegister';
 import MockTheme from '@/test/MockTheme';
 import ReactQueryWrapper from '@/test/ReactQueryWrapper';
 
@@ -36,3 +37,13 @@ export const fireTimeEvent = (func: () => void, ms: number) => {
   func();
   return wait(ms);
 };
+
+export const getTestForm = () => ({
+  register: (name: string) => ({ ...testRegister, name }),
+  watch: (name: string) => name,
+  formState: { errors: {} },
+  resetField: jest.fn(),
+  setError: jest.fn(),
+  setFocus: jest.fn(),
+  handleSubmit: jest.fn(),
+});

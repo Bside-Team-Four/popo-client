@@ -4,6 +4,7 @@ import Portal from '@/components/popup/Portal';
 import { renderWithPortal } from '@/utils/testHelper';
 
 jest.mock('usehooks-ts', () => ({
+  ...jest.requireActual('usehooks-ts'),
   useIsMounted: jest.fn(),
 }));
 

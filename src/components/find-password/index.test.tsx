@@ -1,0 +1,60 @@
+import { fireEvent, screen } from '@testing-library/react';
+
+import FindPassword from '@/components/find-password/index';
+import testRegister from '@/fixtures/testRegister';
+import useFindPasswordForm from '@/hooks/useFindPasswordForm';
+import { renderWithProviders } from '@/utils/testHelper';
+
+jest.mock('@/hooks/useFindPasswordForm');
+
+const email = {
+  register: { ...testRegister, name: 'email' },
+  value: 'email',
+};
+
+const certificationNumber = {
+  register: { ...testRegister, name: 'certificationNumber' },
+  value: 'certificationNumber',
+};
+
+const password = {
+  register: { ...testRegister, name: 'password' },
+  value: 'password',
+};
+
+const passwordConfirm = {
+  register: { ...testRegister, name: 'passwordConfirm' },
+  value: 'passwordConfirm',
+};
+
+describe('FindPassword', () => {
+  const onSubmit = jest.fn();
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    (useFindPasswordForm as jest.Mock).mockImplementation(() => ({
+      step: given.step,
+      formData: {
+        email: { ...email, value: 'popo@gmail.com', onClickReset: jest.fn() },
+        certificationNumber: { ...certificationNumber, onClickReset: jest.fn() },
+        password: { ...password, value: '12341234A', onClickReset: jest.fn() },
+        passwordConfirm: { ...passwordConfirm, value: '12341234A', onClickReset: jest.fn() },
+      },
+      onSubmit,
+    }));
+  });
+
+  const renderFindPassword = () => renderWithProviders(<FindPassword />);
+
+  it('onSubmit 호출', () => {
+    given('step', () => 0);
+    renderFindPassword();
+
+    const button = screen.getByRole('button', { name: '이메일로 인증번호 전송' });
+
+    expect(button).toBeInTheDocument();
+
+    fireEvent.submit(button);
+    expect(onSubmit).toHaveBeenCalled();
+  });
+});
