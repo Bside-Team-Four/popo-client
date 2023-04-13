@@ -7,26 +7,6 @@ import { renderWithProviders } from '@/utils/testHelper';
 
 jest.mock('@/hooks/useFindPasswordForm');
 
-const email = {
-  register: { ...testRegister, name: 'email' },
-  value: 'email',
-};
-
-const certificationNumber = {
-  register: { ...testRegister, name: 'certificationNumber' },
-  value: 'certificationNumber',
-};
-
-const password = {
-  register: { ...testRegister, name: 'password' },
-  value: 'password',
-};
-
-const passwordConfirm = {
-  register: { ...testRegister, name: 'passwordConfirm' },
-  value: 'passwordConfirm',
-};
-
 describe('FindPassword', () => {
   const onSubmit = jest.fn();
 
@@ -35,10 +15,10 @@ describe('FindPassword', () => {
     (useFindPasswordForm as jest.Mock).mockImplementation(() => ({
       step: given.step,
       formData: {
-        email: { ...email, value: 'popo@gmail.com', onClickReset: jest.fn() },
-        certificationNumber: { ...certificationNumber, onClickReset: jest.fn() },
-        password: { ...password, value: '12341234A', onClickReset: jest.fn() },
-        passwordConfirm: { ...passwordConfirm, value: '12341234A', onClickReset: jest.fn() },
+        email: { register: { ...testRegister, name: 'email' }, value: 'popo@gmail.com', onClickReset: jest.fn() },
+        certificationNumber: { register: { ...testRegister, name: 'certificationNumber' }, onClickReset: jest.fn() },
+        password: { register: { ...testRegister, name: 'password' }, value: '12341234A', onClickReset: jest.fn() },
+        passwordConfirm: { register: { ...testRegister, name: 'passwordConfirm' }, value: '12341234A', onClickReset: jest.fn() },
       },
       onSubmit,
     }));

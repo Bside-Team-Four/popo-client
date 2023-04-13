@@ -6,7 +6,7 @@ import { act, renderHook } from '@testing-library/react';
 import _ from 'lodash/fp';
 
 import testRegister from '@/fixtures/testRegister';
-import useFindPasswordForm, { FindPasswordForm } from '@/hooks/useFindPasswordForm';
+import useFindPasswordForm, { FindPasswordForm, FindPasswordName } from '@/hooks/useFindPasswordForm';
 import { getTestForm } from '@/utils/testHelper';
 
 jest.mock('next/navigation', () => ({
@@ -19,6 +19,7 @@ jest.mock('react-hook-form', () => ({
 
 describe('useFindPasswordForm', () => {
   const routerReplace = jest.fn();
+
   const {
     resetField, formState, setError, setFocus,
   } = getTestForm();
@@ -37,7 +38,7 @@ describe('useFindPasswordForm', () => {
       passwordConfirm: given.passwordConfirm,
     });
   };
-  const watch = (name: 'email' | 'certificationNumber' | 'password' | 'passwordConfirm') => given[name];
+  const watch = (name: FindPasswordName) => given[name];
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -59,7 +60,7 @@ describe('useFindPasswordForm', () => {
     () => useFindPasswordForm(),
   );
 
-  context('Submit TEST', () => {
+  context('step별 submit event test', () => {
     it('STEP 0', () => {
       const { result } = renderFindPasswordFormHook();
 
@@ -125,7 +126,7 @@ describe('useFindPasswordForm', () => {
     });
   });
 
-  context('formData Test', () => {
+  context('reset event Test', () => {
     it('email', () => {
       const { result } = renderFindPasswordFormHook();
 

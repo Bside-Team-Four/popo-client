@@ -40,7 +40,6 @@ export const fireTimeEvent = (func: () => void, ms: number) => {
 
 export const getTestForm = () => ({
   register: (name: string) => ({ ...testRegister, name }),
-  watch: (name: string) => name,
   formState: { errors: {} },
   resetField: jest.fn(),
   setError: jest.fn(),

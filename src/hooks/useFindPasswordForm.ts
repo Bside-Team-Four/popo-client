@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 
 import useValidationPattern from '@/hooks/useValidationPattern';
 
-export type FormName = 'email' | 'certificationNumber' | 'password' | 'passwordConfirm';
+export type FindPasswordName = 'email' | 'certificationNumber' | 'password' | 'passwordConfirm';
 
 export type FindPasswordForm = {
   email: string;
@@ -27,7 +27,7 @@ const useFindPasswordForm = () => {
 
   const { errors } = formState;
 
-  const reset = (name: FormName) => {
+  const reset = (name: FindPasswordName) => {
     resetField(name);
     setFocus(name);
   };
