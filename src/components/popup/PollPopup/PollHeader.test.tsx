@@ -5,18 +5,18 @@ import { renderWithProviders } from '@/utils/testHelper';
 import PollHeader from './PollHeader';
 
 describe('PollHeader', () => {
-  const onClosePollPopupMock = jest.fn();
+  const onClose = jest.fn();
 
   const renderPollHeader = () => renderWithProviders(
     <PollHeader
       currentStep={2}
       stepCount={7}
-      onClosePollPopup={onClosePollPopupMock}
+      onClose={onClose}
     />,
   );
 
   beforeEach(() => {
-    onClosePollPopupMock.mockClear();
+    onClose.mockClear();
   });
 
   it('총 step과 현재 step을 잘 렌더링한다.', () => {
@@ -31,6 +31,6 @@ describe('PollHeader', () => {
     const closeIcon = screen.getByAltText('close icon');
     fireEvent.click(closeIcon);
 
-    expect(onClosePollPopupMock).toHaveBeenCalled();
+    expect(onClose).toHaveBeenCalled();
   });
 });

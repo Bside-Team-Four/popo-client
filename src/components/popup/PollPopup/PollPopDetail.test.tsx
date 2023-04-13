@@ -1,16 +1,13 @@
 import { fireEvent, screen } from '@testing-library/react';
 
+import PollPopDetail from '@/components/popup/PollPopup/PollPopDetail';
 import MockTheme from '@/test/MockTheme';
 import { renderWithPortal } from '@/utils/testHelper';
-
-import PollPopup from './index';
 
 jest.useFakeTimers();
 
 jest.mock('usehooks-ts', () => ({
-  ...jest.requireActual('usehooks-ts'),
   useDarkMode: () => ({ isDarkMode: false }),
-  useIsMounted: () => true,
 }));
 
 describe('PollPopup', () => {
@@ -18,8 +15,9 @@ describe('PollPopup', () => {
 
   const renderPollPopup = () => renderWithPortal(
     <MockTheme>
-      <PollPopup onClose={onClose} />
+      <PollPopDetail onClose={onClose} />
     </MockTheme>,
+    'full-portal-root',
   );
 
   context('goNextStep 버튼이 눌리면', () => {

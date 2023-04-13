@@ -19,7 +19,7 @@ export function renderWithProviders(node:ReactNode) {
   );
 }
 
-export function renderWithPortal<P>(ui: ReactElement<P, string | JSXElementConstructor<P>>, elementId = 'popup-portal') {
+export function renderWithPortal<P>(ui: ReactElement<P, string | JSXElementConstructor<P>>, elementId = 'normal-portal-root') {
   const portalContainer = document.createElement('div');
   portalContainer.setAttribute('id', elementId);
 

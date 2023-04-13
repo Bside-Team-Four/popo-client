@@ -85,7 +85,8 @@ export default function Layout({
       <body>
         <LayoutProvider>
           {children}
-          <div id="popup-portal" />
+          <div id="full-portal-root" />
+          <div id="normal-portal-root" />
         </LayoutProvider>
       </body>
     </html>

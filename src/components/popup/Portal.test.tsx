@@ -18,7 +18,7 @@ describe('Portal', () => {
   });
 
   const renderPortal = () => renderWithPortal((
-    <Portal elementId={given.elementId}>
+    <Portal show elementId={given.elementId}>
       <div>{childText}</div>
     </Portal>
   ));
@@ -47,7 +47,7 @@ describe('Portal', () => {
     });
 
     context('elementId를 가진 element가 존재하는 경우', () => {
-      given('elementId', () => 'popup-portal');
+      given('elementId', () => 'normal-portal-root');
 
       it('자식 컴포넌트가 나타나야만 한다', () => {
         const { container } = renderPortal();
