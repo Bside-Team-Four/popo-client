@@ -7,10 +7,10 @@ import { getCalAppWidth, getRatioSizePX } from '@/utils/sizeHelper';
 type PollHeaderProps = {
   currentStep: number;
   stepCount: number;
-  onClosePollPopup: () => void;
+  onClose: () => void;
 };
 
-export default function PollHeader({ currentStep, stepCount, onClosePollPopup }:PollHeaderProps) {
+export default function PollHeader({ currentStep, stepCount, onClose }:PollHeaderProps) {
   const stepCheckText = `${currentStep + 1} / ${stepCount}`;
 
   return (
@@ -19,7 +19,7 @@ export default function PollHeader({ currentStep, stepCount, onClosePollPopup }:
       <StepCheckText>
         {stepCheckText}
       </StepCheckText>
-      <CloseIcon onClick={onClosePollPopup} />
+      <CloseIcon onClick={onClose} />
     </Container>
   );
 }

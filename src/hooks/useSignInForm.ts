@@ -4,9 +4,9 @@ import { useRouter } from 'next/navigation';
 
 import useValidationPattern from '@/hooks/useValidationPattern';
 
-type FormName = 'email' | 'password';
+export type SignInName = 'email' | 'password';
 
-type SignInForm = {
+export type SignInForm = {
   email: string;
   password: string;
 };
@@ -22,7 +22,7 @@ const useSignInForm = () => {
 
   const { errors } = formState;
 
-  const reset = (name: FormName) => {
+  const reset = (name: SignInName) => {
     resetField(name);
     setFocus(name);
   };

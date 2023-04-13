@@ -5,13 +5,15 @@ import FullPopup from './FullPopup';
 
 describe('FullPopup', () => {
   const childText = 'PoPo';
-  const renderFullPopup = () => renderWithPortal((
-    <MockProvider>
-      <FullPopup>
-        <div>{childText}</div>
-      </FullPopup>
-    </MockProvider>
-  ));
+  const renderFullPopup = () => renderWithPortal(
+    (
+      <MockProvider>
+        <FullPopup show>
+          <div>{childText}</div>
+        </FullPopup>
+      </MockProvider>
+    ), 'full-portal-root',
+  );
 
   it('자식 컴포넌트가 나타나야만 한다', () => {
     const { container } = renderFullPopup();

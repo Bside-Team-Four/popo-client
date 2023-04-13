@@ -24,7 +24,7 @@ export default function Home() {
       <PoPoTitle />
       <PoPoImage />
       <VoteButton openPollPopup={openPollPopup} />
-      {showPollPopup && <PollPopup onClose={onClosePollPopup} />}
+      <PollPopup show={showPollPopup} onClose={onClosePollPopup} />
     </Container>
   );
 }

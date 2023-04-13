@@ -1,26 +1,19 @@
 import { PropsWithChildren } from 'react';
 
-import styled from 'styled-components';
-
-import { getAppWidth } from '@/utils/sizeHelper';
-
 import Portal from './Portal';
+import SprintMotion from './SprintMotion';
 
-export default function FullPopup({ children }: PropsWithChildren) {
+type FullPopupProps = {
+  show: boolean;
+
+};
+
+export default function FullPopup({ children, show }: PropsWithChildren<FullPopupProps>) {
   return (
-    <Portal>
-      <InnerContainer>
+    <Portal show={show} elementId="full-portal-root">
+      <SprintMotion>
         {children}
-      </InnerContainer>
+      </SprintMotion>
     </Portal>
   );
 }
-
-const InnerContainer = styled.div`
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  width: ${getAppWidth}px;
-  height: 100%;
-  top: 0;
-`;

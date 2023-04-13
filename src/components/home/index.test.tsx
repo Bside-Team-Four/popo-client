@@ -20,6 +20,7 @@ describe('Home', () => {
         <Home />
       </MockTheme>
     </RecoilRoot>,
+    'full-portal-root',
   );
 
   it('opens the PollPopup component when the VoteButton is clicked', async () => {
