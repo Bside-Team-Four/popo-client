@@ -1,8 +1,7 @@
 import { PropsWithChildren } from 'react';
 
-import SprintMotion from '@/components/popup/SprintMotion';
-
 import Portal from './Portal';
+import SprintMotion from './SprintMotion';
 
 type FullPopupProps = {
   show: boolean;
