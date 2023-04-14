@@ -1,7 +1,7 @@
-export default function Alarm() {
-  return (
-    <div>
-      <h1>Alarm</h1>
-    </div>
-  );
+'use client';
+
+import AlarmPage from '@/components/alarm';
+
+export default function PoPoAlarm() {
+  return <AlarmPage />;
 }

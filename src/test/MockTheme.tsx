@@ -6,11 +6,11 @@ import fixtures from '@/fixtures';
 import defaultTheme from '@/styles/defaultTheme';
 import Size from '@/types/Size';
 
-interface Props {
+type Props = {
   theme?: typeof defaultTheme;
   size?: Size
   children: ReactNode;
-}
+};
 
 function MockTheme({
   theme = defaultTheme,
