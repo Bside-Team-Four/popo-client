@@ -1,5 +1,5 @@
 type User = {
-  gender: string;
+  gender: '남성' | '여성';
   schoolInfo: string;
   gradeInfo: string;
 };

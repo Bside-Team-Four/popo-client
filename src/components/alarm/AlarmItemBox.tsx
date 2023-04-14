@@ -1,18 +1,20 @@
-'use client';
-
 import styled from 'styled-components';
 
-import HintBox from '@/components/alarm/HintBox';
 import ProfileIcon from '@/components/common/ProfileIcon';
-import { b2Font, b3Font } from '@/styles/fontStyles';
 import Alarm from '@/types/Alarm';
 
-export default function AlarmItemBox({ item }: { item: Alarm }) {
+import HintBox from './HintBox';
+
+type AlarmItemBoxProps = {
+  item: Alarm;
+};
+
+export default function AlarmItemBox({ item }: AlarmItemBoxProps) {
   return (
     <Container>
       <TopContainer>
         <ProfileIcon
-          gender={item.userInfo.gender === '남성' ? 'MAN' : 'WOMAN'}
+          gender={item.userInfo.gender === '남성' ? 'male' : 'female'}
         />
         <QuestionBox>{item.title}</QuestionBox>
       </TopContainer>
@@ -27,11 +29,9 @@ export default function AlarmItemBox({ item }: { item: Alarm }) {
           <B3Gray>{item.createdAt}</B3Gray>
         </TimeContainer>
       </MiddleContainer>
-      <div>
-        {item.hints && (
-          <HintBox key={item.hints + item.createdAt} hintData={item?.hints} test-id="hint-box" />
-        )}
-      </div>
+      {item.hints && (
+      <HintBox key={item.hints + item.createdAt} hintData={item.hints} test-id="hint-box" />
+      )}
     </Container>
   );
 }
@@ -40,14 +40,14 @@ const Flexbox = styled.div`
 `;
 
 const Container = styled(Flexbox)`
-  background: ${(props) => props.theme.white};
+  background: ${({ theme }) => theme.color.componentBackground.bg01};
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 35px;
   padding: 16px 14px;
   gap: 8px;
-  box-shadow: 0px 8px 40px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(40px);
   border-radius: 34px;
   width: 100%
@@ -78,7 +78,8 @@ const TimeContainer = styled(Flexbox)`
 `;
 
 const QuestionBox = styled.div`
-  ${b2Font};
+  font-size: 16px;
+  line-height: 24px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -86,6 +87,7 @@ const QuestionBox = styled.div`
   padding: 6px 12px;
   width: 100%;
   background: ${(props) => props.theme.color.componentBackground.bg02};
+  color: ${({ theme }) => theme.color.text.title01};
   border-radius: 18px;
 
   &:after {
@@ -104,10 +106,13 @@ const QuestionBox = styled.div`
 `;
 
 const B3 = styled.div`
-  ${b3Font};
+  font-size: 14px;
+  line-height: 22px;
+  color: ${({ theme }) => theme.color.text.title01};
 `;
 
 const B3Gray = styled.div`
-  ${b3Font};
-  color: rgba(0, 0, 0, 0.4);
+  font-size: 14px;
+  line-height: 22px;
+  color: ${({ theme }) => theme.color.text.title01};
 `;

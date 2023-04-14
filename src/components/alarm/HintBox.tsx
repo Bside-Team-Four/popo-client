@@ -1,32 +1,41 @@
-'use client';
-
 import { useState } from 'react';
 
 import styled from 'styled-components';
 
-import { b1Font } from '@/styles/fontStyles';
 import Hint from '@/types/Hint';
 
-export default function HintBox({ hintData }: { hintData: Hint[] }) {
-  const HINT_SIZE = hintData.length;
-  const [curHintIdx, setCurHintIdx] = useState(0);
+type HintBoxProps = {
+  hintData: Hint[];
+};
 
-  const handleIsVisible = (): void => {
-    setCurHintIdx((prevCount) => (prevCount < HINT_SIZE ? prevCount + 1 : prevCount));
+export default function HintBox({ hintData }: HintBoxProps) {
+  const mainHint = hintData[0];
+  const otherHints = hintData.slice(1);
+
+  const [mainHintOpen, setMainHintOpen] = useState(false);
+  const [otherHintOpen, setOtherHintOpen] = useState({ open: false, index: 0 });
+
+  const openMainHint = () => {
+    setMainHintOpen(true);
   };
+
+  const openOtherHint = () => {
+    setOtherHintOpen({ open: true, index: otherHintOpen.index + 1 });
+  };
+
+  const getHintText = (hint: Hint) => `${hint.hintTitle} : ${hint.hintContent}`;
 
   return (
     <Container>
-      <B1Primary onClick={handleIsVisible}>힌트 보기</B1Primary>
-      {hintData.map(
-        (hintItem: Hint, i: number) => curHintIdx > i && (
-        <B1 data-testid="hint-button" key={hintItem.hintId}>
-          {`${hintItem.hintTitle} : ${hintItem.hintContent}`}
-        </B1>
-        ),
-      )}
-      {curHintIdx !== 0 && curHintIdx !== HINT_SIZE && (
-        <MoreButton onClick={handleIsVisible}>더보기...</MoreButton>
+      <HintOpenButton onClick={openMainHint} disabled={mainHintOpen}>힌트 보기</HintOpenButton>
+      {mainHintOpen && (<HintText>{getHintText(mainHint)}</HintText>)}
+      {otherHintOpen.open && otherHints.map((otherHint) => ((
+        <HintText key={otherHint.hintId}>
+          {getHintText(otherHint)}
+        </HintText>
+      )))}
+      {mainHintOpen && otherHintOpen.index < otherHints.length && (
+      <MoreButton onClick={openOtherHint}>더보기...</MoreButton>
       )}
     </Container>
   );
@@ -42,14 +51,16 @@ const Container = styled.div`
   border-radius: 8px;
 `;
 
-const B1 = styled.div`
-  ${b1Font};
+const HintText = styled.div`
+  font-size: 18px;
+  line-height: 26px;
   color: ${({ theme }) => theme.color.black};
 `;
 
-const B1Primary = styled.button`
+const HintOpenButton = styled.button`
   all: unset;
-  ${b1Font};
+  font-size: 18px;
+  line-height: 26px;
   color: ${({ theme }) => theme.color.primary};
   cursor: pointer;
 `;
