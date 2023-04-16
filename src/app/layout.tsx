@@ -81,6 +81,7 @@ export default function Layout({
     <html lang="ko" className={`${pretendard.variable} ${poppins.variable}`}>
       <head>
         <title>PoPo</title>
+        <script async src="./firebase-messaging-sw.js" />
       </head>
       <body>
         <LayoutProvider>
