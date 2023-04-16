@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 
 import { useRouter } from 'next/navigation';
 
-import useValidationPattern from '@/hooks/useValidationPattern';
+import useGetDefaultRegister from '@/hooks/useGetDefaultRegister';
 
 export type FindPasswordName = 'email' | 'certificationNumber' | 'password' | 'passwordConfirm';
 
@@ -19,11 +19,11 @@ const useFindPasswordForm = () => {
 
   const [step, setStep] = useState(0);
 
-  const { emailPattern, passwordPattern } = useValidationPattern();
-
   const {
     register, watch, formState, resetField, setFocus, handleSubmit, setError,
   } = useForm<FindPasswordForm>();
+
+  const getDefaultRegister = useGetDefaultRegister(register);
 
   const { errors } = formState;
 
@@ -34,40 +34,25 @@ const useFindPasswordForm = () => {
 
   const formData = {
     email: {
-      register: register('email', {
-        pattern: emailPattern,
-      }),
+      register: getDefaultRegister({ name: 'email' }),
       value: watch('email'),
       error: errors.email,
       onClickReset: () => reset('email'),
     },
     certificationNumber: {
-      register: register('certificationNumber', {
-        maxLength: {
-          value: 6,
-          message: '인증번호는 6자리를 입력해주세요.',
-        },
-        minLength: {
-          value: 6,
-          message: '인증번호는 6자리를 입력해주세요.',
-        },
-      }),
+      register: getDefaultRegister({ name: 'certificationNumber' }),
       value: watch('certificationNumber'),
       error: errors.certificationNumber,
       onClickReset: () => reset('certificationNumber'),
     },
     password: {
-      register: register('password', {
-        pattern: passwordPattern,
-      }),
+      register: getDefaultRegister({ name: 'password' }),
       value: watch('password'),
       error: errors.password,
       onClickReset: () => reset('password'),
     },
     passwordConfirm: {
-      register: register('passwordConfirm', {
-        validate: (value) => value === watch('password') || '비밀번호가 일치하지 않습니다.',
-      }),
+      register: getDefaultRegister({ name: 'passwordConfirm', passwordValue: watch('password') }),
       value: watch('passwordConfirm'),
       error: errors.passwordConfirm,
       onClickReset: () => reset('passwordConfirm'),

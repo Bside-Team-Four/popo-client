@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 
 import { useRouter } from 'next/navigation';
 
-import useValidationPattern from '@/hooks/useValidationPattern';
+import useGetDefaultRegister from '@/hooks/useGetDefaultRegister';
 
 export type SignInName = 'email' | 'password';
 
@@ -14,11 +14,11 @@ export type SignInForm = {
 const useSignInForm = () => {
   const router = useRouter();
 
-  const { emailPattern } = useValidationPattern();
-
   const {
     register, watch, formState, resetField, setFocus, setError, handleSubmit,
   } = useForm<SignInForm>();
+
+  const getDefaultRegister = useGetDefaultRegister(register);
 
   const { errors } = formState;
 
@@ -40,9 +40,7 @@ const useSignInForm = () => {
 
   return {
     email: {
-      register: register('email', {
-        pattern: emailPattern,
-      }),
+      register: getDefaultRegister({ name: 'email' }),
       value: watch('email'),
       error: errors.email,
       onClickReset: () => reset('email'),
