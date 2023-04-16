@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 
+import { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
 import localFont from 'next/font/local';
 
@@ -11,13 +12,13 @@ import LayoutProvider from './LayoutProvider';
 dayjs.locale('ko');
 dayjs.extend(utc);
 
-export const metadata = {
+export const metadata: Metadata = {
   metadataBase: new URL('https://popo-client.vercel.app'),
   viewport: {
     width: 'device-width',
-    initalScale: 1,
+    initialScale: 1,
     maximumScale: 1,
-    userScalable: 'no',
+    userScalable: false,
   },
   applicationName: 'PoPo',
   title: 'PoPo',
@@ -41,15 +42,6 @@ export const metadata = {
   icons: {
     shortcut: '/favicon.ico',
     apple: '/icons/maskable_icon_512.png',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    url: 'https://popo-client.vercel.app',
-    title: 'PoPo',
-    description: '좋아하는 마음을 익명으로 표현하고 싶은 10대를 위한, 투표 형식의 SNS 플랫폼 PoPo ❤️',
-    // TODO
-    creator: '@nextjs',
-    images: '/images/thumbnail.png',
   },
   openGraph: {
     title: 'PoPo',
