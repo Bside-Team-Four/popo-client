@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 import styled from 'styled-components';
 
 import alarm from '@/fixtures/alarm';
@@ -6,6 +8,18 @@ import Alarm from '@/types/Alarm';
 import AlarmItemBox from './AlarmItemBox';
 
 export default function AlarmPage() {
+  // @TODO: sw의 전역 사용을 위해 layout 으로 이동이 필요하나 ssr 환경에서 navigator 객체가 없으므로 sw등록 불가능한 이슈 있음
+  if (typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./firebase-messaging-sw.js');
+  }
+
+  useEffect(() => {
+    if (process.browser) {
+      const browserName = navigator.userAgent;
+      console.log('Browser name:', browserName);
+    }
+  }, []);
+
   return (
     <Container>
       <TitleContainer>
