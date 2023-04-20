@@ -6,10 +6,10 @@ import InputItem from '@/types/InputForm';
 type FindPasswordFormProps = {
   step: number;
   formData:{
-    email: InputItem;
-    certificationNumber: InputItem;
-    password: InputItem;
-    passwordConfirm: InputItem;
+    email: InputItem<string>;
+    certificationNumber: InputItem<string>;
+    password: InputItem<string>;
+    passwordConfirm: InputItem<string>;
   }
 };
 

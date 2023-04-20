@@ -10,7 +10,7 @@ type TextFieldProps = {
   register: UseFormRegisterReturn;
   label: string;
   type: string;
-  value: string;
+  value: string | number;
   placeholder?: string;
   message?: string;
   error?: FieldError;

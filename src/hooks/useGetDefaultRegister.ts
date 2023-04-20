@@ -11,7 +11,7 @@ const useGetDefaultRegister = (register: UseFormRegister<any>) => ({
     return register('email', {
       pattern: {
         value: /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i,
-        message: '이메일 형식이 아닙니다.',
+        message: '이메일 형식이 올바르지 않아요. 다시 입력해 주세요.',
       },
     });
   }

@@ -1,8 +1,8 @@
 import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
 
-type InputItem = {
+type InputItem<ValueType> = {
   register: UseFormRegisterReturn;
-  value: string;
+  value: ValueType;
   error?: FieldError;
   onClickReset: ()=>void;
 };
