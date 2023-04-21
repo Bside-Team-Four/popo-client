@@ -1,7 +1,9 @@
+'use client';
+
+import SignUp from '@/components/signup';
+
 export default function SignUpPage() {
   return (
-    <div>
-      <h1>Sign Up</h1>
-    </div>
+    <SignUp />
   );
 }
