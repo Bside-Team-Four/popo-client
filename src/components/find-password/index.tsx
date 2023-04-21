@@ -13,8 +13,8 @@ export default function FindPassword() {
   return (
     <Container onSubmit={onSubmit}>
       <StepTitle step={step} />
-      <StepButton step={step} isActive={isActive} />
       <FindPasswordForm step={step} formData={formData} />
+      <StepButton step={step} isActive={isActive} />
     </Container>
   );
 }

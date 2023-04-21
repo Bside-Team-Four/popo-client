@@ -1,9 +1,8 @@
 import { useCallback, useState } from 'react';
-import { useForm } from 'react-hook-form';
 
 import { useRouter } from 'next/navigation';
 
-import useValidationPattern from '@/hooks/useValidationPattern';
+import usePoPoForm from './usePoPoForm';
 
 export type FindPasswordName = 'email' | 'certificationNumber' | 'password' | 'passwordConfirm';
 
@@ -19,79 +18,24 @@ const useFindPasswordForm = () => {
 
   const [step, setStep] = useState(0);
 
-  const { emailPattern, passwordPattern } = useValidationPattern();
-
   const {
-    register, watch, formState, resetField, setFocus, handleSubmit, setError,
-  } = useForm<FindPasswordForm>();
-
-  const { errors } = formState;
-
-  const reset = (name: FindPasswordName) => {
-    resetField(name);
-    setFocus(name);
-  };
-
-  const formData = {
-    email: {
-      register: register('email', {
-        pattern: emailPattern,
-      }),
-      value: watch('email'),
-      error: errors.email,
-      onClickReset: () => reset('email'),
-    },
-    certificationNumber: {
-      register: register('certificationNumber', {
-        maxLength: {
-          value: 6,
-          message: '인증번호는 6자리를 입력해주세요.',
-        },
-        minLength: {
-          value: 6,
-          message: '인증번호는 6자리를 입력해주세요.',
-        },
-      }),
-      value: watch('certificationNumber'),
-      error: errors.certificationNumber,
-      onClickReset: () => reset('certificationNumber'),
-    },
-    password: {
-      register: register('password', {
-        pattern: passwordPattern,
-      }),
-      value: watch('password'),
-      error: errors.password,
-      onClickReset: () => reset('password'),
-    },
-    passwordConfirm: {
-      register: register('passwordConfirm', {
-        validate: (value) => value === watch('password') || '비밀번호가 일치하지 않습니다.',
-      }),
-      value: watch('passwordConfirm'),
-      error: errors.passwordConfirm,
-      onClickReset: () => reset('passwordConfirm'),
-    },
-  };
+    watch, getError, getDefaultRegister, getActiveCheck, reset, handleSubmit,
+  } = usePoPoForm<FindPasswordForm>();
 
   const getActive = useCallback((currentStep: number) => {
     if (currentStep === 0) {
-      return !!watch('email');
+      return getActiveCheck('email');
     }
     if (currentStep === 1) {
-      return !!watch('certificationNumber');
+      return getActiveCheck('certificationNumber');
     }
 
-    return !!watch('password') && !!watch('passwordConfirm');
-  }, [watch]);
+    return getActiveCheck('password') && getActiveCheck('passwordConfirm');
+  }, [getActiveCheck]);
 
-  const onSubmit = handleSubmit((data: FindPasswordForm) => {
-    if (step === 0) {
-      setStep(1);
-      return;
-    }
-    if (step === 1) {
-      setStep(2);
+  const onSubmit = handleSubmit(() => {
+    if (step < 2) {
+      setStep((prev) => prev + 1);
       return;
     }
 
@@ -100,7 +44,32 @@ const useFindPasswordForm = () => {
 
   return {
     step,
-    formData,
+    formData: {
+      email: {
+        register: getDefaultRegister({ name: 'email' }),
+        value: watch('email'),
+        error: getError('email'),
+        onClickReset: () => reset('email'),
+      },
+      certificationNumber: {
+        register: getDefaultRegister({ name: 'certificationNumber' }),
+        value: watch('certificationNumber'),
+        error: getError('certificationNumber'),
+        onClickReset: () => reset('certificationNumber'),
+      },
+      password: {
+        register: getDefaultRegister({ name: 'password' }),
+        value: watch('password'),
+        error: getError('password'),
+        onClickReset: () => reset('password'),
+      },
+      passwordConfirm: {
+        register: getDefaultRegister({ name: 'passwordConfirm', passwordValue: watch('password') }),
+        value: watch('passwordConfirm'),
+        error: getError('passwordConfirm'),
+        onClickReset: () => reset('passwordConfirm'),
+      },
+    },
     isActive: getActive(step),
     onSubmit,
   };

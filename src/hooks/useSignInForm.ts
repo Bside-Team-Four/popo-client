@@ -1,10 +1,6 @@
-import { useForm } from 'react-hook-form';
-
 import { useRouter } from 'next/navigation';
 
-import useValidationPattern from '@/hooks/useValidationPattern';
-
-export type SignInName = 'email' | 'password';
+import usePoPoForm from './usePoPoForm';
 
 export type SignInForm = {
   email: string;
@@ -14,18 +10,9 @@ export type SignInForm = {
 const useSignInForm = () => {
   const router = useRouter();
 
-  const { emailPattern } = useValidationPattern();
-
   const {
-    register, watch, formState, resetField, setFocus, setError, handleSubmit,
-  } = useForm<SignInForm>();
-
-  const { errors } = formState;
-
-  const reset = (name: SignInName) => {
-    resetField(name);
-    setFocus(name);
-  };
+    register, watch, getError, getDefaultRegister, reset, setError, setFocus, handleSubmit,
+  } = usePoPoForm<SignInForm>();
 
   const onValid = (data: SignInForm) => {
     if (data.email !== 'popo@gmail.com' || data.password !== '1234') {
@@ -40,17 +27,15 @@ const useSignInForm = () => {
 
   return {
     email: {
-      register: register('email', {
-        pattern: emailPattern,
-      }),
+      register: getDefaultRegister({ name: 'email' }),
       value: watch('email'),
-      error: errors.email,
+      error: getError('email'),
       onClickReset: () => reset('email'),
     },
     password: {
       register: register('password'),
       value: watch('password'),
-      error: errors.password,
+      error: getError('password'),
       onClickReset: () => reset('password'),
     },
     reset,

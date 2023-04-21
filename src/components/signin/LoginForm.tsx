@@ -4,8 +4,8 @@ import TextField from '@/components/common/TextField';
 import InputItem from '@/types/InputForm';
 
 type LoginFormProps = {
-  email:InputItem;
-  password: InputItem;
+  email:InputItem<string>;
+  password: InputItem<string>;
 };
 
 export default function LoginForm({ email, password }:LoginFormProps) {

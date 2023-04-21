@@ -7,19 +7,21 @@ import styled, { css } from 'styled-components';
 
 type TextFieldProps = {
   className?:string;
-  register: UseFormRegisterReturn;
+  register?: UseFormRegisterReturn;
   label: string;
-  type: string;
-  value: string;
+  type?: string;
+  value: string | number;
   placeholder?: string;
   message?: string;
+  name?: string;
+  readOnly?: boolean;
   error?: FieldError;
-  onClickReset: () => void;
+  onClickReset?: () => void;
 };
 
 export default function TextField({
   className, register, label,
-  type, placeholder, message,
+  type = 'text', placeholder, message, name, readOnly = false,
   value, error, onClickReset,
 }: TextFieldProps) {
   const [focus, setFocus] = useState(false);
@@ -27,7 +29,7 @@ export default function TextField({
   const $error = !!error?.message;
   const $done = !focus && !!value;
 
-  const { name } = register;
+  const fieldName = register ? register.name : name;
 
   const onFocus = () => {
     setFocus(true);
@@ -52,31 +54,34 @@ export default function TextField({
         $focus={focus}
         $done={$done}
         $error={$error}
+        $readOnly={readOnly}
       >
         <LabelText
           data-testid="input-label"
-          htmlFor={name}
+          htmlFor={fieldName}
           $error={$error}
         >
           {label}
         </LabelText>
         <Input
-          data-testid={`${name}-test-input`}
-          id={name}
+          data-testid={`${fieldName}-test-input`}
+          id={fieldName}
           type={type}
           placeholder={placeholder}
           onFocus={onFocus}
+          readOnly={readOnly}
+          defaultValue={value}
           {...register}
           onBlur={onBlur}
         />
         <IconWrapper>
-          {(focus && value) && (
+          {(focus && value && !readOnly) && (
             <Image
               onClick={onClickReset}
               src="/images/reset-icon.svg"
               width={14}
               height={14}
-              alt={`${name} reset icon`}
+              alt={`${fieldName} reset icon`}
               priority
             />
           )}
@@ -104,7 +109,7 @@ const Container = styled.div`
   height: 80px;
 `;
 
-const InputWrapper = styled.div<{ $focus: boolean, $done: boolean, $error: boolean }>`
+const InputWrapper = styled.div<{ $focus: boolean, $done: boolean, $error: boolean, $readOnly:boolean }>`
   position: relative;
   display: flex;
   flex-direction: column;
@@ -113,7 +118,7 @@ const InputWrapper = styled.div<{ $focus: boolean, $done: boolean, $error: boole
   height: 56px;
   border-width: 1px;
   border-style: solid;
-  border-color: ${({ theme, $focus }) => ($focus ? theme.color.text.title01 : theme.color.componentBackground.bg04)};
+  border-color: ${({ theme, $focus, $readOnly }) => ($focus && !$readOnly ? theme.color.text.title01 : theme.color.componentBackground.bg04)};
   border-radius: 16px;
   padding: 0 12px;
   background-color: ${({ theme, $done }) => ($done ? theme.color.componentBackground.bg04 : 'transparent')};
