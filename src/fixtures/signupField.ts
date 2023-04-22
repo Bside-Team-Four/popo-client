@@ -9,7 +9,7 @@ const signupField = {
   email: { register: { ...testRegister, name: 'email' }, value: 'popo@gmail.com', onClickReset: jest.fn() },
   certificationNumber: { register: { ...testRegister, name: 'certificationNumber' }, value: '', onClickReset: jest.fn() },
   gender: { value: null, onChangeGender: jest.fn() },
-  school: { value: { schoolId: 10, name: '포포고등학교' }, onChangeSchool: jest.fn() },
+  school: { value: { id: 10, name: '포포고등학교', address: '서울' }, onChangeSchool: jest.fn() },
 };
 
 export default signupField;

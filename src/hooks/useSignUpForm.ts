@@ -34,6 +34,7 @@ const useSignUpForm = () => {
   const onSubmit = handleSubmit(() => {
     if (step < 7) {
       setStep((prev) => prev + 1);
+      return;
     }
 
     router.replace('/profile');

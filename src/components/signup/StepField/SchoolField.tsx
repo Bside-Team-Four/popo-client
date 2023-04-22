@@ -1,6 +1,9 @@
+import { useState } from 'react';
+
 import styled from 'styled-components';
 
 import TextField from '@/components/common/TextField';
+import SchoolPopup from '@/components/popup/SchoolPopup';
 import InputItem from '@/types/InputForm';
 import School from '@/types/School';
 
@@ -13,6 +16,11 @@ type SchoolFieldProps = {
 };
 
 export default function SchoolField({ school, grade }: SchoolFieldProps) {
+  const [showPop, setShowPop] = useState(false);
+
+  const onShowPop = () => setShowPop(true);
+  const onClosePop = () => setShowPop(false);
+
   return (
     <Container>
       <TextField
@@ -21,6 +29,7 @@ export default function SchoolField({ school, grade }: SchoolFieldProps) {
         placeholder="OO 학교"
         value={school.value?.name || ''}
         message="원활한 서비스 이용을 위해 꼭 정확한 정보를 입력해주세요."
+        onClick={onShowPop}
         readOnly
       />
       <TextField
@@ -33,6 +42,7 @@ export default function SchoolField({ school, grade }: SchoolFieldProps) {
         onClickReset={grade.onClickReset}
         message="학년은 3월 2일 이후 자동으로 업데이트 되요!"
       />
+      <SchoolPopup show={showPop} onClose={onClosePop} onChangeSchool={school.onChangeSchool} />
     </Container>
   );
 }

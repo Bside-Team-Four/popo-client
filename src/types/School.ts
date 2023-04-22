@@ -1,6 +1,7 @@
 type School = {
-  schoolId: number;
+  id: number;
   name: string;
+  address: string;
 };
 
 export default School;
