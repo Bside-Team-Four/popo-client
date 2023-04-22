@@ -3,6 +3,7 @@ import { FieldError, UseFormRegisterReturn } from 'react-hook-form';
 
 import Image from 'next/image';
 
+import _ from 'lodash/fp';
 import styled, { css } from 'styled-components';
 
 type TextFieldProps = {
@@ -17,12 +18,13 @@ type TextFieldProps = {
   readOnly?: boolean;
   error?: FieldError;
   onClickReset?: () => void;
+  onClick?:()=>void;
 };
 
 export default function TextField({
   className, register, label,
   type = 'text', placeholder, message, name, readOnly = false,
-  value, error, onClickReset,
+  value, error, onClickReset, onClick = _.noop,
 }: TextFieldProps) {
   const [focus, setFocus] = useState(false);
 
@@ -48,7 +50,7 @@ export default function TextField({
   }, [value]);
 
   return (
-    <Container className={className}>
+    <Container className={className} onClick={onClick}>
       <InputWrapper
         data-testid="input-wrapper"
         $focus={focus}

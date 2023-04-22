@@ -11,7 +11,7 @@ describe('ConfirmField', () => {
     year={signupField.year}
     grade={signupField.grade}
     gender={{ value: given.gender, onChangeGender: jest.fn() }}
-    school={{ value: { schoolId: 1, name: given.school }, onChangeSchool: jest.fn() }}
+    school={{ value: { id: 1, name: given.school, address: '서울' }, onChangeSchool: jest.fn() }}
   />);
 
   it('회원가입할 동안 입력했던 내용을 화면에 보여준다.', () => {

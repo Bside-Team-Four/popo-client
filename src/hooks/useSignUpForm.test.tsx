@@ -130,7 +130,7 @@ describe('useSignUpForm', () => {
       const { result } = renderSignUpFormHook();
 
       act(() => {
-        result.current.formData.school.onChangeSchool({ schoolId: 1, name: '포포고등학교' });
+        result.current.formData.school.onChangeSchool({ id: 1, name: '포포고등학교', address: '서울' });
       });
 
       Array.from({ length: 6 }).forEach(() => {
@@ -259,13 +259,13 @@ describe('useSignUpForm', () => {
     expect(result.current.formData.gender.value).toBe('male');
   });
 
-  it('school change event', () => {
+  it('school.ts change event', () => {
     const { result } = renderSignUpFormHook();
 
     act(() => {
-      result.current.formData.school.onChangeSchool({ schoolId: 1, name: '포포고등학교' });
+      result.current.formData.school.onChangeSchool({ id: 1, name: '포포고등학교', address: '서울' });
     });
 
-    expect(result.current.formData.school.value).toStrictEqual({ schoolId: 1, name: '포포고등학교' });
+    expect(result.current.formData.school.value).toStrictEqual({ id: 1, name: '포포고등학교', address: '서울' });
   });
 });
