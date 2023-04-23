@@ -50,6 +50,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@typescript-eslint/eslint-plugin", "virtual:130f9dfaf573be191133b422510c7a4fc76dbc7013c6438318e59762620022ebd76c03268d6c956327437b9455fca3a911ac16133de442d066d1f8e049d7c510#npm:5.54.1"],\
             ["@typescript-eslint/parser", "virtual:130f9dfaf573be191133b422510c7a4fc76dbc7013c6438318e59762620022ebd76c03268d6c956327437b9455fca3a911ac16133de442d066d1f8e049d7c510#npm:5.54.1"],\
             ["axios", "npm:1.3.4"],\
+            ["axios-mock-adapter", "virtual:130f9dfaf573be191133b422510c7a4fc76dbc7013c6438318e59762620022ebd76c03268d6c956327437b9455fca3a911ac16133de442d066d1f8e049d7c510#npm:1.21.4"],\
             ["cypress", "npm:12.7.0"],\
             ["dayjs", "npm:1.11.7"],\
             ["eslint", "npm:8.36.0"],\
@@ -5900,6 +5901,30 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["axios-mock-adapter", [\
+        ["npm:1.21.4", {\
+          "packageLocation": "./.yarn/cache/axios-mock-adapter-npm-1.21.4-374b41c5a8-adcd838c8b.zip/node_modules/axios-mock-adapter/",\
+          "packageDependencies": [\
+            ["axios-mock-adapter", "npm:1.21.4"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:130f9dfaf573be191133b422510c7a4fc76dbc7013c6438318e59762620022ebd76c03268d6c956327437b9455fca3a911ac16133de442d066d1f8e049d7c510#npm:1.21.4", {\
+          "packageLocation": "./.yarn/__virtual__/axios-mock-adapter-virtual-dbcf33c6f0/0/cache/axios-mock-adapter-npm-1.21.4-374b41c5a8-adcd838c8b.zip/node_modules/axios-mock-adapter/",\
+          "packageDependencies": [\
+            ["axios-mock-adapter", "virtual:130f9dfaf573be191133b422510c7a4fc76dbc7013c6438318e59762620022ebd76c03268d6c956327437b9455fca3a911ac16133de442d066d1f8e049d7c510#npm:1.21.4"],\
+            ["@types/axios", null],\
+            ["axios", "npm:1.3.4"],\
+            ["fast-deep-equal", "npm:3.1.3"],\
+            ["is-buffer", "npm:2.0.5"]\
+          ],\
+          "packagePeers": [\
+            "@types/axios",\
+            "axios"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["axobject-query", [\
         ["npm:3.1.1", {\
           "packageLocation": "./.yarn/cache/axobject-query-npm-3.1.1-13705ce3c1-c12a5da10d.zip/node_modules/axobject-query/",\
@@ -10250,6 +10275,15 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
           "linkType": "HARD"\
         }]\
       ]],\
+      ["is-buffer", [\
+        ["npm:2.0.5", {\
+          "packageLocation": "./.yarn/cache/is-buffer-npm-2.0.5-17e563f277-764c9ad8b5.zip/node_modules/is-buffer/",\
+          "packageDependencies": [\
+            ["is-buffer", "npm:2.0.5"]\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
       ["is-callable", [\
         ["npm:1.2.7", {\
           "packageLocation": "./.yarn/cache/is-callable-npm-1.2.7-808a303e61-61fd57d03b.zip/node_modules/is-callable/",\
@@ -13382,6 +13416,7 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@typescript-eslint/eslint-plugin", "virtual:130f9dfaf573be191133b422510c7a4fc76dbc7013c6438318e59762620022ebd76c03268d6c956327437b9455fca3a911ac16133de442d066d1f8e049d7c510#npm:5.54.1"],\
             ["@typescript-eslint/parser", "virtual:130f9dfaf573be191133b422510c7a4fc76dbc7013c6438318e59762620022ebd76c03268d6c956327437b9455fca3a911ac16133de442d066d1f8e049d7c510#npm:5.54.1"],\
             ["axios", "npm:1.3.4"],\
+            ["axios-mock-adapter", "virtual:130f9dfaf573be191133b422510c7a4fc76dbc7013c6438318e59762620022ebd76c03268d6c956327437b9455fca3a911ac16133de442d066d1f8e049d7c510#npm:1.21.4"],\
             ["cypress", "npm:12.7.0"],\
             ["dayjs", "npm:1.11.7"],\
             ["eslint", "npm:8.36.0"],\

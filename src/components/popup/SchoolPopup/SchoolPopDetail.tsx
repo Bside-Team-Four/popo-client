@@ -1,10 +1,11 @@
 import { useState } from 'react';
 
 import styled from 'styled-components';
+import { useDebounce } from 'usehooks-ts';
 
 import SearchField from '@/components/common/SearchField';
 import SchoolItem from '@/components/popup/SchoolPopup/SchoolItem';
-import fixtures from '@/fixtures';
+import useGetSchools from '@/hooks/api/useGetSchools';
 import School from '@/types/School';
 
 type SchoolPopDetailProps = {
@@ -14,7 +15,10 @@ type SchoolPopDetailProps = {
 
 export default function SchoolPopDetail({ onClose, onChangeSchool }:SchoolPopDetailProps) {
   const [keyword, setKeyword] = useState('');
-  const { school } = fixtures;
+
+  const debouncedKeyword:string = useDebounce(keyword, 500);
+
+  const { schoolData } = useGetSchools({ keyword: debouncedKeyword });
 
   const onSelectItem = (item: School) => {
     onChangeSchool(item);
@@ -30,7 +34,7 @@ export default function SchoolPopDetail({ onClose, onChangeSchool }:SchoolPopDet
         onClose={onClose}
       />
       <Wrapper>
-        {school.map((item) => (
+        {schoolData && schoolData.map((item) => (
           <SchoolItem key={item.id} school={item} onClick={() => onSelectItem(item)} />
         ))}
       </Wrapper>
