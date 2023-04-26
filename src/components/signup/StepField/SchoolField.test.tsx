@@ -2,6 +2,7 @@ import { fireEvent, screen, waitFor } from '@testing-library/react';
 
 import signupField from '@/fixtures/signupField';
 import MockTheme from '@/test/MockTheme';
+import ReactQueryWrapper from '@/test/ReactQueryWrapper';
 import { renderWithPortal } from '@/utils/testHelper';
 
 import SchoolField from './SchoolField';
@@ -14,12 +15,14 @@ jest.mock('usehooks-ts', () => ({
 
 describe('SchoolField', () => {
   const renderSchoolField = (schoolValue: string) => renderWithPortal(
-    <MockTheme>
-      <SchoolField
-        school={{ onChangeSchool: jest.fn, value: { id: 1, name: schoolValue, address: '서울' } }}
-        grade={signupField.grade}
-      />
-    </MockTheme>,
+    <ReactQueryWrapper>
+      <MockTheme>
+        <SchoolField
+          school={{ onChangeSchool: jest.fn, value: { id: 1, name: schoolValue, address: '서울' } }}
+          grade={signupField.grade}
+        />
+      </MockTheme>
+    </ReactQueryWrapper>,
     'full-portal-root',
   );
 

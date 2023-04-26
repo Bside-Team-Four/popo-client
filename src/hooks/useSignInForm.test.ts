@@ -1,8 +1,9 @@
 import { useForm } from 'react-hook-form';
 
 import { useRouter } from 'next/navigation';
+import { signIn } from 'next-auth/react';
 
-import { act, renderHook } from '@testing-library/react';
+import { renderHook } from '@testing-library/react';
 
 import { FindPasswordName } from '@/hooks/useFindPasswordForm';
 import useSignInForm, { SignInForm } from '@/hooks/useSignInForm';
@@ -15,6 +16,8 @@ jest.mock('next/navigation', () => ({
 jest.mock('react-hook-form', () => ({
   useForm: jest.fn(),
 }));
+
+jest.mock('next-auth/react');
 
 describe('useSignInForm', () => {
   const routerReplace = jest.fn();
@@ -46,42 +49,46 @@ describe('useSignInForm', () => {
       setFocus,
       handleSubmit,
     }));
+    (signIn as jest.Mock).mockImplementation(() => ({
+      ok: given.ok,
+      error: given.error,
+    }));
   });
 
   const renderSignInFormHook = () => renderHook(
     () => useSignInForm(),
   );
 
-  context('submit event test', () => {
-    it('email과 password가 일치하지 않을 경우 에러를 발생시킨다.', () => {
+  describe('로그인 테스트', () => {
+    it('로그인이 성공했을 경우 투표 대기화면으로 이동한다.', async () => {
       given('email', () => 'popo@gmail.com');
-      given('password', () => '4321');
+      given('password', () => '1234');
+      given('ok', () => true);
+      given('error', () => false);
 
       const { result } = renderSignInFormHook();
 
-      act(() => {
-        result.current.onSubmit();
-      });
+      await result.current.onSubmit();
+
+      expect(routerReplace).toHaveBeenCalled();
+    });
+
+    it('로그인이 실패했을 경우 비밀번호 필드에 에러메세지를 띄우고, 포커스시킨다.', async () => {
+      given('email', () => 'popo@gmail.com');
+      given('password', () => '4321');
+      given('ok', () => false);
+      given('error', () => true);
+
+      const { result } = renderSignInFormHook();
+
+      await result.current.onSubmit();
 
       expect(setError).toHaveBeenCalledWith('password', { message: '비밀번호가 일치하지 않아요.' });
       expect(setFocus).toHaveBeenCalledWith('password');
     });
-
-    it('email과 password가 일치할 경우 root 경로로 이동한다.', () => {
-      given('email', () => 'popo@gmail.com');
-      given('password', () => '1234');
-
-      const { result } = renderSignInFormHook();
-
-      act(() => {
-        result.current.onSubmit();
-      });
-
-      expect(routerReplace).toHaveBeenCalled();
-    });
   });
 
-  context('reset event test', () => {
+  describe('텍스트필드 초기화 테스트', () => {
     it('reset email', () => {
       const { result } = renderSignInFormHook();
 

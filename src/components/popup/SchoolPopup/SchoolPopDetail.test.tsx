@@ -3,15 +3,18 @@ import { useDarkMode } from 'usehooks-ts';
 
 import SchoolPopDetail from '@/components/popup/SchoolPopup/SchoolPopDetail';
 import fixtures from '@/fixtures';
+import useGetSchools from '@/hooks/api/useGetSchools';
 import { renderWithProviders } from '@/utils/testHelper';
 
 jest.mock('usehooks-ts');
+jest.mock('@/hooks/api/useGetSchools');
 
 describe('SchoolPopDetail', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
     (useDarkMode as jest.Mock).mockImplementation(() => ({ isDarkMode: given.isDarkMode }));
+    (useGetSchools as jest.Mock).mockImplementation(() => ({ schoolData: fixtures.school }));
   });
 
   const onClose = jest.fn();

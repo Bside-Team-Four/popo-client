@@ -44,8 +44,10 @@ const Container = styled.div`
 const SchoolInfo = styled.div`
   position: relative;
   display: flex;
+  justify-content: center;
   flex-direction: column;
   width: 100%;
+  height: 60px;
   padding-left: 8px;
 `;
 
@@ -77,5 +79,5 @@ const ArrowIcon = styled(Image).attrs({
 })`
   position: absolute;
   right: 0;
-  top: 12px;
+  top: 24px;
 `;
