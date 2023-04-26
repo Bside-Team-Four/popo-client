@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { GetSchoolsResponse } from '@/types/ApiTypes';
+import { AuthenticateResponse, GetSchoolsResponse } from '@/types/ApiTypes';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -15,6 +15,14 @@ export default class ApiService {
     },
   });
 
+  accessToken: string | undefined;
+
+  setToken(accessToken:string) {
+    this.instance.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+
+    this.accessToken = accessToken;
+  }
+
   fetchGetSchools = async ({ keyword }: { keyword: string }) => {
     const { data } = await this.instance.get<GetSchoolsResponse>('/school/search', {
       params: {
@@ -24,6 +32,21 @@ export default class ApiService {
     });
 
     return data.content;
+  };
+
+  authenticate = async (payload: { email: string, password: string }) => {
+    const { data } = await this.instance.post<AuthenticateResponse>('/user/authenticate', {}, {
+      params: {
+        email: payload.email,
+        password: payload.password,
+      },
+    });
+
+    if (data.value?.token) {
+      this.setToken(data.value.token);
+    }
+
+    return data;
   };
 }
 

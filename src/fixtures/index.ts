@@ -1,4 +1,5 @@
 import alarm from './alarm';
+import authenticate from './authenticate';
 import candidate from './candidate';
 import hint from './hint';
 import polls from './polls';
@@ -12,4 +13,5 @@ export default {
   alarm,
   hint,
   school,
+  authenticate,
 };
