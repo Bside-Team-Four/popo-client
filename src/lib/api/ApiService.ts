@@ -23,16 +23,12 @@ export default class ApiService {
     this.accessToken = accessToken;
   }
 
-  fetchGetSchools = async ({ keyword }: { keyword: string }) => {
-    const { data } = await this.instance.get<GetSchoolsResponse>('/school/search', {
-      params: {
-        keyword,
-        size: 50,
-      },
-    });
-
-    return data.content;
-  };
+  fetchGetSchools = ({ keyword }: { keyword: string }) => this.instance.get<GetSchoolsResponse>('/school/search', {
+    params: {
+      keyword,
+      size: 50,
+    },
+  }).then(({ data }) => data);
 
   authenticate = async (payload: { email: string, password: string }) => {
     const { data } = await this.instance.post<AuthenticateResponse>('/user/authenticate', {}, {

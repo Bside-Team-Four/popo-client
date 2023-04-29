@@ -6,7 +6,6 @@ import SignIn from '@/components/signin/index';
 import { renderWithProviders } from '@/utils/testHelper';
 
 jest.mock('next/navigation', () => ({
-  ...jest.requireActual('next/navigation'),
   useRouter: jest.fn(),
 }));
 
