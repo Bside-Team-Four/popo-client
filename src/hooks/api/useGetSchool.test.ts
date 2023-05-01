@@ -15,7 +15,9 @@ describe('useGetSchool', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
-    (apiService.fetchGetSchools as jest.Mock).mockImplementation(() => fixtures.school);
+    (apiService.fetchGetSchools as jest.Mock).mockImplementation(() => (
+      { content: fixtures.school }
+    ));
   });
 
   it('returns school data', async () => {

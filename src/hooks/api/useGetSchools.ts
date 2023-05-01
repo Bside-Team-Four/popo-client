@@ -14,6 +14,7 @@ const useGetSchools = ({ keyword }:GetSchoolProps) => {
     () => apiService.fetchGetSchools({ keyword }),
     {
       enabled: keyword.length >= 2,
+      select: (data) => data.content,
     },
   );
 
