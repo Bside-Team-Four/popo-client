@@ -28,9 +28,9 @@ describe('ApiService', () => {
     it('returns schools', async () => {
       mock.onGet('/school/search').reply(200, { content: fixtures.school });
 
-      const { content } = await mockApiService.fetchGetSchools({ keyword: 'test' });
+      const { data } = await mockApiService.fetchGetSchools({ keyword: 'test', page: 0 });
 
-      expect(content).toEqual(fixtures.school);
+      expect(data.content).toEqual(fixtures.school);
     });
   });
 

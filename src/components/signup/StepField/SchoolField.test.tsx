@@ -1,3 +1,5 @@
+import { useInView } from 'react-intersection-observer';
+
 import { fireEvent, screen, waitFor } from '@testing-library/react';
 
 import signupField from '@/fixtures/signupField';
@@ -14,6 +16,14 @@ jest.mock('usehooks-ts', () => ({
 }));
 
 describe('SchoolField', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    (useInView as jest.Mock).mockImplementation(() => ({
+      ref: jest.fn(),
+      inView: false,
+    }));
+  });
+
   const renderSchoolField = (schoolValue: string) => renderWithPortal(
     <ReactQueryWrapper>
       <MockTheme>

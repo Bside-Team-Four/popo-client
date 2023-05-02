@@ -1,7 +1,10 @@
 import School from '@/types/School';
 
 export type GetSchoolsResponse = {
-  content: School[]
+  content: School[];
+  first: boolean;
+  last: boolean;
+  number: number;
 };
 
 export type AuthenticateResponse = {

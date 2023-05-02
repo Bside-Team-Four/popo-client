@@ -2,6 +2,7 @@ import { useRouter } from 'next/navigation';
 
 import styled from 'styled-components';
 
+import FixedSpinner from '@/components/common/FixedSpinner';
 import SignTitle from '@/components/common/SignTitle';
 import SmallButton from '@/components/common/SmallButton';
 import LoginButtons from '@/components/signin/LoginButtons';
@@ -10,7 +11,7 @@ import useSignInForm from '@/hooks/useSignInForm';
 
 export default function SignIn() {
   const {
-    email, password, onSubmit, isActive,
+    isLoading, email, password, onSubmit, isActive,
   } = useSignInForm();
 
   const router = useRouter();
@@ -28,6 +29,7 @@ export default function SignIn() {
       />
       <SmallButton onClick={goToFindPassword}>비밀번호 찾기</SmallButton>
       <LoginButtons isActive={isActive} />
+      {isLoading && <FixedSpinner type="pop" />}
     </Container>
   );
 }
