@@ -2,12 +2,14 @@ import { useForm } from 'react-hook-form';
 
 import { useRouter } from 'next/navigation';
 
-import { act, renderHook } from '@testing-library/react';
-import _ from 'lodash/fp';
+import { act, renderHook, waitFor } from '@testing-library/react';
 
 import testRegister from '@/fixtures/testRegister';
-import useFindPasswordForm, { FindPasswordForm, FindPasswordName } from '@/hooks/useFindPasswordForm';
+import { apiService } from '@/lib/api/ApiService';
+import wrapper from '@/test/ReactQueryWrapper';
 import { getTestForm } from '@/utils/testHelper';
+
+import useFindPasswordForm, { FindPasswordForm, FindPasswordName } from './useFindPasswordForm';
 
 jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
@@ -17,8 +19,11 @@ jest.mock('react-hook-form', () => ({
   useForm: jest.fn(),
 }));
 
+jest.mock('@/lib/api/ApiService');
+
 describe('useFindPasswordForm', () => {
   const routerReplace = jest.fn();
+  const routerPush = jest.fn();
 
   const {
     resetField, formState, setError, setFocus,
@@ -32,17 +37,18 @@ describe('useFindPasswordForm', () => {
 
   const handleSubmit = (onValid: (data:FindPasswordForm)=>void) => () => {
     onValid({
-      email: given.name,
-      certificationNumber: given.certificationNumber,
-      password: given.password,
-      passwordConfirm: given.passwordConfirm,
+      email: watch('email'),
+      certificationNumber: watch('certificationNumber'),
+      password: (watch('password')),
+      passwordConfirm: (watch('passwordConfirm')),
     });
   };
-  const watch = (name: FindPasswordName) => given[name];
+  const watch = (name: FindPasswordName) => name;
 
   beforeEach(() => {
     jest.clearAllMocks();
     (useRouter as jest.Mock).mockImplementation(() => ({
+      push: routerPush,
       replace: routerReplace,
     }));
     (useForm as jest.Mock).mockImplementation(() => ({
@@ -54,75 +60,164 @@ describe('useFindPasswordForm', () => {
       setFocus,
       handleSubmit,
     }));
+    (apiService.passwordMissing as jest.Mock).mockImplementation(() => given.passwordMissing);
+    (apiService.passwordMissingAuth as jest.Mock).mockImplementation(
+      () => given.passwordMissingAuth,
+    );
+    (apiService.passwordReset as jest.Mock).mockImplementation(
+      () => given.passwordReset,
+    );
   });
 
   const renderFindPasswordFormHook = () => renderHook(
     () => useFindPasswordForm(),
+    {
+      wrapper,
+    },
   );
 
-  context('step별 submit event test', () => {
-    it('STEP 0', () => {
-      const { result } = renderFindPasswordFormHook();
+  describe('step별 submit event test', () => {
+    describe('step0', () => {
+      it('step0 submit success', async () => {
+        given('passwordMissing', () => ({ code: 0, value: { userId: 100 } }));
+        const { result } = renderFindPasswordFormHook();
 
-      expect(result.current.step).toEqual(0);
-    });
-    it('STEP 1', () => {
-      const { result } = renderFindPasswordFormHook();
+        expect(result.current.step).toEqual(0);
 
-      act(() => {
-        result.current.onSubmit();
+        await act(async () => {
+          await result.current.onSubmit();
+        });
+
+        expect(result.current.popInfo.show).toEqual(false);
+        expect(result.current.step).toEqual(1);
       });
 
-      expect(result.current.step).toEqual(1);
-    });
-    it('STEP 2', () => {
-      const { result } = renderFindPasswordFormHook();
+      it('step0 submit failed', async () => {
+        given('passwordMissing', () => Promise.reject());
+        const { result } = renderFindPasswordFormHook();
 
-      Array.from({ length: 2 }).forEach(() => {
+        expect(result.current.step).toEqual(0);
+
+        await act(async () => {
+          await result.current.onSubmit();
+        });
+
+        expect(result.current.popInfo.show).toEqual(true);
+
+        if (result.current.popInfo.onOk) {
+          result.current.popInfo.onOk();
+        }
+        expect(routerPush).toHaveBeenCalledWith('/signup');
+
         act(() => {
+          result.current.popInfo.onClose();
+        });
+
+        expect(result.current.popInfo.show).toEqual(false);
+      });
+    });
+    describe('step1', () => {
+      it('step1 submit success', async () => {
+        given('passwordMissing', () => ({ code: 0, value: { userId: 100 } }));
+        given('passwordMissingAuth', () => ({ code: 0, message: 'ok' }));
+
+        const { result } = renderFindPasswordFormHook();
+
+        await act(async () => {
+          await result.current.onSubmit();
+        });
+        await waitFor(() => {
           result.current.onSubmit();
+        });
+
+        await waitFor(() => {
+          expect(result.current.step).toEqual(2);
         });
       });
 
-      expect(result.current.step).toEqual(2);
-    });
-    it('password === passwordConfirm router replace', () => {
-      given('password', () => '12345678');
-      given('passwordConfirm', () => '12345678');
-      const { result } = renderFindPasswordFormHook();
+      it('step1 submit failed', async () => {
+        given('passwordMissing', () => ({ code: 0, value: { userId: 100 } }));
+        given('passwordMissingAuth', () => Promise.reject());
 
-      Array.from({ length: 3 }).forEach(() => {
-        act(() => {
+        const { result } = renderFindPasswordFormHook();
+
+        await act(async () => {
+          await result.current.onSubmit();
+        });
+        await waitFor(() => {
           result.current.onSubmit();
         });
+
+        await waitFor(() => {
+          expect(result.current.popInfo.show).toEqual(true);
+        });
+
+        act(() => {
+          result.current.popInfo.onClose();
+        });
+
+        expect(result.current.popInfo.show).toEqual(false);
+      });
+    });
+
+    describe('step2', () => {
+      it('step2 submit success', async () => {
+        given('passwordMissing', () => ({ code: 0, value: { userId: 100 } }));
+        given('passwordMissingAuth', () => ({ code: 0, message: 'ok' }));
+        given('passwordReset', () => ({ code: 0, message: 'ok' }));
+
+        const { result } = renderFindPasswordFormHook();
+
+        await act(async () => {
+          await result.current.onSubmit();
+        });
+
+        await act(async () => {
+          await result.current.onSubmit();
+        });
+
+        await act(async () => {
+          await result.current.onSubmit();
+        });
+
+        await waitFor(() => {
+          expect(result.current.popInfo.show).toEqual(true);
+        });
+
+        result.current.popInfo.onClose();
+
+        expect(routerPush).toHaveBeenCalledWith('/signin');
       });
 
-      expect(routerReplace).toHaveBeenCalled();
-    });
-  });
+      it('step2 submit failed', async () => {
+        given('passwordMissing', () => ({ code: 0, value: { userId: 100 } }));
+        given('passwordMissingAuth', () => ({ code: 0, message: 'ok' }));
+        given('passwordReset', () => Promise.reject());
 
-  context('passwordConfirm Validation Test', () => {
-    it('password === passwordConfirm', () => {
-      given('password', () => '12345678');
+        const { result } = renderFindPasswordFormHook();
 
-      const { result } = renderFindPasswordFormHook();
+        await act(async () => {
+          await result.current.onSubmit();
+        });
 
-      const { passwordConfirm } = result.current.formData;
+        await act(async () => {
+          await result.current.onSubmit();
+        });
 
-      const validate = _.get('register.validate')(passwordConfirm);
+        await act(async () => {
+          await result.current.onSubmit();
+        });
 
-      expect(validate('12345678')).toBe(true);
-    });
-    it('password !== passwordConfirm', () => {
-      given('password', () => '12345678');
+        await waitFor(() => {
+          expect(result.current.popInfo.show).toEqual(true);
+        });
 
-      const { result } = renderFindPasswordFormHook();
+        act(() => {
+          result.current.popInfo.onClose();
+        });
 
-      const { passwordConfirm } = result.current.formData;
-
-      const validate = _.get('register.validate')(passwordConfirm);
-
-      expect(validate('123456789')).toBe('비밀번호가 일치하지 않습니다.');
+        expect(result.current.popInfo.show).toEqual(false);
+      });
     });
   });
 
@@ -159,5 +254,21 @@ describe('useFindPasswordForm', () => {
       expect(resetField).toHaveBeenCalledWith('passwordConfirm');
       expect(setFocus).toHaveBeenCalledWith('passwordConfirm');
     });
+  });
+
+  it('onResend Test', async () => {
+    const { result } = renderFindPasswordFormHook();
+
+    result.current.onResend();
+
+    await waitFor(() => {
+      expect(result.current.popInfo.show).toEqual(true);
+    });
+
+    act(() => {
+      result.current.popInfo.onClose();
+    });
+
+    expect(result.current.popInfo.show).toEqual(false);
   });
 });

@@ -1,16 +1,29 @@
 import School from '@/types/School';
 
-export type GetSchoolsResponse = {
+type DefaultResponse = {
+  code: number;
+  message: string;
+};
+
+export type GetSchoolsResponse = DefaultResponse & {
   content: School[];
   first: boolean;
   last: boolean;
   number: number;
 };
 
-export type AuthenticateResponse = {
-  code: number;
-  message: string;
+export type AuthenticateResponse = DefaultResponse & {
   value:{
     token: string;
   }
 };
+
+export type PasswordMissingResponse = DefaultResponse & {
+  value:{
+    userId: number;
+  }
+};
+
+export type PasswordMissingAuthResponse = DefaultResponse;
+
+export type PasswordResetResponse = DefaultResponse;
