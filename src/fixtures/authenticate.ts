@@ -1,5 +1,5 @@
 const authenticate = {
-  code: 200,
+  code: 0,
   message: 'success',
   value: {
     token: 'test-token',

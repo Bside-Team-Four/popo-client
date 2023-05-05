@@ -15,13 +15,13 @@ export default function useGetInfiniteSchool({ keyword }:GetSchoolProps) {
     [GET_INFINITE_SCHOOLS_KEY, keyword],
     async ({ pageParam = 0 }) => apiService.fetchGetSchools({ keyword, page: pageParam }),
     {
-      getNextPageParam: (lastPage) => {
-        if (lastPage.data.last) return undefined;
-        return lastPage.data.number + 1;
+      getNextPageParam: (res) => {
+        if (res.last) return undefined;
+        return res.number + 1;
       },
-      getPreviousPageParam: (firstPage) => {
-        if (firstPage.data.first) return undefined;
-        return firstPage.data.number - 1;
+      getPreviousPageParam: (res) => {
+        if (res.first) return undefined;
+        return res.number - 1;
       },
       enabled: keyword.length >= 2,
     },
@@ -37,7 +37,7 @@ export default function useGetInfiniteSchool({ keyword }:GetSchoolProps) {
   });
 
   const schoolData = query.data ? _.flatten(
-    query.data.pages.map((page) => page.data.content),
+    query.data.pages.map((res) => res.content),
   ) : [];
 
   const isEmpty = schoolData.length === 0;

@@ -22,11 +22,9 @@ describe('useGetSchool', () => {
 
     (apiService.fetchGetSchools as jest.Mock).mockImplementation(() => (
       {
-        data: {
-          content: fixtures.school,
-          last: given.last,
-          first: given.first,
-        },
+        content: fixtures.school,
+        last: given.last,
+        first: given.first,
       }
     ));
     (useInView as jest.Mock).mockImplementation(() => ({

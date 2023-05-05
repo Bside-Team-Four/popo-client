@@ -3,11 +3,12 @@ import styled from 'styled-components';
 import FindPasswordForm from '@/components/find-password/FindPasswordForm';
 import StepButton from '@/components/find-password/StepButton';
 import StepTitle from '@/components/find-password/StepTitle';
+import NormalPopup from '@/components/popup/NormalPopup';
 import useFindPasswordForm from '@/hooks/useFindPasswordForm';
 
 export default function FindPassword() {
   const {
-    step, isActive, formData, onSubmit,
+    step, isActive, formData, onSubmit, popInfo,
   } = useFindPasswordForm();
 
   return (
@@ -15,6 +16,7 @@ export default function FindPassword() {
       <StepTitle step={step} />
       <FindPasswordForm step={step} formData={formData} />
       <StepButton step={step} isActive={isActive} />
+      <NormalPopup {...popInfo} />
     </Container>
   );
 }
