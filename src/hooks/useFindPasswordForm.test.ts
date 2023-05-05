@@ -255,4 +255,20 @@ describe('useFindPasswordForm', () => {
       expect(setFocus).toHaveBeenCalledWith('passwordConfirm');
     });
   });
+
+  it('onResend Test', async () => {
+    const { result } = renderFindPasswordFormHook();
+
+    result.current.onResend();
+
+    await waitFor(() => {
+      expect(result.current.popInfo.show).toEqual(true);
+    });
+
+    act(() => {
+      result.current.popInfo.onClose();
+    });
+
+    expect(result.current.popInfo.show).toEqual(false);
+  });
 });

@@ -113,6 +113,21 @@ const useFindPasswordForm = () => {
     );
   });
 
+  const onResend = () => {
+    passwordMissingMutation.mutate({
+      email: watch('email'),
+    }, {
+      onSuccess: () => {
+        setPopInfo({
+          show: true,
+          title: '인증번호를 재전송했어요.\n인증번호를 입력해주세요.',
+          okText: '확인',
+          onClose: () => setPopInfo(getDefaultPopInfo()),
+        });
+      },
+    });
+  };
+
   return {
     step,
     formData: {
@@ -144,6 +159,7 @@ const useFindPasswordForm = () => {
     isActive: getActive(step),
     popInfo,
     onSubmit,
+    onResend,
   };
 };
 

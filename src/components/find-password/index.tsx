@@ -8,13 +8,13 @@ import useFindPasswordForm from '@/hooks/useFindPasswordForm';
 
 export default function FindPassword() {
   const {
-    step, isActive, formData, onSubmit, popInfo,
+    step, isActive, formData, onSubmit, popInfo, onResend,
   } = useFindPasswordForm();
 
   return (
     <Container onSubmit={onSubmit}>
       <StepTitle step={step} />
-      <FindPasswordForm step={step} formData={formData} />
+      <FindPasswordForm step={step} formData={formData} onResend={onResend} />
       <StepButton step={step} isActive={isActive} />
       <NormalPopup {...popInfo} />
     </Container>

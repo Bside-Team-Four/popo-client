@@ -36,7 +36,6 @@ export default class ApiService {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      withCredentials: true,
     },
   });
 
