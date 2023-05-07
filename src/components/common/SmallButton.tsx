@@ -3,12 +3,17 @@ import { PropsWithChildren } from 'react';
 import styled from 'styled-components';
 
 type SmallButtonProps = {
+  className?: string;
   onClick: ()=>void;
 };
 
-export default function SmallButton({ onClick, children }:PropsWithChildren<SmallButtonProps>) {
+export default function SmallButton({
+  className,
+  onClick,
+  children,
+}:PropsWithChildren<SmallButtonProps>) {
   return (
-    <Container onClick={onClick}>
+    <Container className={className} onClick={onClick}>
       <Text>{children}</Text>
     </Container>
   );
