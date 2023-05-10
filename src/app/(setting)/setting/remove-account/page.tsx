@@ -1,5 +1,7 @@
 'use client';
 
+import RemoveAccount from '@/components/remove-account';
+
 export default function RemoveAccountPage() {
-  return <div>RemoveAccountPage</div>;
+  return <RemoveAccount />;
 }
