@@ -9,6 +9,7 @@ import BackIcon from '@/lib/assets/back-icon.svg';
 const settingTitle:{ [key: string]: string } = {
   '/setting': '설정',
   '/setting/profile-setting': '프로필 관리',
+  '/setting/notification': '알림 설정',
   '/setting/tos': '이용약관',
   '/setting/change-password': '비밀번호 변경',
   '/setting/remove-account': '회원 탈퇴',
