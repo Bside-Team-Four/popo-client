@@ -1,5 +1,7 @@
 'use client';
 
+import ProfileSetting from '@/components/profile-setting';
+
 export default function ProfileSettingPage() {
-  return <div>ProfileSettingPage</div>;
+  return <ProfileSetting />;
 }

@@ -4,10 +4,12 @@ import ProfileType from '@/types/ProfileType';
 const profile: ProfileType = {
   userName: 'Test POPO',
   schoolName: '포포 고등학교',
+  email: 'popo@gmail.com',
   profileImageUrl: '',
   grade: 1,
   gender: 0,
   reward: 21,
+  age: 18,
   selectedPOPOCount: 243,
   selectPOPOCount: 200,
   followerCount: 230,
