@@ -2,15 +2,21 @@ import Image from 'next/image';
 
 import styled from 'styled-components';
 
+import Switch from '@/components/common/Switch';
+
 type SettingItemProps = {
   title: string;
   showArrow?: boolean;
   message?: string;
   onClick?: () => void;
+  switchValue?: {
+    isOn: boolean;
+    onClick: () => void;
+  }
 };
 
 export default function SettingItem({
-  title, showArrow = false, message, onClick,
+  title, switchValue, showArrow = false, message, onClick,
 }:SettingItemProps) {
   return (
     <Container onClick={onClick}>
@@ -19,6 +25,13 @@ export default function SettingItem({
       </Title>
       {showArrow && <ArrowIcon />}
       {message && <Message>{message}</Message>}
+      {switchValue && (
+      <Switch
+        title={title}
+        isOn={switchValue.isOn}
+        onClick={switchValue.onClick}
+      />
+      )}
     </Container>
   );
 }

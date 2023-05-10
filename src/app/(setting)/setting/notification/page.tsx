@@ -1,5 +1,7 @@
 'use client';
 
+import Notification from '@/components/notification';
+
 export default function NotificationPage() {
-  return <div>NotificationPage</div>;
+  return <Notification />;
 }
