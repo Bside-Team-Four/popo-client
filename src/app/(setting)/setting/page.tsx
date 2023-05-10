@@ -1,5 +1,7 @@
 'use client';
 
+import Setting from '@/components/setting';
+
 export default function SettingPage() {
-  return <div>SettingPage</div>;
+  return <Setting />;
 }
