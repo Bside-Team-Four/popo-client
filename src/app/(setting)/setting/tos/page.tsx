@@ -1,5 +1,7 @@
 'use client';
 
+import Tos from '@/components/tos';
+
 export default function TosPage() {
-  return <div>TosPage</div>;
+  return <Tos />;
 }

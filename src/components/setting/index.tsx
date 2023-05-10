@@ -3,7 +3,7 @@ import { signOut } from 'next-auth/react';
 
 import styled from 'styled-components';
 
-import SettingItem from '@/components/setting/SettingItem';
+import SettingItem from '@/components/common/SettingItem';
 
 export default function Setting() {
   const router = useRouter();

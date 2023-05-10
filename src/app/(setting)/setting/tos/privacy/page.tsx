@@ -1,5 +1,7 @@
 'use client';
 
+import TosText from '@/components/tos/TosText';
+
 export default function TosPrivacyPage() {
-  return <div>TosPrivacyPage</div>;
+  return <TosText text="개인정보처리방침" />;
 }
