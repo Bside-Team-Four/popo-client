@@ -4,7 +4,7 @@ import { renderWithPortal } from '@/utils/testHelper';
 import FullPopup from './FullPopup';
 
 describe('FullPopup', () => {
-  const childText = 'PoPo';
+  const childText = 'POPO';
   const renderFullPopup = () => renderWithPortal(
     (
       <MockProvider>

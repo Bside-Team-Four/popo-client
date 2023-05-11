@@ -1,19 +1,19 @@
 import { useRecoilState } from 'recoil';
 
 import popoState from '@/store/popo';
-import PoPoState from '@/types/PoPoState';
+import POPOState from '@/types/POPOState';
 
-const usePoPoState = () => {
+const usePOPOState = () => {
   const [state, setState] = useRecoilState(popoState);
 
-  const setPoPoState = (newState: PoPoState) => {
+  const setPOPOState = (newState: POPOState) => {
     setState(newState);
   };
 
   return {
     popoState: state,
-    setPoPoState,
+    setPOPOState,
   };
 };
 
-export default usePoPoState;
+export default usePOPOState;

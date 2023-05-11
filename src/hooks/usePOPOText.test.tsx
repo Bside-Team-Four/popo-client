@@ -1,27 +1,27 @@
 import { act, renderHook } from '@testing-library/react';
 import { RecoilRoot } from 'recoil';
 
-import usePoPoState from './recoil/usePoPoState';
-import usePoPoText from './usePoPoText';
+import usePOPOState from './recoil/usePOPOState';
+import usePOPOText from './usePOPOText';
 
-jest.mock('./recoil/usePoPoState');
+jest.mock('./recoil/usePOPOState');
 jest.useFakeTimers();
 
-describe('usePoPoText', () => {
+describe('usePOPOText', () => {
   const setState = jest.fn();
 
   beforeEach(() => {
     jest.clearAllTimers();
-    (usePoPoState as jest.Mock).mockImplementation(() => ({
+    (usePOPOState as jest.Mock).mockImplementation(() => ({
       popoState: given.popoState,
-      setPoPoState: setState,
+      setPOPOState: setState,
     }));
   });
 
-  const renderPoPoTextHook = (dateValue: string) => {
+  const renderPOPOTextHook = (dateValue: string) => {
     jest.setSystemTime(new Date(dateValue));
     return renderHook(
-      () => usePoPoText(),
+      () => usePOPOText(),
       {
         wrapper: ({ children }) => (
           <RecoilRoot>
@@ -36,7 +36,7 @@ describe('usePoPoText', () => {
     given('popoState', () => 'sleep');
 
     it('returns sleep titleText, timer', () => {
-      const { result } = renderPoPoTextHook('December 17, 2023 03:33:30');
+      const { result } = renderPOPOTextHook('December 17, 2023 03:33:30');
 
       expect(result.current.titleText).toEqual('POPO');
       expect(result.current.timer).toEqual({
@@ -51,7 +51,7 @@ describe('usePoPoText', () => {
     given('popoState', () => 'done');
 
     it('returns done titleText, timer', () => {
-      const { result } = renderPoPoTextHook('December 17, 2023 21:33:10');
+      const { result } = renderPOPOTextHook('December 17, 2023 21:33:10');
 
       expect(result.current.titleText).toEqual('POPO');
       expect(result.current.timer).toEqual({
@@ -66,7 +66,7 @@ describe('usePoPoText', () => {
     given('popoState', () => 'start');
 
     it('returns 오전 start titleText, timer', () => {
-      const { result } = renderPoPoTextHook('December 17, 2023 08:33:30');
+      const { result } = renderPOPOTextHook('December 17, 2023 08:33:30');
 
       expect(result.current.titleText).toEqual('POPO_오전 8시');
       expect(result.current.timer).toEqual({
@@ -77,7 +77,7 @@ describe('usePoPoText', () => {
     });
 
     it('returns 오후 start titleText, timer', () => {
-      const { result } = renderPoPoTextHook('December 17, 2023 20:33:30');
+      const { result } = renderPOPOTextHook('December 17, 2023 20:33:30');
 
       expect(result.current.titleText).toEqual('POPO_오후 8시');
       expect(result.current.timer).toEqual({
@@ -90,7 +90,7 @@ describe('usePoPoText', () => {
 
   it('시간이 sleep 시간일 때 sleep 상태로 변한다.(오전 3시 ~ 오전 7시)', () => {
     given('popoState', () => 'start');
-    renderPoPoTextHook('December 17, 2023 02:59:59');
+    renderPOPOTextHook('December 17, 2023 02:59:59');
 
     act(() => {
       jest.advanceTimersByTime(1000);
@@ -101,7 +101,7 @@ describe('usePoPoText', () => {
 
   it('시간이 start 시간일 때 start 상태로 변한다.(오전 7시 ~ 오전 3시)', () => {
     given('popoState', () => 'sleep');
-    renderPoPoTextHook('December 17, 2023 06:59:59');
+    renderPOPOTextHook('December 17, 2023 06:59:59');
 
     act(() => {
       jest.advanceTimersByTime(1000);

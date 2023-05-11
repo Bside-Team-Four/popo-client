@@ -4,8 +4,8 @@ import styled from 'styled-components';
 
 import PollPopup from '@/components/popup/PollPopup';
 
-import PoPoImage from './PoPoImage';
-import PoPoTitle from './PoPoTitle';
+import POPOImage from './POPOImage';
+import POPOTitle from './POPOTitle';
 import VoteButton from './VoteButton';
 
 export default function Home() {
@@ -21,8 +21,8 @@ export default function Home() {
 
   return (
     <Container>
-      <PoPoTitle />
-      <PoPoImage />
+      <POPOTitle />
+      <POPOImage />
       <VoteButton openPollPopup={openPollPopup} />
       <PollPopup show={showPollPopup} onClose={onClosePollPopup} />
     </Container>

@@ -4,8 +4,8 @@ import dayjs from 'dayjs';
 import _ from 'lodash/fp';
 import { useInterval } from 'usehooks-ts';
 
-import usePoPoState from '@/hooks/recoil/usePoPoState';
-import PoPoState from '@/types/PoPoState';
+import usePOPOState from '@/hooks/recoil/usePOPOState';
+import POPOState from '@/types/POPOState';
 
 const padInt = (length: number): ((a1: number) => string) => _.flow(
   String,
@@ -21,7 +21,7 @@ const getNowTime = () => {
   };
 };
 
-const getTimerText = (state: PoPoState) => {
+const getTimerText = (state: POPOState) => {
   const { minute, second } = getNowTime();
 
   if (state === 'sleep') {
@@ -40,7 +40,7 @@ const getTimerText = (state: PoPoState) => {
   };
 };
 
-const getTitleText = (state:PoPoState) => {
+const getTitleText = (state:POPOState) => {
   const { hour } = getNowTime();
 
   if (state === 'start') {
@@ -52,8 +52,8 @@ const getTitleText = (state:PoPoState) => {
   return 'POPO';
 };
 
-const usePoPoText = () => {
-  const { popoState, setPoPoState } = usePoPoState();
+const usePOPOText = () => {
+  const { popoState, setPOPOState } = usePOPOState();
 
   const [titleText, setTitleText] = useState(getTitleText(popoState));
   const [timer, setTimer] = useState(getTimerText(popoState));
@@ -65,11 +65,11 @@ const usePoPoText = () => {
     setTimer(getTimerText(popoState));
 
     if (hour === 3 && minute + second === 0) {
-      setPoPoState('sleep');
+      setPOPOState('sleep');
     }
 
     if (!(hour >= 3 && hour < 7) && (minute + second === 0)) {
-      setPoPoState('start');
+      setPOPOState('start');
     }
   }, 1000);
 
@@ -79,4 +79,4 @@ const usePoPoText = () => {
   };
 };
 
-export default usePoPoText;
+export default usePOPOText;

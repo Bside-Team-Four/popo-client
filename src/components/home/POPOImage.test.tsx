@@ -1,20 +1,20 @@
 import { screen } from '@testing-library/react';
 
-import PoPoImage from '@/components/home/PoPoImage';
-import usePoPoState from '@/hooks/recoil/usePoPoState';
+import POPOImage from '@/components/home/POPOImage';
+import usePOPOState from '@/hooks/recoil/usePOPOState';
 import { renderWithProviders } from '@/utils/testHelper';
 
-jest.mock('@/hooks/recoil/usePoPoState');
+jest.mock('@/hooks/recoil/usePOPOState');
 
-describe('PoPoImage', () => {
+describe('POPOImage', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    (usePoPoState as jest.Mock).mockImplementation(() => ({
+    (usePOPOState as jest.Mock).mockImplementation(() => ({
       popoState: given.popoState,
     }));
   });
   const popoImageRender = () => renderWithProviders(
-    <PoPoImage />,
+    <POPOImage />,
   );
 
   context('when popo state is sleep', () => {

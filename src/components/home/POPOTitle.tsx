@@ -1,10 +1,10 @@
 import styled from 'styled-components';
 
-import usePoPoState from '@/hooks/recoil/usePoPoState';
-import usePoPoText from '@/hooks/usePoPoText';
-import PoPoState from '@/types/PoPoState';
+import usePOPOState from '@/hooks/recoil/usePOPOState';
+import usePOPOText from '@/hooks/usePOPOText';
+import POPOState from '@/types/POPOState';
 
-const getSubTitleText = (popoState: PoPoState) => {
+const getSubTitleText = (popoState: POPOState) => {
   if (popoState === 'sleep') {
     return '자고 있어';
   }
@@ -14,7 +14,7 @@ const getSubTitleText = (popoState: PoPoState) => {
   return '남았어';
 };
 
-const getMessageText = (popoState: PoPoState) => {
+const getMessageText = (popoState: POPOState) => {
   if (popoState === 'sleep') {
     return '새벽 3시에서 7시에는 잠에 들 시간이야';
   }
@@ -38,9 +38,9 @@ const getTimerText = (timer: { hourText: string; minuteText: string; secondText:
   );
 };
 
-export default function PoPoTitle() {
-  const { popoState } = usePoPoState();
-  const { titleText, timer } = usePoPoText();
+export default function POPOTitle() {
+  const { popoState } = usePOPOState();
+  const { titleText, timer } = usePOPOText();
 
   return (
     <Container>

@@ -1,8 +1,8 @@
 import { atom } from 'recoil';
 
-import PoPoState from '@/types/PoPoState';
+import POPOState from '@/types/POPOState';
 
-const popoState = atom<PoPoState>({
+const popoState = atom<POPOState>({
   key: 'popoState',
   default: 'start',
 });

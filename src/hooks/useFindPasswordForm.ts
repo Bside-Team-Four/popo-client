@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import useChangePasswordMutation from '@/hooks/api/useChangePasswordMutation';
 import PopInfo, { getDefaultPopInfo } from '@/types/PopInfo';
 
-import usePoPoForm from './usePoPoForm';
+import usePOPOForm from './usePOPOForm';
 
 export type FindPasswordName = 'email' | 'certificationNumber' | 'password' | 'passwordConfirm';
 
@@ -25,7 +25,7 @@ const useFindPasswordForm = () => {
 
   const {
     watch, getError, getDefaultRegister, getActiveCheck, reset, handleSubmit,
-  } = usePoPoForm<FindPasswordForm>();
+  } = usePOPOForm<FindPasswordForm>();
 
   const {
     passwordMissingMutation,

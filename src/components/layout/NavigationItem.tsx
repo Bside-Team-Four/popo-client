@@ -5,7 +5,7 @@ import styled, { css } from 'styled-components';
 
 import FriendSVG from '@/lib/assets/freind-icon.svg';
 import MySVG from '@/lib/assets/my-icon.svg';
-import PoPoSVG from '@/lib/assets/popo-icon.svg';
+import POPOSVG from '@/lib/assets/popo-icon.svg';
 import WhoSVG from '@/lib/assets/who-icon.svg';
 import { getRatioSizePX } from '@/utils/sizeHelper';
 
@@ -17,7 +17,7 @@ type NavigationItemProps = {
 
 const renderIcon = (title: string, isActive: boolean) => {
   if (title === 'POPO') {
-    return <PoPoIcon data-testid="popo-icon" $isActive={isActive} />;
+    return <POPOIcon data-testid="popo-icon" $isActive={isActive} />;
   }
   if (title === 'WHO') {
     return <WhoIcon data-testid="who-icon" $isActive={isActive} />;
@@ -67,7 +67,7 @@ const IconStyle = css<{ $isActive?: boolean }>`
   };
 `;
 
-const PoPoIcon = styled(PoPoSVG)`
+const POPOIcon = styled(POPOSVG)`
   ${IconStyle};
 `;
 
