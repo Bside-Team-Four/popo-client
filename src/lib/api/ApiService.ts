@@ -1,10 +1,12 @@
+import { getSession } from 'next-auth/react';
+
 import axios, { AxiosError, AxiosResponse } from 'axios';
 
 import ApiException from '@/lib/excptions/ApiException';
 import CustomException from '@/lib/excptions/CustomException';
 import { ApiErrorScheme } from '@/lib/excptions/type';
 import {
-  AuthenticateResponse,
+  AuthenticateResponse, GetPollStatusResponse,
   GetSchoolsResponse, PasswordMissingAuthResponse,
   PasswordMissingResponse,
   PasswordResetResponse, SignUpAuthEmailResponse, SignUpResponse, SignUpSendEmailResponse,
@@ -45,14 +47,18 @@ export default class ApiService {
       interceptorResponseFulfilled,
       interceptorResponseRejected,
     );
-  }
+    this.instance.interceptors.request.use(async (config) => {
+      const user = await getSession();
 
-  accessToken: string | undefined;
+      const accessToken = user?.accessToken;
 
-  setToken(accessToken:string) {
-    this.instance.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+      if (accessToken) {
+        // eslint-disable-next-line no-param-reassign
+        config.headers.Authorization = `Bearer ${accessToken}`;
+      }
 
-    this.accessToken = accessToken;
+      return config;
+    });
   }
 
   get<T>(...args: Parameters<typeof this.instance.get>) {
@@ -73,19 +79,11 @@ export default class ApiService {
     },
   });
 
-  authenticate = async (payload: { email: string, password: string }) => {
-    const data = await this.post<AuthenticateResponse>('/user/authenticate', {
-      email: payload.email,
-      password: payload.password,
-      fcmToken: 'test',
-    });
-
-    if (data.value?.token) {
-      this.setToken(data.value.token);
-    }
-
-    return data;
-  };
+  authenticate = async (payload: { email: string, password: string }) => this.post<AuthenticateResponse>('/user/authenticate', {
+    email: payload.email,
+    password: payload.password,
+    fcmToken: 'test',
+  });
 
   passwordMissing = ({ email }: {
     email:string
@@ -106,6 +104,8 @@ export default class ApiService {
     userId,
     toChangePassword,
   });
+
+  fetchGetPollStatus = () => this.get<GetPollStatusResponse>('/poll/status');
 
   signUpSendEmail = ({ email }: { email: string }) => this.post<SignUpSendEmailResponse>('/user/sign-up/send/email', {
     email,

@@ -15,7 +15,7 @@ jest.mock('usehooks-ts', () => ({
 
 describe('Home', () => {
   const renderHome = () => renderWithPortal(
-    <RecoilRoot initializeState={({ set }) => set(popoState, 'start')}>
+    <RecoilRoot initializeState={({ set }) => set(popoState, 'START')}>
       <MockTheme>
         <Home />
       </MockTheme>

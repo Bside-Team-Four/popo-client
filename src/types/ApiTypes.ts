@@ -1,3 +1,4 @@
+import PollStatus from '@/types/PollStatus';
 import School from '@/types/School';
 
 type DefaultResponse = {
@@ -34,9 +35,15 @@ export type SignUpSendEmailResponse = DefaultResponse;
 
 export type SignUpAuthEmailResponse = DefaultResponse;
 
-export type SignUpResponse = {
+export type SignUpResponse = DefaultResponse & {
   value:{
     token: string;
     userId: number;
+  }
+};
+
+export type GetPollStatusResponse = DefaultResponse & {
+  value:{
+    status: PollStatus;
   }
 };

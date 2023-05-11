@@ -1,24 +1,24 @@
 import styled from 'styled-components';
 
-import usePOPOState from '@/hooks/recoil/usePOPOState';
+import usePollStatus from '@/hooks/recoil/usePollStatus';
 import usePOPOText from '@/hooks/usePOPOText';
-import POPOState from '@/types/POPOState';
+import PollStatus from '@/types/PollStatus';
 
-const getSubTitleText = (popoState: POPOState) => {
-  if (popoState === 'sleep') {
+const getSubTitleText = (pollStatus: PollStatus) => {
+  if (pollStatus === 'SLEEP') {
     return '자고 있어';
   }
-  if (popoState === 'done') {
+  if (pollStatus === 'DONE') {
     return '곧 시작할거야';
   }
   return '남았어';
 };
 
-const getMessageText = (popoState: POPOState) => {
-  if (popoState === 'sleep') {
+const getMessageText = (pollStatus: PollStatus) => {
+  if (pollStatus === 'SLEEP') {
     return '새벽 3시에서 7시에는 잠에 들 시간이야';
   }
-  if (popoState === 'done') {
+  if (pollStatus === 'DONE') {
     return '뒤에 봐';
   }
   return '시작하기를 눌러줘';
@@ -39,19 +39,19 @@ const getTimerText = (timer: { hourText: string; minuteText: string; secondText:
 };
 
 export default function POPOTitle() {
-  const { popoState } = usePOPOState();
+  const { pollStatus } = usePollStatus();
   const { titleText, timer } = usePOPOText();
 
   return (
     <Container>
       <Title data-testid="title">{titleText}</Title>
       <SubTitleContainer>
-        {popoState === 'start' && getTimerText(timer)}
-        <SubTitle data-testid="sub-title">{getSubTitleText(popoState)}</SubTitle>
+        {pollStatus === 'START' && getTimerText(timer)}
+        <SubTitle data-testid="sub-title">{getSubTitleText(pollStatus)}</SubTitle>
       </SubTitleContainer>
       <MessageContainer data-testid="message">
-        {popoState === 'done' && getTimerText(timer)}
-        <Message>{getMessageText(popoState)}</Message>
+        {pollStatus === 'DONE' && getTimerText(timer)}
+        <Message>{getMessageText(pollStatus)}</Message>
       </MessageContainer>
     </Container>
   );

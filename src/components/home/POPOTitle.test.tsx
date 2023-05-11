@@ -1,18 +1,18 @@
 import { screen } from '@testing-library/react';
 
 import POPOTitle from '@/components/home/POPOTitle';
-import usePOPOState from '@/hooks/recoil/usePOPOState';
+import usePollStatus from '@/hooks/recoil/usePollStatus';
 import { renderWithProviders } from '@/utils/testHelper';
 
-jest.mock('@/hooks/recoil/usePOPOState');
+jest.mock('@/hooks/recoil/usePollStatus');
 
 jest.useFakeTimers();
 
 describe('POPOTitle', () => {
   beforeEach(() => {
     jest.clearAllTimers();
-    (usePOPOState as jest.Mock).mockImplementation(() => ({
-      popoState: given.popoState,
+    (usePollStatus as jest.Mock).mockImplementation(() => ({
+      pollStatus: given.pollStatus,
     }));
   });
 
@@ -25,7 +25,7 @@ describe('POPOTitle', () => {
   };
 
   context('when popo state is sleep', () => {
-    given('popoState', () => 'sleep');
+    given('pollStatus', () => 'SLEEP');
 
     it('renders sleep Title, SubTitle, Message', () => {
       renderPOPOTitle('December 17, 2023 03:33:30');
@@ -37,7 +37,7 @@ describe('POPOTitle', () => {
   });
 
   context('when popo state is done', () => {
-    given('popoState', () => 'done');
+    given('pollStatus', () => 'DONE');
 
     it('renders done Title, SubTitle, Message', () => {
       renderPOPOTitle('December 17, 2023 21:33:10');
@@ -49,7 +49,7 @@ describe('POPOTitle', () => {
   });
 
   context('when popo state is start', () => {
-    given('popoState', () => 'start');
+    given('pollStatus', () => 'START');
 
     it('renders start Title, SubTitle, Message', () => {
       renderPOPOTitle('December 17, 2023 20:33:30');
