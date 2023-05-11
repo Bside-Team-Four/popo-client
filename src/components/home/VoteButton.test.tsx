@@ -1,16 +1,16 @@
 import { screen } from '@testing-library/react';
 
-import usePoPoState from '@/hooks/recoil/usePoPoState';
+import usePOPOState from '@/hooks/recoil/usePOPOState';
 import { renderWithProviders } from '@/utils/testHelper';
 
 import VoteButton from './VoteButton';
 
-jest.mock('@/hooks/recoil/usePoPoState');
+jest.mock('@/hooks/recoil/usePOPOState');
 
 describe('VoteButton', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    (usePoPoState as jest.Mock).mockImplementation(() => ({
+    (usePOPOState as jest.Mock).mockImplementation(() => ({
       popoState: given.popoState,
     }));
   });

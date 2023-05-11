@@ -2,7 +2,7 @@ import { FieldValues, Path, useForm } from 'react-hook-form';
 
 import useGetDefaultRegister from './useGetDefaultRegister';
 
-const usePoPoForm = <FormType extends FieldValues>() => {
+const usePOPOForm = <FormType extends FieldValues>() => {
   const {
     register, watch, formState, resetField, setFocus, setError, handleSubmit,
   } = useForm<FormType>();
@@ -31,4 +31,4 @@ const usePoPoForm = <FormType extends FieldValues>() => {
   };
 };
 
-export default usePoPoForm;
+export default usePOPOForm;

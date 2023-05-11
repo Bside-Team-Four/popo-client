@@ -2,6 +2,6 @@
 
 import AlarmPage from '@/components/alarm';
 
-export default function PoPoAlarm() {
+export default function POPOAlarm() {
   return <AlarmPage />;
 }

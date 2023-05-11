@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import Gender from '@/types/Gender';
 import School from '@/types/School';
 
-import usePoPoForm from './usePoPoForm';
+import usePOPOForm from './usePOPOForm';
 
 export type SignUpName = 'email' | 'certificationNumber' | 'password' | 'passwordConfirm' | 'name' | 'year' | 'grade';
 
@@ -29,7 +29,7 @@ const useSignUpForm = () => {
 
   const {
     register, watch, getError, getDefaultRegister, getActiveCheck, reset, handleSubmit,
-  } = usePoPoForm<SignUpForm>();
+  } = usePOPOForm<SignUpForm>();
 
   const onSubmit = handleSubmit(() => {
     if (step < 7) {

@@ -1,10 +1,10 @@
 import { act, renderHook } from '@testing-library/react';
 import { RecoilRoot } from 'recoil';
 
-import usePoPoState from '@/hooks/recoil/usePoPoState';
+import usePOPOState from '@/hooks/recoil/usePOPOState';
 
-describe('usePoPoState', () => {
-  const renderUsePoPoStateHook = () => renderHook(() => usePoPoState(), {
+describe('usePOPOState', () => {
+  const renderUsePOPOStateHook = () => renderHook(() => usePOPOState(), {
     wrapper: ({ children }) => (
       <RecoilRoot>
         {children}
@@ -13,16 +13,16 @@ describe('usePoPoState', () => {
   });
 
   it('popoState의 초깃값을 잘 가져오는가.', () => {
-    const { result } = renderUsePoPoStateHook();
+    const { result } = renderUsePOPOStateHook();
 
     expect(result.current.popoState).toEqual('start');
   });
 
-  it('setPoPoState를 통해 popoState를 변경할 수 있는가.', () => {
-    const { result } = renderUsePoPoStateHook();
+  it('setPOPOState 통해 popoState를 변경할 수 있는가.', () => {
+    const { result } = renderUsePOPOStateHook();
 
     act(() => {
-      result.current.setPoPoState('done');
+      result.current.setPOPOState('done');
     });
 
     expect(result.current.popoState).toBe('done');

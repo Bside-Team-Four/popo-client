@@ -1,4 +1,4 @@
-# 🔥 PoPo Client
+# 🔥 POPO Client
 
 <a href="https://github.com/Bside-Team-Four/popo-client/actions/workflows/ci.yml">
   <img src="https://img.shields.io/github/actions/workflow/status/Bside-Team-Four/popo-client/ci.yml?branch=main&label=CI&logo=GitHub&style=flat-square" />
@@ -24,7 +24,7 @@
   <img src="https://img.shields.io/github/repo-size/Bside-Team-Four/popo-client?logo=yarn&style=flat-square">
 </a>
 
-### 좋아하는 마음을 익명으로 표현하고 싶은 10대를 위한, 투표 형식의 SNS 플랫폼 PoPo ❤️
+### 좋아하는 마음을 익명으로 표현하고 싶은 10대를 위한, 투표 형식의 SNS 플랫폼 POPO ❤️
 
 ## 💻 Develop by
 

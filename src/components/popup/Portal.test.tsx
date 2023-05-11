@@ -10,7 +10,7 @@ jest.mock('usehooks-ts', () => ({
 }));
 
 describe('Portal', () => {
-  const childText = 'PoPo';
+  const childText = 'POPO';
 
   beforeEach(() => {
     jest.clearAllMocks();

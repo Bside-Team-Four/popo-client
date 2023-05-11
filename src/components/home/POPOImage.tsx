@@ -2,10 +2,10 @@ import Image from 'next/image';
 
 import styled from 'styled-components';
 
-import usePoPoState from '@/hooks/recoil/usePoPoState';
+import usePOPOState from '@/hooks/recoil/usePOPOState';
 
-export default function PoPoImage() {
-  const { popoState } = usePoPoState();
+export default function POPOImage() {
+  const { popoState } = usePOPOState();
 
   if (popoState === 'sleep') {
     return <SleepImage src="/images/popo-sleep.svg" width={272} height={212} alt="popo-sleep-image" priority />;

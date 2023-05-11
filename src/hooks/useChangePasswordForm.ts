@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import usePoPoForm from '@/hooks/usePoPoForm';
+import usePOPOForm from '@/hooks/usePOPOForm';
 
 export type ChangePasswordName = 'currentPassword' | 'password' | 'passwordConfirm';
 
@@ -16,7 +16,7 @@ const useChangePasswordForm = () => {
 
   const {
     watch, getError, getDefaultRegister, getActiveCheck, reset, handleSubmit,
-  } = usePoPoForm<ChangePasswordForm>();
+  } = usePOPOForm<ChangePasswordForm>();
 
   const onSubmit = handleSubmit(() => {
     setShowPop(true);
