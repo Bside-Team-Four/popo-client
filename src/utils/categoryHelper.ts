@@ -25,4 +25,17 @@ export const getCategoryColor = (type:ColorType) => ({ theme, $isDarkMode, $cate
   return _.get(`color.category.${$category}`)(theme);
 };
 
-export const getCategoryIcon = () => null;
+const icons = {
+  romance: '/images/category-romance.svg',
+  friendship: '/images/category-friendship.svg',
+  school: '/images/category-school.svg',
+  speciality: '/images/category-speciality.svg',
+  etc: '/images/category-etc.svg',
+  appearance: '/images/category-appearance.svg',
+  personality: '/images/category-personality.svg',
+};
+
+export const getCategoryIcon = (category: Category) => ({
+  src: icons[category],
+  alt: `${category} icon`,
+});

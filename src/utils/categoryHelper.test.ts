@@ -4,7 +4,7 @@ import DarkTheme from '@/styles/darkTheme';
 import defaultTheme from '@/styles/defaultTheme';
 import Category from '@/types/Category';
 
-import { getCategoryColor } from './categoryHelper';
+import { getCategoryColor, getCategoryIcon } from './categoryHelper';
 
 describe('categoryHelper', () => {
   const fixtureDarkProps = {
@@ -45,6 +45,30 @@ describe('categoryHelper', () => {
         const result = getCategoryColor('backgroundColor')(fixtureLightProps);
 
         expect(result).toBe('#FF3B30');
+      });
+    });
+  });
+
+  describe('getCategoryColor', () => {
+    context('카테고리가 romance 일 때', () => {
+      it('romance 아이콘을 반환한다.', () => {
+        const result = getCategoryIcon('romance');
+
+        expect(result).toEqual({
+          src: '/images/category-romance.svg',
+          alt: 'romance icon',
+        });
+      });
+    });
+
+    context('카테고리가 school 일 때', () => {
+      it('school 아이콘을 반환한다.', () => {
+        const result = getCategoryIcon('school');
+
+        expect(result).toEqual({
+          src: '/images/category-school.svg',
+          alt: 'school icon',
+        });
       });
     });
   });
