@@ -69,7 +69,7 @@ const polls:Poll[] = [
   {
     questionId: 6,
     content: '4번 질문',
-    categoryName: 'private',
+    categoryName: 'etc',
     candidates: [
       {
         userId: 2,

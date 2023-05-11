@@ -4,7 +4,8 @@ import styled from 'styled-components';
 import { useDarkMode } from 'usehooks-ts';
 
 import fixtures from '@/fixtures';
-import getCategoryColor from '@/styles/getCategoryColor';
+import Category from '@/types/Category';
+import { getCategoryColor } from '@/utils/categoryHelper';
 
 import CandidateList from './CandidateList';
 import OptionButtons from './OptionButtons';
@@ -60,7 +61,7 @@ export default function PollPopDetail({ onClose }:PollPopDetailProps) {
   );
 }
 
-const Container = styled.div<{ $isDarkMode:boolean, $category: string }>`
+const Container = styled.div<{ $isDarkMode:boolean, $category: Category }>`
   display: flex;
   width: 100%;
   height: 100%;
