@@ -123,4 +123,34 @@ describe('ApiService', () => {
       expect(data.message).toEqual('ok');
     });
   });
+
+  describe('signUpSendEmail', () => {
+    it('요청이 성공할 경우 데이터를 리턴한다.', async () => {
+      mock.onPost('/user/sign-up/send/email').reply(200, { code: 0, message: 'ok' });
+
+      const data = await mockApiService.signUpSendEmail({ email: 'popo@gmail.com' });
+
+      expect(data.message).toEqual('ok');
+    });
+  });
+
+  describe('signUpAuthEmail', () => {
+    it('요청이 성공할 경우 데이터를 리턴한다.', async () => {
+      mock.onPost('/user/sign-up/auth/email').reply(200, { code: 0, message: 'ok' });
+
+      const data = await mockApiService.signUpAuthEmail({ email: 'popo@gmail.com', userCode: '123456' });
+
+      expect(data.message).toEqual('ok');
+    });
+  });
+
+  describe('signUp', () => {
+    it('요청이 성공할 경우 데이터를 리턴한다.', async () => {
+      mock.onPost('/user/sign-up').reply(200, { code: 0, message: 'ok' });
+
+      const data = await mockApiService.signUp(fixtures.signupUser);
+
+      expect(data.message).toEqual('ok');
+    });
+  });
 });

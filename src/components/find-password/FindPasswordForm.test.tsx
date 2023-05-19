@@ -34,6 +34,7 @@ describe('FindPasswordForm', () => {
         password: { ...password, value: '12341234A', onClickReset: jest.fn() },
         passwordConfirm: { ...passwordConfirm, value: '12341234A', onClickReset: jest.fn() },
       }}
+      onResend={jest.fn()}
     />,
   );
 

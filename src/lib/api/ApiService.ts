@@ -7,8 +7,9 @@ import {
   AuthenticateResponse,
   GetSchoolsResponse, PasswordMissingAuthResponse,
   PasswordMissingResponse,
-  PasswordResetResponse,
+  PasswordResetResponse, SignUpAuthEmailResponse, SignUpResponse, SignUpSendEmailResponse,
 } from '@/types/ApiTypes';
+import SignUpUser from '@/types/SignUpUser';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -73,11 +74,10 @@ export default class ApiService {
   });
 
   authenticate = async (payload: { email: string, password: string }) => {
-    const data = await this.post<AuthenticateResponse>('/user/authenticate', {}, {
-      params: {
-        email: payload.email,
-        password: payload.password,
-      },
+    const data = await this.post<AuthenticateResponse>('/user/authenticate', {
+      email: payload.email,
+      password: payload.password,
+      fcmToken: 'test',
     });
 
     if (data.value?.token) {
@@ -106,6 +106,25 @@ export default class ApiService {
     userId,
     toChangePassword,
   });
+
+  signUpSendEmail = ({ email }: { email: string }) => this.post<SignUpSendEmailResponse>('/user/sign-up/send/email', {
+    email,
+  });
+
+  signUpAuthEmail = ({ email, userCode } : {
+    email: string, userCode: string
+  }) => this.post<SignUpAuthEmailResponse>(
+    '/user/sign-up/auth/email',
+    {
+      email,
+      userCode,
+    },
+  );
+
+  signUp = (payload: SignUpUser) => this.post<SignUpResponse>(
+    '/user/sign-up',
+    { ...payload, fcmToken: 'test' },
+  );
 }
 
 export const apiService = new ApiService();
