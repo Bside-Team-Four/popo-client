@@ -7,7 +7,7 @@ import {
   AuthenticateResponse,
   GetSchoolsResponse, PasswordMissingAuthResponse,
   PasswordMissingResponse,
-  PasswordResetResponse,
+  PasswordResetResponse, SignUpAuthEmailResponse, SignUpSendEmailResponse,
 } from '@/types/ApiTypes';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -106,6 +106,20 @@ export default class ApiService {
     userId,
     toChangePassword,
   });
+
+  signUpSendEmail = ({ email }: { email: string }) => this.post<SignUpSendEmailResponse>('/user/sign-up/send/email', {
+    email,
+  });
+
+  signUpAuthEmail = ({ email, userCode } : {
+    email: string, userCode: string
+  }) => this.post<SignUpAuthEmailResponse>(
+    '/user/sign-up/auth/email',
+    {
+      email,
+      userCode,
+    },
+  );
 }
 
 export const apiService = new ApiService();

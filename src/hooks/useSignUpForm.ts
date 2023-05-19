@@ -2,7 +2,9 @@ import { useCallback, useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
+import useSignUpEmailMutation from '@/hooks/api/useSignUpEmailMutation';
 import Gender from '@/types/Gender';
+import PopInfo, { getDefaultPopInfo } from '@/types/PopInfo';
 import School from '@/types/School';
 
 import usePOPOForm from './usePOPOForm';
@@ -26,12 +28,57 @@ const useSignUpForm = () => {
 
   const [gender, setGender] = useState<Gender | null>(null);
   const [school, setSchool] = useState<School | null>(null);
+  const [popInfo, setPopInfo] = useState<PopInfo>(getDefaultPopInfo());
 
   const {
     register, watch, getError, getDefaultRegister, getActiveCheck, reset, handleSubmit,
   } = usePOPOForm<SignUpForm>();
 
+  const {
+    signUpSendEmailMutation,
+    signUpAuthEmailMutation,
+  } = useSignUpEmailMutation();
+
   const onSubmit = handleSubmit(() => {
+    if (step === 0) {
+      signUpSendEmailMutation.mutate({
+        email: watch('email'),
+      }, {
+        onSuccess: () => {
+          setStep(1);
+        },
+        onError: () => {
+          setPopInfo({
+            show: true,
+            title: '이미 가입된 이메일이에요.\n기존 계정으로 로그인해주세요.',
+            okText: '확인',
+            onClose: () => setPopInfo(getDefaultPopInfo()),
+          });
+        },
+      });
+      return;
+    }
+
+    if (step === 1) {
+      signUpAuthEmailMutation.mutate({
+        email: watch('email'),
+        userCode: watch('certificationNumber'),
+      }, {
+        onSuccess: () => {
+          setStep(2);
+        },
+        onError: () => {
+          setPopInfo({
+            show: true,
+            title: '인증번호가 일치하지 않아요.\n다시 확인해 주세요.',
+            okText: '확인',
+            onClose: () => setPopInfo(getDefaultPopInfo()),
+          });
+        },
+      });
+      return;
+    }
+
     if (step < 7) {
       setStep((prev) => prev + 1);
       return;
@@ -65,6 +112,21 @@ const useSignUpForm = () => {
 
     return true;
   }, [gender, getActiveCheck, school]);
+
+  const onResend = () => {
+    signUpSendEmailMutation.mutate({
+      email: watch('email'),
+    }, {
+      onSuccess: () => {
+        setPopInfo({
+          show: true,
+          title: '인증번호를 재전송했어요.\n인증번호를 입력해주세요.',
+          okText: '확인',
+          onClose: () => setPopInfo(getDefaultPopInfo()),
+        });
+      },
+    });
+  };
 
   return {
     step,
@@ -131,7 +193,9 @@ const useSignUpForm = () => {
       },
     },
     isActive: getActive(step),
+    popInfo,
     onSubmit,
+    onResend,
   };
 };
 

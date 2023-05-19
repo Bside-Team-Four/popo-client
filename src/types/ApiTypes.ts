@@ -27,3 +27,7 @@ export type PasswordMissingResponse = DefaultResponse & {
 export type PasswordMissingAuthResponse = DefaultResponse;
 
 export type PasswordResetResponse = DefaultResponse;
+
+export type SignUpSendEmailResponse = DefaultResponse;
+
+export type SignUpAuthEmailResponse = DefaultResponse;
