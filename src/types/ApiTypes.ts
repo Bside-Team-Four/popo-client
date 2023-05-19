@@ -6,10 +6,12 @@ type DefaultResponse = {
 };
 
 export type GetSchoolsResponse = DefaultResponse & {
-  content: School[];
-  first: boolean;
-  last: boolean;
-  number: number;
+  value:{
+    content: School[]
+    first: boolean;
+    last: boolean;
+    number: number;
+  };
 };
 
 export type AuthenticateResponse = DefaultResponse & {
@@ -31,3 +33,10 @@ export type PasswordResetResponse = DefaultResponse;
 export type SignUpSendEmailResponse = DefaultResponse;
 
 export type SignUpAuthEmailResponse = DefaultResponse;
+
+export type SignUpResponse = {
+  value:{
+    token: string;
+    userId: number;
+  }
+};

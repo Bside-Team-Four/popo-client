@@ -16,12 +16,12 @@ export default function useGetInfiniteSchool({ keyword }:GetSchoolProps) {
     async ({ pageParam = 0 }) => apiService.fetchGetSchools({ keyword, page: pageParam }),
     {
       getNextPageParam: (res) => {
-        if (res.last) return undefined;
-        return res.number + 1;
+        if (res.value.last) return undefined;
+        return res.value.number + 1;
       },
       getPreviousPageParam: (res) => {
-        if (res.first) return undefined;
-        return res.number - 1;
+        if (res.value.first) return undefined;
+        return res.value.number - 1;
       },
       enabled: keyword.length >= 2,
     },
@@ -37,7 +37,7 @@ export default function useGetInfiniteSchool({ keyword }:GetSchoolProps) {
   });
 
   const schoolData = query.data ? _.flatten(
-    query.data.pages.map((res) => res.content),
+    query.data.pages.map((res) => res.value.content),
   ) : [];
 
   const isEmpty = schoolData.length === 0;

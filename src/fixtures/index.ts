@@ -5,6 +5,7 @@ import hint from './hint';
 import polls from './polls';
 import profile from './profile';
 import school from './school';
+import signupUser from './signupUser';
 import theme from './theme';
 
 export default {
@@ -16,4 +17,5 @@ export default {
   school,
   authenticate,
   profile,
+  signupUser,
 };

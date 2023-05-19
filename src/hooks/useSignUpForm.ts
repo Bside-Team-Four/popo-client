@@ -1,8 +1,12 @@
 import { useCallback, useState } from 'react';
 
 import { useRouter } from 'next/navigation';
+import { signIn } from 'next-auth/react';
+
+import dayjs from 'dayjs';
 
 import useSignUpEmailMutation from '@/hooks/api/useSignUpEmailMutation';
+import useSignUpMutation from '@/hooks/api/useSignUpMutation';
 import Gender from '@/types/Gender';
 import PopInfo, { getDefaultPopInfo } from '@/types/PopInfo';
 import School from '@/types/School';
@@ -38,6 +42,8 @@ const useSignUpForm = () => {
     signUpSendEmailMutation,
     signUpAuthEmailMutation,
   } = useSignUpEmailMutation();
+
+  const signUp = useSignUpMutation();
 
   const onSubmit = handleSubmit(() => {
     if (step === 0) {
@@ -84,7 +90,30 @@ const useSignUpForm = () => {
       return;
     }
 
-    router.replace('/profile');
+    signUp({
+      gender: gender === 'male' ? 0 : 1,
+      email: watch('email'),
+      password: watch('password'),
+      grade: Number(watch('grade')),
+      name: watch('name'),
+      schoolId: school?.id || 0,
+    }, {
+      onSuccess: async (data, payload) => {
+        await signIn('credentials', {
+          email: payload.email, password: payload.password, redirect: false,
+        });
+
+        router.replace('/profile-image');
+      },
+      onError: () => {
+        setPopInfo({
+          show: true,
+          title: '회원가입에 실패했어요.\n다시 시도해주세요.',
+          okText: '확인',
+          onClose: () => setPopInfo(getDefaultPopInfo()),
+        });
+      },
+    });
   });
 
   const getActive = useCallback((currentStep: number) => {
@@ -156,7 +185,12 @@ const useSignUpForm = () => {
         onClickReset: () => reset('passwordConfirm'),
       },
       name: {
-        register: register('name'),
+        register: register('name', {
+          pattern: {
+            value: /^[가-힣]{2,4}$/,
+            message: '이름은 한글 2~4자리로 작성해주세요.',
+          },
+        }),
         value: watch('name'),
         error: getError('name'),
         onClickReset: () => reset('name'),
@@ -166,6 +200,20 @@ const useSignUpForm = () => {
           pattern: {
             value: /^[0-9]{4}$/,
             message: '입력 형식에 맞춰 입력해주세요.',
+          },
+          validate: (value) => {
+            const now = dayjs();
+            const year = now.year();
+
+            if (year - value < 14) {
+              return '만 14세 미만은 회원가입을 할 수 없어요.';
+            }
+
+            if (year - value > 19) {
+              return '만 19세 초과는 회원가입을 할 수 없어요.';
+            }
+
+            return true;
           },
         }),
         value: watch('year'),

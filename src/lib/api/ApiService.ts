@@ -7,8 +7,9 @@ import {
   AuthenticateResponse,
   GetSchoolsResponse, PasswordMissingAuthResponse,
   PasswordMissingResponse,
-  PasswordResetResponse, SignUpAuthEmailResponse, SignUpSendEmailResponse,
+  PasswordResetResponse, SignUpAuthEmailResponse, SignUpResponse, SignUpSendEmailResponse,
 } from '@/types/ApiTypes';
+import SignUpUser from '@/types/SignUpUser';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -77,6 +78,7 @@ export default class ApiService {
       params: {
         email: payload.email,
         password: payload.password,
+        fcmToken: 'test',
       },
     });
 
@@ -119,6 +121,11 @@ export default class ApiService {
       email,
       userCode,
     },
+  );
+
+  signUp = (payload: SignUpUser) => this.post<SignUpResponse>(
+    '/user/sign-up',
+    { ...payload, fcmToken: 'test' },
   );
 }
 

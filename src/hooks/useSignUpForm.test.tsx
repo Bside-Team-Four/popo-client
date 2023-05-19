@@ -1,8 +1,10 @@
 import { useForm } from 'react-hook-form';
 
 import { useRouter } from 'next/navigation';
+import { signIn } from 'next-auth/react';
 
 import { act, renderHook, waitFor } from '@testing-library/react';
+import _ from 'lodash/fp';
 
 import testRegister from '@/fixtures/testRegister';
 import useSignUpForm, { SignUpForm, SignUpName } from '@/hooks/useSignUpForm';
@@ -18,7 +20,11 @@ jest.mock('react-hook-form', () => ({
   useForm: jest.fn(),
 }));
 
+jest.mock('next-auth/react');
+
 jest.mock('@/lib/api/ApiService');
+
+jest.useFakeTimers();
 
 describe('useSignUpForm', () => {
   const routerReplace = jest.fn();
@@ -37,14 +43,14 @@ describe('useSignUpForm', () => {
     onValid({
       email: watch('email'),
       certificationNumber: watch('certificationNumber'),
-      password: watch('password'),
-      passwordConfirm: watch('passwordConfirm'),
+      password: given.password,
+      passwordConfirm: given.passwordConfirm,
       name: watch('name'),
       year: given.year,
       grade: given.grade,
     });
   };
-  const watch = (name: SignUpName) => name;
+  const watch = (name: SignUpName) => given[name];
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -64,6 +70,13 @@ describe('useSignUpForm', () => {
     (apiService.signUpAuthEmail as jest.Mock).mockImplementation(
       () => given.signUpAuthEmail,
     );
+    (apiService.signUp as jest.Mock).mockImplementation(
+      () => given.signUp,
+    );
+    (signIn as jest.Mock).mockImplementation(() => ({
+      ok: given.ok,
+      error: given.error,
+    }));
   });
 
   const renderSignUpFormHook = () => renderHook(
@@ -71,30 +84,6 @@ describe('useSignUpForm', () => {
     { wrapper },
   );
 
-  // describe('passwordConfirm Validation Test', () => {
-  //   it('password === passwordConfirm', () => {
-  //     given('password', () => '12345678');
-  //
-  //     const { result } = renderSignUpFormHook();
-  //
-  //     const { passwordConfirm } = result.current.formData;
-  //
-  //     const validate = _.get('register.validate')(passwordConfirm);
-  //
-  //     expect(validate('12345678')).toBe(true);
-  //   });
-  //   it('password !== passwordConfirm', () => {
-  //     given('password', () => '12345678');
-  //
-  //     const { result } = renderSignUpFormHook();
-  //
-  //     const { passwordConfirm } = result.current.formData;
-  //
-  //     const validate = _.get('register.validate')(passwordConfirm);
-  //
-  //     expect(validate('123456789')).toBe('비밀번호가 일치하지 않습니다.');
-  //   });
-  // });
   describe('STEP 별 Submit TEST', () => {
     describe('step0', () => {
       context('이메일이 유효하지 않은 경우', () => {
@@ -177,6 +166,121 @@ describe('useSignUpForm', () => {
           });
 
           expect(result.current.step).toEqual(2);
+        });
+      });
+    });
+
+    describe('step < 7', () => {
+      beforeEach(() => {
+        given('signUpSendEmail', () => ({
+          code: 0,
+          message: 'ok',
+        }));
+        given('signUpAuthEmail', () => ({
+          code: 0,
+          message: 'ok',
+        }));
+      });
+      it('다음 Step으로 이동한다.', async () => {
+        const { result } = renderSignUpFormHook();
+
+        await act(async () => {
+          await result.current.onSubmit();
+        });
+
+        await act(async () => {
+          await result.current.onSubmit();
+        });
+
+        Array.from({ length: 5 }).forEach(() => {
+          act(() => {
+            result.current.onSubmit();
+          });
+        });
+
+        expect(result.current.step).toEqual(7);
+      });
+    });
+
+    describe('SignUp Test', () => {
+      beforeEach(() => {
+        given('signUpSendEmail', () => ({
+          code: 0,
+          message: 'ok',
+        }));
+        given('signUpAuthEmail', () => ({
+          code: 0,
+          message: 'ok',
+        }));
+      });
+
+      context('회원가입 성공 시', () => {
+        given('signUp', () => Promise.resolve());
+        given('password', () => '12345678');
+        given('passwordConfirm', () => '12345678');
+        given('grade', () => 1);
+        it('프로필 이미지 설정화면으로 이동한다.', async () => {
+          const { result } = renderSignUpFormHook();
+
+          await act(async () => {
+            await result.current.onSubmit();
+            result.current.formData.gender.onChangeGender('female');
+            result.current.formData.school.onChangeSchool({
+              id: 106,
+              name: '남서울중학교',
+              address: '서울특별시 관악구 남부순환로172길 97',
+            });
+          });
+
+          await act(async () => {
+            await result.current.onSubmit();
+          });
+
+          Array.from({ length: 5 }).forEach(() => {
+            act(() => {
+              result.current.onSubmit();
+            });
+          });
+
+          await act(async () => {
+            await result.current.onSubmit();
+          });
+
+          expect(routerReplace).toHaveBeenCalledWith('/profile-image');
+        });
+      });
+
+      context('회원가입 실패 시', () => {
+        given('signUp', () => Promise.reject());
+        it('실패 팝업을 띄운다.', async () => {
+          const { result } = renderSignUpFormHook();
+
+          await act(async () => {
+            await result.current.onSubmit();
+          });
+
+          await act(async () => {
+            await result.current.onSubmit();
+            result.current.formData.gender.onChangeGender('male');
+          });
+
+          Array.from({ length: 5 }).forEach(() => {
+            act(() => {
+              result.current.onSubmit();
+            });
+          });
+
+          await act(async () => {
+            await result.current.onSubmit();
+          });
+
+          expect(result.current.popInfo.show).toEqual(true);
+
+          act(() => {
+            result.current.popInfo.onClose();
+          });
+
+          expect(result.current.popInfo.show).toEqual(false);
         });
       });
     });
@@ -275,5 +379,63 @@ describe('useSignUpForm', () => {
     });
 
     expect(result.current.popInfo.show).toEqual(false);
+  });
+
+  describe('passwordConfirm Validation Test', () => {
+    it('password === passwordConfirm', () => {
+      given('password', () => '12345678');
+
+      const { result } = renderSignUpFormHook();
+
+      const { passwordConfirm } = result.current.formData;
+
+      const validate = _.get('register.validate')(passwordConfirm);
+
+      expect(validate('12345678')).toBe(true);
+    });
+    it('password !== passwordConfirm', () => {
+      given('password', () => '12345678');
+
+      const { result } = renderSignUpFormHook();
+
+      const { passwordConfirm } = result.current.formData;
+
+      const validate = _.get('register.validate')(passwordConfirm);
+
+      expect(validate('123456789')).toBe('비밀번호가 일치하지 않습니다.');
+    });
+  });
+
+  describe('year Validation Test', () => {
+    jest.setSystemTime(new Date().setFullYear(2023));
+    it('year < 14', () => {
+      const { result } = renderSignUpFormHook();
+
+      const { year } = result.current.formData;
+
+      const validate = _.get('register.validate')(year);
+
+      expect(validate(2020)).toBe('만 14세 미만은 회원가입을 할 수 없어요.');
+    });
+
+    it('year > 19', () => {
+      const { result } = renderSignUpFormHook();
+
+      const { year } = result.current.formData;
+
+      const validate = _.get('register.validate')(year);
+
+      expect(validate(1998)).toBe('만 19세 초과는 회원가입을 할 수 없어요.');
+    });
+
+    it('year === 15', () => {
+      const { result } = renderSignUpFormHook();
+
+      const { year } = result.current.formData;
+
+      const validate = _.get('register.validate')(year);
+
+      expect(validate(2006)).toBe(true);
+    });
   });
 });

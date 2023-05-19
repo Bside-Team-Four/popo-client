@@ -143,4 +143,14 @@ describe('ApiService', () => {
       expect(data.message).toEqual('ok');
     });
   });
+
+  describe('signUp', () => {
+    it('요청이 성공할 경우 데이터를 리턴한다.', async () => {
+      mock.onPost('/user/sign-up').reply(200, { code: 0, message: 'ok' });
+
+      const data = await mockApiService.signUp(fixtures.signupUser);
+
+      expect(data.message).toEqual('ok');
+    });
+  });
 });
