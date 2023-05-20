@@ -1,31 +1,45 @@
+import { useState } from 'react';
+
 import styled from 'styled-components';
 
 import SearchUserProfile from '@/components/common/SearchUserProfile';
+import usePostFollowUser from '@/hooks/api/usePostFollowUser';
 
 export type FriendBoxProps = {
-  idx: number;
+  grade: number;
   profileImg: string;
   name: string;
-  schoolInfo: string;
-  isFollowing: boolean;
+  schoolName: string;
+  isFollow: boolean;
+  userId: number;
+  gender?: string;
 };
 
 export default function FriendBox({
-  idx,
+  grade,
   profileImg,
   name,
-  schoolInfo,
-  isFollowing,
+  schoolName,
+  isFollow,
+  userId,
+  gender,
 }: FriendBoxProps) {
+  const [followUserId, setFollowUserId] = useState<number>(0);
+  const { followData } = usePostFollowUser({ followeeId: followUserId });
+
+  const doFollow = () => {
+    setFollowUserId(userId);
+  };
+
   return (
     <Wrapper>
-      <SearchUserProfile gender="female" size={44} />
+      <SearchUserProfile gender={gender} size={44} />
       <Container>
         <NameDiv>{name}</NameDiv>
-        <SchoolDiv>{schoolInfo}</SchoolDiv>
+        <SchoolDiv>{`${schoolName} ${grade}학년 ${gender === 'MALE' ? '남자' : '여자'}`}</SchoolDiv>
       </Container>
-      <FollowBtn active={isFollowing}>
-        {isFollowing ? '팔로우' : '팔로잉'}
+      <FollowBtn active={isFollow} onClick={doFollow}>
+        {isFollow ? '팔로우' : '팔로잉'}
       </FollowBtn>
     </Wrapper>
   );

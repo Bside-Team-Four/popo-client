@@ -1,21 +1,23 @@
 import { useState } from 'react';
 
 import styled from 'styled-components';
+import { useDebounce } from 'usehooks-ts';
 
 import SearchField from '@/components/common/SearchField';
-import FriendBox from '@/components/search/FriendBox';
-import friend from '@/fixtures/friend';
+import FriendBox, { FriendBoxProps } from '@/components/search/FriendBox';
+// import friend from '@/fixtures/friend';
+import useGetUsers from '@/hooks/api/useGetUsers';
 
 export default function SearchPage() {
   const [keyword, setKeyword] = useState('');
 
-  const onClose = () => {
-    console.log('onClose');
-  };
+  const debouncedKeyword: string = useDebounce(keyword, 500);
+  const { userData } = useGetUsers({
+    keyword: debouncedKeyword,
+    type: 'SCHOOL',
+    size: 10,
+  });
 
-  //   const debouncedKeyword: string = useDebounce(keyword, 500);
-
-  // 디바운스 useDebounce
   return (
     <Container>
       {/* <Dropdown options={['학교', '이름']} /> */}
@@ -23,13 +25,11 @@ export default function SearchPage() {
         keyword={keyword}
         setKeyword={setKeyword}
         placeholder="검색어를 입력해주세요"
-        onClose={onClose}
       />
       <Wrapper>
-        {friend
-          && friend.map((eachFriend) => (
-            <FriendBox key={eachFriend.name} {...eachFriend} />
-          ))}
+        {userData?.value.map((eachFriend: FriendBoxProps) => (
+          <FriendBox key={eachFriend.name} {...eachFriend} />
+        ))}
       </Wrapper>
     </Container>
   );
