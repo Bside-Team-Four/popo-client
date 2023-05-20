@@ -2,18 +2,20 @@ import { ChangeEvent } from 'react';
 
 import styled from 'styled-components';
 
+import Dropdown from '@/components/common/Dropdown';
 import SearchIcon from '@/lib/assets/search-icon.svg';
 
 type SearchFieldProps = {
   keyword: string;
   setKeyword: (keyword: string) => void;
   placeholder: string;
+  searchOption?: Array<{ key: string, name: string }>;
   onClose?: () => void;
 };
 
 export default function SearchField({
-  keyword, setKeyword, placeholder, onClose,
-}:SearchFieldProps) {
+  keyword, setKeyword, placeholder, onClose, searchOption,
+}: SearchFieldProps) {
   const onChangeKeyword = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setKeyword(e.target.value);
@@ -22,6 +24,7 @@ export default function SearchField({
   return (
     <Container>
       <SearchWrapper>
+        {searchOption?.length && <Dropdown options={searchOption} />}
         <InputField
           type="text"
           value={keyword}
@@ -72,7 +75,7 @@ const InputField = styled.input`
 `;
 
 const SearchImage = styled(SearchIcon)`
-  width: 16px;
+  min-width: 16px;
   height: 16px;
   margin-left: 16px;
   path{
