@@ -7,9 +7,13 @@ import CustomException from '@/lib/excptions/CustomException';
 import { ApiErrorScheme } from '@/lib/excptions/type';
 import {
   AuthenticateResponse, GetPollStatusResponse,
-  GetSchoolsResponse, PasswordMissingAuthResponse,
+  GetSchoolsResponse, GetUserBySchoolReq,
+  GetUserBySchoolResponse,
+  PasswordMissingAuthResponse,
   PasswordMissingResponse,
-  PasswordResetResponse, SignUpAuthEmailResponse, SignUpResponse, SignUpSendEmailResponse,
+  PasswordResetResponse, PostFollowUserReq,
+  PostFollowUserRes,
+  SignUpAuthEmailResponse, SignUpResponse, SignUpSendEmailResponse,
 } from '@/types/ApiTypes';
 import SignUpUser from '@/types/SignUpUser';
 
@@ -39,6 +43,7 @@ export default class ApiService {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
+      Authorization: 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJpbnRoMTIzNEBuYXZlci5jb20iLCJhdXRoIjoiVVNFUl9ST0xFIiwidXNlcklkIjo4NCwiZXhwIjoxNjgzOTg4NTE1fQ.fpD8wUYRu0c8dANZNM88XRn-zZvFEiTqDpdcp26FCt5dDGykH69A5fJbqgrsCgE4ws8ltfYCcG3avCNZNHwvoQ',
     },
   });
 
@@ -125,6 +130,42 @@ export default class ApiService {
     '/user/sign-up',
     { ...payload, fcmToken: 'test' },
   );
+
+  fetchGetUsersBySchool = async ({
+    keyword,
+    type,
+    lastId,
+    size,
+  }: GetUserBySchoolReq) => {
+    const { data } = await this.instance.get<GetUserBySchoolResponse>(
+      '/user/search',
+      {
+        params: {
+          keyword,
+          type,
+          lastId,
+          size,
+        },
+      },
+    );
+
+    return data;
+  };
+
+  fetchPostFollowUser = async ({
+    followeeId,
+  }: PostFollowUserReq) => {
+    const { data } = await this.instance.post<PostFollowUserRes>(
+      '/relation/request',
+      {
+        params: {
+          followeeId,
+        },
+      },
+    );
+
+    return data;
+  };
 }
 
 export const apiService = new ApiService();

@@ -81,7 +81,8 @@ const SearchImage = styled(SearchIcon)`
 `;
 
 const CloseText = styled.div`
-  width: 50px;
+  cursor: pointer;
+  min-width: 50px;
   font-size: 16px;
   font-weight: 400;
   line-height: 23px;
