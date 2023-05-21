@@ -5,6 +5,14 @@ import { renderWithProviders } from '@/utils/testHelper';
 import InviteFriends from './InviteFriends';
 
 describe('InviteFriends', () => {
+  const writeText = jest.fn();
+
+  Object.assign(navigator, {
+    clipboard: {
+      writeText,
+    },
+  });
+
   it('친구 초대 박스를 보여준다.', () => {
     renderWithProviders(<InviteFriends />);
 

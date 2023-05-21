@@ -5,6 +5,14 @@ import fixtures from '@/fixtures';
 import { renderWithProviders } from '@/utils/testHelper';
 
 describe('ProfileDetail', () => {
+  const writeText = jest.fn();
+
+  Object.assign(navigator, {
+    clipboard: {
+      writeText,
+    },
+  });
+
   const renderProfileDetail = () => renderWithProviders(
     <ProfileDetail {...fixtures.profile} gender={given.gender} />,
   );

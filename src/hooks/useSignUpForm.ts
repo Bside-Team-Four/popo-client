@@ -1,4 +1,5 @@
 import { useCallback, useState } from 'react';
+import { toast } from 'react-toastify';
 
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
@@ -99,6 +100,13 @@ const useSignUpForm = () => {
       schoolId: school?.id || 0,
     }, {
       onSuccess: async (data, payload) => {
+        toast('POPO 가입을 환영합니다.', {
+          position: 'top-center',
+          type: 'success',
+          autoClose: 1000,
+          hideProgressBar: true,
+        });
+
         await signIn('credentials', {
           email: payload.email, password: payload.password, redirect: false,
         });

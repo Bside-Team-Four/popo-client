@@ -1,3 +1,5 @@
+import { toast } from 'react-toastify';
+
 import styled from 'styled-components';
 
 import SmallButton from '@/components/common/SmallButton';
@@ -25,10 +27,14 @@ export default function ProfileDetail({
   gender,
   profileImageUrl,
 }:ProfileDetailProps) {
-  // TODO: 링크 관련 기획 이후 추가(Toast 포함)
-  const handleCopyLink = () => {
-    // eslint-disable-next-line no-console
-    console.log('복사');
+  const handleCopyLink = async () => {
+    await navigator.clipboard.writeText('https://popo-client.vercel.app');
+    toast('링크를 복사했어요. 내 프로필을 공유하고 친구를 초대하세요.', {
+      position: 'top-center',
+      type: 'success',
+      autoClose: 1000,
+      hideProgressBar: true,
+    });
   };
 
   return (
