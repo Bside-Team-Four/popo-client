@@ -129,4 +129,5 @@ const NoResultImg = styled(Image)`
 `;
 
 const NoResultText = styled.span`
+  color: ${({ theme }) => theme.color.text.title01};
 `;

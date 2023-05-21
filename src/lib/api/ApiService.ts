@@ -43,7 +43,6 @@ export default class ApiService {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      Authorization: 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJpbnRoMTIzNEBuYXZlci5jb20iLCJhdXRoIjoiVVNFUl9ST0xFIiwidXNlcklkIjo4NCwiZXhwIjoxNjgzOTg4NTE1fQ.fpD8wUYRu0c8dANZNM88XRn-zZvFEiTqDpdcp26FCt5dDGykH69A5fJbqgrsCgE4ws8ltfYCcG3avCNZNHwvoQ',
     },
   });
 
