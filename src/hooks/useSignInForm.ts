@@ -1,7 +1,9 @@
+import { useState } from 'react';
+
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 
-import usePoPoForm from './usePoPoForm';
+import usePOPOForm from './usePOPOForm';
 
 export type SignInForm = {
   email: string;
@@ -9,16 +11,21 @@ export type SignInForm = {
 };
 
 const useSignInForm = () => {
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const {
     register, watch, getError, getDefaultRegister, reset, setError, setFocus, handleSubmit,
-  } = usePoPoForm<SignInForm>();
+  } = usePOPOForm<SignInForm>();
 
   const onValid = async (data: SignInForm) => {
+    setIsLoading(true);
+
     const res = await signIn('credentials', {
       email: data.email, password: data.password, redirect: false,
     });
+
+    setIsLoading(false);
 
     if (res?.ok) {
       router.replace('/');
@@ -34,6 +41,7 @@ const useSignInForm = () => {
   const onSubmit = handleSubmit(onValid);
 
   return {
+    isLoading,
     email: {
       register: getDefaultRegister({ name: 'email' }),
       value: watch('email'),

@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+import SmallButton from '@/components/common/SmallButton';
 import TextField from '@/components/common/TextField';
 import InputItem from '@/types/InputForm';
 
@@ -11,9 +12,10 @@ type FindPasswordFormProps = {
     password: InputItem<string>;
     passwordConfirm: InputItem<string>;
   }
+  onResend: () => void;
 };
 
-export default function FindPasswordForm({ step, formData }:FindPasswordFormProps) {
+export default function FindPasswordForm({ step, formData, onResend }:FindPasswordFormProps) {
   const {
     email, certificationNumber, password, passwordConfirm,
   } = formData;
@@ -35,15 +37,18 @@ export default function FindPasswordForm({ step, formData }:FindPasswordFormProp
 
     if (currStep === 1) {
       return (
-        <TextField
-          label="인증번호"
-          placeholder="6자리 숫자"
-          type="number"
-          register={certificationNumber.register}
-          value={certificationNumber.value}
-          error={certificationNumber.error}
-          onClickReset={certificationNumber.onClickReset}
-        />
+        <>
+          <TextField
+            label="인증번호"
+            placeholder="6자리 숫자"
+            type="number"
+            register={certificationNumber.register}
+            value={certificationNumber.value}
+            error={certificationNumber.error}
+            onClickReset={certificationNumber.onClickReset}
+          />
+          <SmallButton onClick={onResend}>인증번호 재전송</SmallButton>
+        </>
       );
     }
 

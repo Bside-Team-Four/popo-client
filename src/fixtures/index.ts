@@ -3,7 +3,9 @@ import authenticate from './authenticate';
 import candidate from './candidate';
 import hint from './hint';
 import polls from './polls';
+import profile from './profile';
 import school from './school';
+import signupUser from './signupUser';
 import theme from './theme';
 
 export default {
@@ -14,4 +16,6 @@ export default {
   hint,
   school,
   authenticate,
+  profile,
+  signupUser,
 };

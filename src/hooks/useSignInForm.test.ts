@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 
-import { renderHook } from '@testing-library/react';
+import { renderHook, waitFor } from '@testing-library/react';
 
 import { FindPasswordName } from '@/hooks/useFindPasswordForm';
 import useSignInForm, { SignInForm } from '@/hooks/useSignInForm';
@@ -68,7 +68,9 @@ describe('useSignInForm', () => {
 
       const { result } = renderSignInFormHook();
 
-      await result.current.onSubmit();
+      await waitFor(() => {
+        result.current.onSubmit();
+      });
 
       expect(routerReplace).toHaveBeenCalled();
     });
@@ -81,7 +83,9 @@ describe('useSignInForm', () => {
 
       const { result } = renderSignInFormHook();
 
-      await result.current.onSubmit();
+      await waitFor(() => {
+        result.current.onSubmit();
+      });
 
       expect(setError).toHaveBeenCalledWith('password', { message: '비밀번호가 일치하지 않아요.' });
       expect(setFocus).toHaveBeenCalledWith('password');

@@ -1,11 +1,17 @@
 import { useCallback, useState } from 'react';
 
 import { useRouter } from 'next/navigation';
+import { signIn } from 'next-auth/react';
 
+import dayjs from 'dayjs';
+
+import useSignUpEmailMutation from '@/hooks/api/useSignUpEmailMutation';
+import useSignUpMutation from '@/hooks/api/useSignUpMutation';
 import Gender from '@/types/Gender';
+import PopInfo, { getDefaultPopInfo } from '@/types/PopInfo';
 import School from '@/types/School';
 
-import usePoPoForm from './usePoPoForm';
+import usePOPOForm from './usePOPOForm';
 
 export type SignUpName = 'email' | 'certificationNumber' | 'password' | 'passwordConfirm' | 'name' | 'year' | 'grade';
 
@@ -26,18 +32,88 @@ const useSignUpForm = () => {
 
   const [gender, setGender] = useState<Gender | null>(null);
   const [school, setSchool] = useState<School | null>(null);
+  const [popInfo, setPopInfo] = useState<PopInfo>(getDefaultPopInfo());
 
   const {
     register, watch, getError, getDefaultRegister, getActiveCheck, reset, handleSubmit,
-  } = usePoPoForm<SignUpForm>();
+  } = usePOPOForm<SignUpForm>();
+
+  const {
+    signUpSendEmailMutation,
+    signUpAuthEmailMutation,
+  } = useSignUpEmailMutation();
+
+  const signUp = useSignUpMutation();
 
   const onSubmit = handleSubmit(() => {
+    if (step === 0) {
+      signUpSendEmailMutation.mutate({
+        email: watch('email'),
+      }, {
+        onSuccess: () => {
+          setStep(1);
+        },
+        onError: () => {
+          setPopInfo({
+            show: true,
+            title: '이미 가입된 이메일이에요.\n기존 계정으로 로그인해주세요.',
+            okText: '확인',
+            onClose: () => setPopInfo(getDefaultPopInfo()),
+          });
+        },
+      });
+      return;
+    }
+
+    if (step === 1) {
+      signUpAuthEmailMutation.mutate({
+        email: watch('email'),
+        userCode: watch('certificationNumber'),
+      }, {
+        onSuccess: () => {
+          setStep(2);
+        },
+        onError: () => {
+          setPopInfo({
+            show: true,
+            title: '인증번호가 일치하지 않아요.\n다시 확인해 주세요.',
+            okText: '확인',
+            onClose: () => setPopInfo(getDefaultPopInfo()),
+          });
+        },
+      });
+      return;
+    }
+
     if (step < 7) {
       setStep((prev) => prev + 1);
       return;
     }
 
-    router.replace('/profile');
+    signUp({
+      gender: gender === 'male' ? 0 : 1,
+      email: watch('email'),
+      password: watch('password'),
+      grade: Number(watch('grade')),
+      name: watch('name'),
+      schoolId: school?.id || 0,
+    }, {
+      onSuccess: async (data, payload) => {
+        await signIn('credentials', {
+          email: payload.email, password: payload.password, redirect: false,
+        });
+
+        router.replace('/profile-image');
+      },
+      onError: () => {
+        setPopInfo({
+          show: true,
+          title: '회원가입에 실패했어요.\n다시 시도해주세요.',
+          okText: '확인',
+          onClose: () => setPopInfo(getDefaultPopInfo()),
+        });
+      },
+    });
   });
 
   const getActive = useCallback((currentStep: number) => {
@@ -65,6 +141,21 @@ const useSignUpForm = () => {
 
     return true;
   }, [gender, getActiveCheck, school]);
+
+  const onResend = () => {
+    signUpSendEmailMutation.mutate({
+      email: watch('email'),
+    }, {
+      onSuccess: () => {
+        setPopInfo({
+          show: true,
+          title: '인증번호를 재전송했어요.\n인증번호를 입력해주세요.',
+          okText: '확인',
+          onClose: () => setPopInfo(getDefaultPopInfo()),
+        });
+      },
+    });
+  };
 
   return {
     step,
@@ -94,7 +185,12 @@ const useSignUpForm = () => {
         onClickReset: () => reset('passwordConfirm'),
       },
       name: {
-        register: register('name'),
+        register: register('name', {
+          pattern: {
+            value: /^[가-힣]{2,4}$/,
+            message: '이름은 한글 2~4자리로 작성해주세요.',
+          },
+        }),
         value: watch('name'),
         error: getError('name'),
         onClickReset: () => reset('name'),
@@ -104,6 +200,20 @@ const useSignUpForm = () => {
           pattern: {
             value: /^[0-9]{4}$/,
             message: '입력 형식에 맞춰 입력해주세요.',
+          },
+          validate: (value) => {
+            const now = dayjs();
+            const year = now.year();
+
+            if (year - value < 14) {
+              return '만 14세 미만은 회원가입을 할 수 없어요.';
+            }
+
+            if (year - value > 19) {
+              return '만 19세 초과는 회원가입을 할 수 없어요.';
+            }
+
+            return true;
           },
         }),
         value: watch('year'),
@@ -131,7 +241,9 @@ const useSignUpForm = () => {
       },
     },
     isActive: getActive(step),
+    popInfo,
     onSubmit,
+    onResend,
   };
 };
 
