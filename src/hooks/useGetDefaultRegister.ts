@@ -33,11 +33,11 @@ const useGetDefaultRegister = (register: UseFormRegister<any>) => ({
 
   return register('certificationNumber', {
     maxLength: {
-      value: 6,
+      value: 4,
       message: '인증번호는 6자리를 입력해주세요.',
     },
     minLength: {
-      value: 6,
+      value: 4,
       message: '인증번호는 6자리를 입력해주세요.',
     },
   });
