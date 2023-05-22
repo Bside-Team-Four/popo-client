@@ -2,23 +2,16 @@ import { MouseEvent } from 'react';
 
 import styled from 'styled-components';
 
+import PopInfo from '@/types/PopInfo';
+
 import PopupButtons from './PopupButtons';
 import Portal from './Portal';
 import SprintMotion from './SprintMotion';
 
-type NormalPopupProps = {
-  show: boolean;
-  onClose: () => void;
-  title: string;
-  okText: string;
-  cancelText?: string;
-  onOk?: ()=>void;
-};
-
 export default function NormalPopup({
   show, onClose, title,
   okText, cancelText, onOk,
-}:NormalPopupProps) {
+}:PopInfo) {
   const onStopPropagation = (e: MouseEvent) => e.stopPropagation();
 
   return (
@@ -67,7 +60,9 @@ const Title = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
   width: 100%;
   height: 78px;
   border-bottom: 1px solid ${({ theme }) => theme.color.gray00};
+  white-space: pre-wrap;
 `;

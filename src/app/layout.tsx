@@ -20,13 +20,13 @@ export const metadata: Metadata = {
     maximumScale: 1,
     userScalable: false,
   },
-  applicationName: 'PoPo',
-  title: 'PoPo',
+  applicationName: 'POPO',
+  title: 'POPO',
   authors: [
     { name: 'JaeJun', url: 'https://github.com/JaeMeDev' },
     { name: 'YangHa', url: 'https://github.com/ummaeha' },
   ],
-  description: '좋아하는 마음을 익명으로 표현하고 싶은 10대를 위한, 투표 형식의 SNS 플랫폼 PoPo ❤️',
+  description: '좋아하는 마음을 익명으로 표현하고 싶은 10대를 위한, 투표 형식의 SNS 플랫폼 POPO ❤️',
   manifest: '/manifest.json',
   themeColor: [
     { media: '(prefers-color-scheme: light)', color: '#FFFFFF' },
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
   // TODO: itunes 등록 필요
   appleWebApp: {
     capable: true,
-    title: 'PoPo',
+    title: 'POPO',
     statusBarStyle: 'default',
     // TODO: startUpImage splash image
   },
@@ -44,10 +44,10 @@ export const metadata: Metadata = {
     apple: '/icons/maskable_icon_512.png',
   },
   openGraph: {
-    title: 'PoPo',
-    description: '좋아하는 마음을 익명으로 표현하고 싶은 10대를 위한, 투표 형식의 SNS 플랫폼 PoPo ❤️',
+    title: 'POPO',
+    description: '좋아하는 마음을 익명으로 표현하고 싶은 10대를 위한, 투표 형식의 SNS 플랫폼 POPO ❤️',
     url: 'https://popo-client.vercel.app',
-    siteName: 'PoPo',
+    siteName: 'POPO',
     images: '/images/thumbnail.png',
     type: 'website',
   },
@@ -72,7 +72,7 @@ export default function Layout({
   return (
     <html lang="ko" className={`${pretendard.variable} ${poppins.variable}`}>
       <head>
-        <title>PoPo</title>
+        <title>POPO</title>
       </head>
       <body>
         <LayoutProvider>

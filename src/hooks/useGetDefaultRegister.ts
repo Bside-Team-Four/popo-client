@@ -1,6 +1,6 @@
 import { UseFormRegister } from 'react-hook-form';
 
-type DefaultUserField = 'email' | 'password' | 'passwordConfirm' | 'certificationNumber';
+type DefaultUserField = 'email' | 'password' | 'currentPassword' | 'passwordConfirm' | 'certificationNumber';
 
 const useGetDefaultRegister = (register: UseFormRegister<any>) => ({
   name,
@@ -16,8 +16,8 @@ const useGetDefaultRegister = (register: UseFormRegister<any>) => ({
     });
   }
 
-  if (name === 'password') {
-    return register('password', {
+  if (name === 'password' || name === 'currentPassword') {
+    return register(name, {
       pattern: {
         value: /^(?!((?:[A-Za-z]+)|(?:[~!@#$%^&*()_+=]+)|(?:[0-9]+))$)[A-Za-z\d~!@#$%^&*()_+=]{8,20}$/,
         message: '8~20자리 (영문, 숫자, 특수문자 중 2가지 이상 조합)',
@@ -33,11 +33,11 @@ const useGetDefaultRegister = (register: UseFormRegister<any>) => ({
 
   return register('certificationNumber', {
     maxLength: {
-      value: 6,
+      value: 4,
       message: '인증번호는 6자리를 입력해주세요.',
     },
     minLength: {
-      value: 6,
+      value: 4,
       message: '인증번호는 6자리를 입력해주세요.',
     },
   });

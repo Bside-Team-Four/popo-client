@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+import NormalPopup from '@/components/popup/NormalPopup';
 import useSignUpForm from '@/hooks/useSignUpForm';
 
 import SignUpButton from './SignUpButton';
@@ -8,14 +9,15 @@ import SignUpTitle from './SignUpTitle';
 
 export default function SignUp() {
   const {
-    step, isActive, onSubmit, formData,
+    step, isActive, onSubmit, formData, onResend, popInfo,
   } = useSignUpForm();
 
   return (
     <Container onSubmit={onSubmit}>
       <SignUpTitle step={step} />
-      <SignUpForm step={step} formData={formData} />
+      <SignUpForm step={step} formData={formData} onResend={onResend} />
       <SignUpButton step={step} isActive={isActive} />
+      <NormalPopup {...popInfo} />
     </Container>
   );
 }

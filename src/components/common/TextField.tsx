@@ -123,7 +123,7 @@ const InputWrapper = styled.div<{ $focus: boolean, $done: boolean, $error: boole
   border-color: ${({ theme, $focus, $readOnly }) => ($focus && !$readOnly ? theme.color.text.title01 : theme.color.componentBackground.bg04)};
   border-radius: 16px;
   padding: 0 12px;
-  background-color: ${({ theme, $done }) => ($done ? theme.color.componentBackground.bg04 : 'transparent')};
+  background-color: ${({ theme, $done, $readOnly }) => ($done || $readOnly ? theme.color.componentBackground.bg04 : 'transparent')};
   ${({ $error }) => $error && css`
     border-color: ${({ theme }) => theme.color.error};
   `};

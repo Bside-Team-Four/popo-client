@@ -1,10 +1,10 @@
 import { atom } from 'recoil';
 
-import PoPoState from '@/types/PoPoState';
+import PollStatus from '@/types/PollStatus';
 
-const popoState = atom<PoPoState>({
+const popoState = atom<PollStatus>({
   key: 'popoState',
-  default: 'start',
+  default: 'START',
 });
 
 export default popoState;

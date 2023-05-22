@@ -5,7 +5,7 @@ import { useDebounce } from 'usehooks-ts';
 
 import SearchField from '@/components/common/SearchField';
 import SchoolItem from '@/components/popup/SchoolPopup/SchoolItem';
-import useGetSchools from '@/hooks/api/useGetSchools';
+import useGetInfiniteSchool from '@/hooks/api/useGetInfiniteSchool';
 import School from '@/types/School';
 
 type SchoolPopDetailProps = {
@@ -18,7 +18,9 @@ export default function SchoolPopDetail({ onClose, onChangeSchool }:SchoolPopDet
 
   const debouncedKeyword:string = useDebounce(keyword, 500);
 
-  const { schoolData } = useGetSchools({ keyword: debouncedKeyword });
+  const {
+    schoolData, isLoading, isFetchingNextPage, refState,
+  } = useGetInfiniteSchool({ keyword: debouncedKeyword });
 
   const onSelectItem = (item: School) => {
     onChangeSchool(item);
@@ -37,6 +39,7 @@ export default function SchoolPopDetail({ onClose, onChangeSchool }:SchoolPopDet
         {schoolData && schoolData.map((item) => (
           <SchoolItem key={item.id} school={item} onClick={() => onSelectItem(item)} />
         ))}
+        {!isLoading && !isFetchingNextPage && <div ref={refState.lastItemRef} />}
       </Wrapper>
     </Container>
   );
