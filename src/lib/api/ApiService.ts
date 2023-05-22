@@ -5,6 +5,7 @@ import CustomException from '@/lib/excptions/CustomException';
 import { ApiErrorScheme } from '@/lib/excptions/type';
 import {
   AuthenticateResponse,
+  GetFollowRes,
   GetSchoolsResponse, GetUserBySchoolReq,
   GetUserBySchoolResponse,
   PasswordMissingAuthResponse,
@@ -40,7 +41,7 @@ export default class ApiService {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      Authorization: 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJpbnRoMTIzNEBuYXZlci5jb20iLCJhdXRoIjoiVVNFUl9ST0xFIiwidXNlcklkIjo4NCwiZXhwIjoxNjgzOTg4NTE1fQ.fpD8wUYRu0c8dANZNM88XRn-zZvFEiTqDpdcp26FCt5dDGykH69A5fJbqgrsCgE4ws8ltfYCcG3avCNZNHwvoQ',
+      Authorization: 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJpbnRoMTIzNEBuYXZlci5jb20iLCJhdXRoIjoiVVNFUl9ST0xFIiwidXNlcklkIjo4NCwiZXhwIjoxNjg0Njk2MDg4fQ.Q7-8eP_IgOo9Blwjcg_gi07nG3yDsfpjHRvZv78BR9oGN_Jz0vcB36R4h_m-_Wrfqrwlydgo3hvpEKgv9uo7Kw',
     },
   });
 
@@ -91,6 +92,9 @@ export default class ApiService {
     return data;
   };
 
+  /**
+   * 유저 검색 관련
+   */
   fetchGetUsersBySchool = async ({
     keyword,
     type,
@@ -112,6 +116,9 @@ export default class ApiService {
     return data;
   };
 
+  /**
+   * 팔로우 관련
+   */
   fetchPostFollowUser = async ({
     followeeId,
   }: PostFollowUserReq) => {
@@ -122,6 +129,22 @@ export default class ApiService {
           followeeId,
         },
       },
+    );
+
+    return data;
+  };
+
+  fetchGetFollowee = async () => {
+    const { data } = await this.instance.get<GetFollowRes>(
+      '/relation/followee',
+    );
+
+    return data;
+  };
+
+  fetchGetFollower = async () => {
+    const { data } = await this.instance.get<GetFollowRes>(
+      '/relation/follower',
     );
 
     return data;

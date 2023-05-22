@@ -67,14 +67,22 @@ export type PostFollowUserReq = {
   followeeId: number
 };
 
+export type FollowInfo = {
+  relationId: number,
+  followerId: number,
+  followerName: string,
+  followerProfileImage: string,
+  gender: string
+};
+
 export type PostFollowUserRes = {
   code: number,
   message: string,
-  value: {
-    relationId: number,
-    followerId: number,
-    followerName: string,
-    followerProfileImage: string,
-    gender: string
-  }
+  value: FollowInfo
+};
+
+export type GetFollowRes = {
+  code: number,
+  message: string,
+  value: Array<FollowInfo>
 };

@@ -10,8 +10,8 @@ export type FriendBoxProps = {
   profileImg: string;
   name: string;
   schoolName: string;
-  isFollow: boolean;
-  userId: number;
+  isFollow?: boolean;
+  userId?: number;
   gender?: string;
 };
 
