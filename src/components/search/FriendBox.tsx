@@ -38,8 +38,8 @@ export default function FriendBox({
         <NameDiv>{name}</NameDiv>
         <SchoolDiv>{`${schoolName} ${grade}학년 ${gender === 'MALE' ? '남자' : '여자'}`}</SchoolDiv>
       </Container>
-      <FollowBtn active={isFollow.toString()} onClick={doFollow}>
-        {isFollow ? '팔로우' : '팔로잉'}
+      <FollowBtn active={isFollow ? 'true' : 'false'} onClick={doFollow}>
+        {isFollow === true ? '팔로우' : '팔로잉'}
       </FollowBtn>
     </Wrapper>
   );
@@ -91,5 +91,5 @@ const FollowBtn = styled.button<{ active: boolean }>`
   line-height: 20px;
   min-width: 40px;
 
-  color: ${(props) => (props.active ? '#838393' : '#AF52DE')};
+  color: ${(props) => (props.active === true ? '#838393' : '#AF52DE')};
 `;

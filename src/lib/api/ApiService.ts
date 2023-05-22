@@ -165,3 +165,4 @@ export default class ApiService {
 }
 
 export const apiService = new ApiService();
+export const { fetchGetUsers } = apiService;

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import Image from 'next/image';
 
@@ -9,61 +9,72 @@ import { useDebounce } from 'usehooks-ts';
 import SearchField from '@/components/common/SearchField';
 import FriendBox, { FriendBoxProps } from '@/components/search/FriendBox';
 import useGetUsers from '@/hooks/api/useGetUsers';
+import { fetchGetUsers } from '@/lib/api/ApiService';
 import { selectedOptionSelector } from '@/recoil/selector';
 
 export default function SearchPage() {
   const [keyword, setKeyword] = useState('');
-  // const [searchedUserData, setSearchedUserData] = useState()
   const selectedOption = useRecoilValue(selectedOptionSelector);
+  const [userInfo, setUserInfo] = useState(null);
 
-  // const observer = useRef<IntersectionObserver | null>(null);
-  // const lastItemRef = useRef<HTMLDivElement | null>(null);
+  const observer = useRef(null);
+  const targetRef = useRef(null);
 
   const debouncedKeyword: string = useDebounce(keyword, 500);
 
-  const { userData } = useGetUsers({
+  const { userData, isLoading } = useGetUsers({
     keyword: debouncedKeyword,
     type: selectedOption,
-    size: 100,
+    size: 10,
   });
 
-  // const handleObserver = (entries: IntersectionObserverEntry[]) => {
-  //   const target = entries[0];
-  //   console.log("target", target.isIntersecting)
-  //   if (target.isIntersecting) {
-  //     const lastUserId = searchedUserData[searchedUserData.length - 1]?.userId || null;
-  //     const userData = fetchData(lastUserId);
-  //     if (userData) {
-  //       const updatedData = searchedUserData.concat(userData.value);
-  //       setSearchedUserData(updatedData)
-  //     }
-  //   }
-  // };
+  useEffect(() => {
+    // Run the effect only when userData is initially set
+    if (!isLoading && userData && !userInfo) {
+      setUserInfo(userData);
+    }
+  }, [userData, userInfo, isLoading]);
 
-  // useEffect(() => {
-  //   fetchData().then((userData: any) => {
-  //     if (userData) {
-  //       setSearchedUserData(userData.value)
-  //     }
-  //   })
-  // }, [debouncedKeyword, selectedOption])
+  const handleIntersection = (entries: IntersectionObserverEntry[]) => {
+    const target = entries[0];
+    if (target.isIntersecting) {
+      const lastUserId = userData?.value?.[userData.value.length - 1]?.userId;
+      if (lastUserId) {
+        fetchGetUsers({
+          keyword: debouncedKeyword,
+          type: selectedOption,
+          lastId: lastUserId,
+          size: 10,
+        }).then((res) => {
+          const updatedData = {
+            ...userData,
+            value: [...userData.value, ...res.value],
+          };
+          setUserInfo(updatedData);
+        });
+      }
+    }
+  };
 
-  // useEffect(() => {
-  //   console.log("lastItemRef.current", lastItemRef.current)
-  //   if (lastItemRef.current) {
-  //     observer.current = new IntersectionObserver(handleObserver, {
-  //       rootMargin: '20px',
-  //       threshold: 0.01,
-  //     });
-  //     observer.current.observe(lastItemRef.current);
-  //   }
+  // IntersectionObserver로직
+  useEffect(() => {
+    const options = {
+      rootMargin: '0px',
+      threshold: 0.9,
+    };
 
-  //   return () => {
-  //     if (observer.current) {
-  //       observer.current.disconnect();
-  //     }
-  //   };
-  // }, [handleObserver]);
+    observer.current = new IntersectionObserver(handleIntersection, options);
+
+    if (targetRef.current) {
+      observer.current.observe(targetRef.current);
+    }
+
+    return () => {
+      if (observer.current) {
+        observer.current.disconnect();
+      }
+    };
+  }, [userData, debouncedKeyword, selectedOption]);
 
   return (
     <Container>
@@ -77,13 +88,14 @@ export default function SearchPage() {
           { key: 'NAME', name: '이름' },
         ]}
       />
-      <Wrapper>
-        {userData ? userData?.value?.map((eachFriend: FriendBoxProps) => <FriendBox key={eachFriend.userId} {...eachFriend} />) : (
-          <NoResultWrapper>
-            <NoResultImg src="/images/search.svg" width="96" height="96" alt="" />
-            <NoResultText>검색 결과가 없어요.</NoResultText>
-          </NoResultWrapper>
-        )}
+      <Wrapper ref={targetRef}>
+        {userData ? userInfo?.value?.map((eachFriend: FriendBoxProps) => <FriendBox key={eachFriend.userId} {...eachFriend} />)
+          : (
+            <NoResultWrapper>
+              <NoResultImg src="/images/search.svg" width="96" height="96" alt="" />
+              <NoResultText>검색 결과가 없어요.</NoResultText>
+            </NoResultWrapper>
+          )}
       </Wrapper>
     </Container>
   );
