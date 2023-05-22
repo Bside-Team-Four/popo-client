@@ -1,11 +1,16 @@
 'use client';
 
+import FixedSpinner from '@/components/common/FixedSpinner';
+import LoadingHandler from '@/components/common/LoadingHandler';
 import Home from '@/components/home';
+import useGetPollStatus from '@/hooks/api/useGetPollStatus';
 
 export default function POPO() {
-  // fetch 후 recoil 저장까지
+  const { isLoading } = useGetPollStatus();
 
   return (
-    <Home />
+    <LoadingHandler isLoading={isLoading} loadingComponent={<FixedSpinner type="normal" />}>
+      <Home />
+    </LoadingHandler>
   );
 }

@@ -1,17 +1,17 @@
 import { screen } from '@testing-library/react';
 
-import usePOPOState from '@/hooks/recoil/usePOPOState';
+import usePollStatus from '@/hooks/recoil/usePollStatus';
 import { renderWithProviders } from '@/utils/testHelper';
 
 import VoteButton from './VoteButton';
 
-jest.mock('@/hooks/recoil/usePOPOState');
+jest.mock('@/hooks/recoil/usePollStatus');
 
 describe('VoteButton', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    (usePOPOState as jest.Mock).mockImplementation(() => ({
-      popoState: given.popoState,
+    (usePollStatus as jest.Mock).mockImplementation(() => ({
+      pollStatus: given.pollStatus,
     }));
   });
 
@@ -19,8 +19,8 @@ describe('VoteButton', () => {
     <VoteButton openPollPopup={jest.fn()} />,
   );
 
-  context('state 가 start 상태일 때', () => {
-    given('popoState', () => 'start');
+  context('pollStatus 가 start 상태일 때', () => {
+    given('pollStatus', () => 'START');
     it('시작하기 text를 렌더링한다.', () => {
       renderVoteButton();
 
@@ -28,8 +28,8 @@ describe('VoteButton', () => {
     });
   });
 
-  context('state 가 start 상태가 아닐 때', () => {
-    given('popoState', () => 'sleep');
+  context('pollStatus 가 start 상태가 아닐 때', () => {
+    given('pollStatus', () => 'SLEEP');
     it('아무것도 렌더링하지 않는다.', () => {
       const { container } = renderVoteButton();
 

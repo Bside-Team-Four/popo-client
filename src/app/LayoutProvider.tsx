@@ -3,6 +3,7 @@
 import { ReactNode } from 'react';
 
 import dynamic from 'next/dynamic';
+import { SessionProvider } from 'next-auth/react';
 
 import { AnimatePresence } from 'framer-motion';
 import { RecoilRoot } from 'recoil';
@@ -20,19 +21,21 @@ const SizeThemeProvider = dynamic(() => import('../components/provider/SizeTheme
 
 export default function LayoutProvider({ children }: { children: ReactNode }) {
   return (
-    <ReactQueryProvider>
-      <RecoilRoot>
-        <AnimatePresence>
-          <StyledComponentsRegistry>
-            <SizeThemeProvider>
-              <MobileLayout>
-                {children}
-                <CustomToast />
-              </MobileLayout>
-            </SizeThemeProvider>
-          </StyledComponentsRegistry>
-        </AnimatePresence>
-      </RecoilRoot>
-    </ReactQueryProvider>
+    <SessionProvider>
+      <ReactQueryProvider>
+        <RecoilRoot>
+          <AnimatePresence>
+            <StyledComponentsRegistry>
+              <SizeThemeProvider>
+                <MobileLayout>
+                  {children}
+                  <CustomToast />
+                </MobileLayout>
+              </SizeThemeProvider>
+            </StyledComponentsRegistry>
+          </AnimatePresence>
+        </RecoilRoot>
+      </ReactQueryProvider>
+    </SessionProvider>
   );
 }

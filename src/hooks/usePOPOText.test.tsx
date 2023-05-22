@@ -1,10 +1,10 @@
 import { act, renderHook } from '@testing-library/react';
 import { RecoilRoot } from 'recoil';
 
-import usePOPOState from './recoil/usePOPOState';
+import usePollStatus from './recoil/usePollStatus';
 import usePOPOText from './usePOPOText';
 
-jest.mock('./recoil/usePOPOState');
+jest.mock('./recoil/usePollStatus');
 jest.useFakeTimers();
 
 describe('usePOPOText', () => {
@@ -12,9 +12,9 @@ describe('usePOPOText', () => {
 
   beforeEach(() => {
     jest.clearAllTimers();
-    (usePOPOState as jest.Mock).mockImplementation(() => ({
-      popoState: given.popoState,
-      setPOPOState: setState,
+    (usePollStatus as jest.Mock).mockImplementation(() => ({
+      pollStatus: given.pollStatus,
+      setPollStatus: setState,
     }));
   });
 
@@ -32,8 +32,8 @@ describe('usePOPOText', () => {
     );
   };
 
-  context('when popo state is sleep', () => {
-    given('popoState', () => 'sleep');
+  context('when pollStatus is sleep', () => {
+    given('pollStatus', () => 'SLEEP');
 
     it('returns sleep titleText, timer', () => {
       const { result } = renderPOPOTextHook('December 17, 2023 03:33:30');
@@ -47,8 +47,8 @@ describe('usePOPOText', () => {
     });
   });
 
-  context('when popo state is done', () => {
-    given('popoState', () => 'done');
+  context('when pollStatus is done', () => {
+    given('pollStatus', () => 'DONE');
 
     it('returns done titleText, timer', () => {
       const { result } = renderPOPOTextHook('December 17, 2023 21:33:10');
@@ -62,8 +62,8 @@ describe('usePOPOText', () => {
     });
   });
 
-  context('when popo state is start', () => {
-    given('popoState', () => 'start');
+  context('when pollStatus is start', () => {
+    given('pollStatus', () => 'START');
 
     it('returns 오전 start titleText, timer', () => {
       const { result } = renderPOPOTextHook('December 17, 2023 08:33:30');
@@ -89,24 +89,24 @@ describe('usePOPOText', () => {
   });
 
   it('시간이 sleep 시간일 때 sleep 상태로 변한다.(오전 3시 ~ 오전 7시)', () => {
-    given('popoState', () => 'start');
+    given('pollStatus', () => 'START');
     renderPOPOTextHook('December 17, 2023 02:59:59');
 
     act(() => {
       jest.advanceTimersByTime(1000);
     });
 
-    expect(setState).toHaveBeenCalledWith('sleep');
+    expect(setState).toHaveBeenCalledWith('SLEEP');
   });
 
   it('시간이 start 시간일 때 start 상태로 변한다.(오전 7시 ~ 오전 3시)', () => {
-    given('popoState', () => 'sleep');
+    given('pollStatus', () => 'SLEEP');
     renderPOPOTextHook('December 17, 2023 06:59:59');
 
     act(() => {
       jest.advanceTimersByTime(1000);
     });
 
-    expect(setState).toHaveBeenCalledWith('start');
+    expect(setState).toHaveBeenCalledWith('START');
   });
 });

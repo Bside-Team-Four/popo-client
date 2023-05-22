@@ -3,28 +3,19 @@ import Image from 'next/image';
 import styled from 'styled-components';
 import { useDarkMode } from 'usehooks-ts';
 
-import getCategoryColor from '@/styles/getCategoryColor';
+import Category from '@/types/Category';
+import { getCategoryColor, getCategoryIcon } from '@/utils/categoryHelper';
 import { getCalAppWidth, getRatioSizePX } from '@/utils/sizeHelper';
 
 type QuestionProps = {
-  category: string;
+  category: Category;
   content: string;
 };
-
-type CategoryIcon = {
-  src: string;
-  alt: string
-};
-
-const getIcon = (category: string):CategoryIcon => ({
-  src: '/images/category-romance.svg',
-  alt: `${category} icon`,
-});
 
 export default function Question({ category, content }:QuestionProps) {
   const { isDarkMode } = useDarkMode();
 
-  const { src, alt } = getIcon(category);
+  const { src, alt } = getCategoryIcon(category);
 
   return (
     <Container>
@@ -68,7 +59,7 @@ const TextContainer = styled.div`
   padding: 16px 0;
 `;
 
-const QuestionText = styled.span<{ $isDarkMode:boolean, $category: string }>`
+const QuestionText = styled.span<{ $isDarkMode:boolean, $category: Category }>`
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 4;
