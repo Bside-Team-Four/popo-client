@@ -10,7 +10,7 @@ const useGetUsers = ({
 }: GetUserBySchoolReq) => {
   const { data: userData, isLoading } = useQuery(
     [GET_USERS_KEY, keyword],
-    () => apiService.fetchGetUsersBySchool({
+    () => apiService.fetchGetUsers({
       keyword, type, lastId, size,
     }),
     {

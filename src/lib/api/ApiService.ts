@@ -131,26 +131,22 @@ export default class ApiService {
     { ...payload, fcmToken: 'test' },
   );
 
-  fetchGetUsersBySchool = async ({
+  fetchGetUsers = async ({
     keyword,
     type,
     lastId,
     size,
-  }: GetUserBySchoolReq) => {
-    const { data } = await this.instance.get<GetUserBySchoolResponse>(
-      '/user/search',
-      {
-        params: {
-          keyword,
-          type,
-          lastId,
-          size,
-        },
+  }: GetUserBySchoolReq) => this.instance.get<GetUserBySchoolResponse>(
+    '/user/search',
+    {
+      params: {
+        keyword,
+        type,
+        lastId,
+        size,
       },
-    );
-
-    return data;
-  };
+    },
+  );
 
   fetchPostFollowUser = async ({
     followeeId,

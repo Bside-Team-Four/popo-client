@@ -7,7 +7,7 @@ import usePostFollowUser from '@/hooks/api/usePostFollowUser';
 
 export type FriendBoxProps = {
   grade: number;
-  profileImg: string;
+  profileImg?: string;
   name: string;
   schoolName: string;
   isFollow: boolean;
@@ -38,7 +38,7 @@ export default function FriendBox({
         <NameDiv>{name}</NameDiv>
         <SchoolDiv>{`${schoolName} ${grade}학년 ${gender === 'MALE' ? '남자' : '여자'}`}</SchoolDiv>
       </Container>
-      <FollowBtn active={isFollow} onClick={doFollow}>
+      <FollowBtn active={isFollow.toString()} onClick={doFollow}>
         {isFollow ? '팔로우' : '팔로잉'}
       </FollowBtn>
     </Wrapper>
