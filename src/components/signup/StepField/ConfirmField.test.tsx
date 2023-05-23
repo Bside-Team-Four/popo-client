@@ -15,7 +15,7 @@ describe('ConfirmField', () => {
   />);
 
   it('회원가입할 동안 입력했던 내용을 화면에 보여준다.', () => {
-    given('gender', () => 'male');
+    given('gender', () => 'MALE');
     given('school', () => '포포고등학교');
 
     renderConfirmField();
@@ -28,7 +28,7 @@ describe('ConfirmField', () => {
   });
 
   it('회원가입할 동안 입력했던 내용을 화면에 보여준다.(성별: 여성, 학교가 선택되어 있지 않을 경우)', () => {
-    given('gender', () => 'female');
+    given('gender', () => 'FEMALE');
     given('school', () => '');
 
     renderConfirmField();

@@ -92,7 +92,7 @@ const useSignUpForm = () => {
     }
 
     signUp({
-      gender: gender === 'male' ? 0 : 1,
+      gender: gender === 'MALE' ? 0 : 1,
       email: watch('email'),
       password: watch('password'),
       grade: Number(watch('grade')),

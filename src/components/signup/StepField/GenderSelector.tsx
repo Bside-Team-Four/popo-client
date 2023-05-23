@@ -18,8 +18,8 @@ export default function GenderSelector({ value, onChangeGender }: GenderSelector
         <SelectBox
           data-testid="man-box"
           $isSelect={isSelect}
-          $isOn={value === 'male'}
-          onClick={() => onChangeGender('male')}
+          $isOn={value === 'MALE'}
+          onClick={() => onChangeGender('MALE')}
         >
           <GenderTitle>남성</GenderTitle>
           <ManIcon />
@@ -27,8 +27,8 @@ export default function GenderSelector({ value, onChangeGender }: GenderSelector
         <SelectBox
           data-testid="woman-box"
           $isSelect={isSelect}
-          $isOn={value === 'female'}
-          onClick={() => onChangeGender('female')}
+          $isOn={value === 'FEMALE'}
+          onClick={() => onChangeGender('FEMALE')}
         >
           <GenderTitle>여성</GenderTitle>
           <WomanIcon />

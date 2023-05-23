@@ -6,7 +6,7 @@ import ApiException from '@/lib/excptions/ApiException';
 import CustomException from '@/lib/excptions/CustomException';
 import { ApiErrorScheme } from '@/lib/excptions/type';
 import {
-  AuthenticateResponse, GetPollStatusResponse,
+  AuthenticateResponse, GetMyProfileResponse, GetPollStatusResponse,
   GetSchoolsResponse, PasswordMissingAuthResponse,
   PasswordMissingResponse,
   PasswordResetResponse, SignUpAuthEmailResponse, SignUpResponse, SignUpSendEmailResponse,
@@ -125,6 +125,8 @@ export default class ApiService {
     '/user/sign-up',
     { ...payload, fcmToken: 'test' },
   );
+
+  fetchMyProfile = () => this.get<GetMyProfileResponse>('/user/my');
 }
 
 export const apiService = new ApiService();

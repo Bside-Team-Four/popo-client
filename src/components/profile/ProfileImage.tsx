@@ -2,12 +2,14 @@ import Image from 'next/image';
 
 import styled, { css } from 'styled-components';
 
+import Gender from '@/types/Gender';
+
 type ProfileImageProps = {
-  gender:number;
+  gender: Gender;
   profileImageUrl: string;
 };
 
-const getDefaultGenderIcon = (gender:number) => (gender === 0 ? 'male' : 'female');
+const getDefaultGenderIcon = (gender: Gender) => (gender.toLowerCase());
 
 export default function ProfileImage({ gender, profileImageUrl }:ProfileImageProps) {
   return (

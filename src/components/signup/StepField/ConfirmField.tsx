@@ -26,7 +26,7 @@ export default function ConfirmField({
     <Container>
       <TextField label="이름" value={name.value} readOnly />
       <TextField label="출생년도" value={year.value} readOnly />
-      <TextField label="성별" value={gender.value === 'male' ? '남성' : '여성'} readOnly />
+      <TextField label="성별" value={gender.value === 'MALE' ? '남성' : '여성'} readOnly />
       <TextField label="학교" value={school.value?.name || ''} readOnly />
       <TextField label="학년" value={grade.value} readOnly />
     </Container>

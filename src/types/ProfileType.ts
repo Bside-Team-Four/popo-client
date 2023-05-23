@@ -1,16 +1,16 @@
+import Gender from '@/types/Gender';
+
 type ProfileType = {
   userName: string
-  profileImageUrl: string,
   schoolName: string,
   grade: number,
-  age: number,
-  gender:number,
-  reward: number,
-  selectedPOPOCount: number,
-  selectPOPOCount: number,
+  votedCount: number,
+  voteCount: number,
   followerCount: number,
   followingCount: number,
-  email: string,
+  reward: number,
+  gender: Gender,
+  profileImageUrl: string,
 };
 
 export default ProfileType;
