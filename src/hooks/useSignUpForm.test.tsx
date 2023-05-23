@@ -224,7 +224,7 @@ describe('useSignUpForm', () => {
 
           await act(async () => {
             await result.current.onSubmit();
-            result.current.formData.gender.onChangeGender('female');
+            result.current.formData.gender.onChangeGender('FEMALE');
             result.current.formData.school.onChangeSchool({
               id: 106,
               name: '남서울중학교',
@@ -261,7 +261,7 @@ describe('useSignUpForm', () => {
 
           await act(async () => {
             await result.current.onSubmit();
-            result.current.formData.gender.onChangeGender('male');
+            result.current.formData.gender.onChangeGender('MALE');
           });
 
           Array.from({ length: 5 }).forEach(() => {
@@ -349,10 +349,10 @@ describe('useSignUpForm', () => {
     const { result } = renderSignUpFormHook();
 
     act(() => {
-      result.current.formData.gender.onChangeGender('male');
+      result.current.formData.gender.onChangeGender('MALE');
     });
 
-    expect(result.current.formData.gender.value).toBe('male');
+    expect(result.current.formData.gender.value).toBe('MALE');
   });
 
   it('school.ts change event', () => {

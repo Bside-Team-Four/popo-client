@@ -23,14 +23,14 @@ describe('GenderSelector', () => {
     expect(womanButton).toBeInTheDocument();
 
     fireEvent.click(manButton);
-    expect(onChangeGender).toHaveBeenCalledWith('male');
+    expect(onChangeGender).toHaveBeenCalledWith('MALE');
 
     fireEvent.click(womanButton);
-    expect(onChangeGender).toHaveBeenCalledWith('female');
+    expect(onChangeGender).toHaveBeenCalledWith('FEMALE');
   });
 
   context('성별이 선택되어 있을 때', () => {
-    given('value', () => 'male');
+    given('value', () => 'MALE');
 
     it('선택된 성별은 테두리(border)가 생겨야 한다.', () => {
       renderGenderSelector();
