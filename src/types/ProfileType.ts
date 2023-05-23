@@ -7,7 +7,7 @@ type ProfileType = {
   votedCount: number,
   voteCount: number,
   followerCount: number,
-  followingCount: number,
+  followeeCount: number,
   reward: number,
   gender: Gender,
   profileImageUrl: string,
