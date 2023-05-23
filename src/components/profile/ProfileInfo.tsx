@@ -1,28 +1,30 @@
 import styled from 'styled-components';
 
-import fixtures from '@/fixtures';
+import ProfileType from '@/types/ProfileType';
 
 import ProfileCount from './ProfileCount';
 import ProfileDetail from './ProfileDetail';
 
-export default function ProfileInfo() {
-  const { profile } = fixtures;
+type ProfileInfoProps = {
+  data: ProfileType
+};
 
+export default function ProfileInfo({ data }: ProfileInfoProps) {
   return (
     <Container>
       <ProfileDetail
-        userName={profile.userName}
-        schoolName={profile.schoolName}
-        grade={profile.grade}
-        reward={profile.reward}
-        gender={profile.gender}
-        profileImageUrl={profile.profileImageUrl}
+        userName={data.userName}
+        schoolName={data.schoolName}
+        grade={data.grade}
+        reward={data.reward}
+        gender={data.gender}
+        profileImageUrl={data.profileImageUrl}
       />
       <ProfileCount
-        votedCount={profile.votedCount}
-        voteCount={profile.voteCount}
-        followerCount={profile.followerCount}
-        followingCount={profile.followingCount}
+        votedCount={data.votedCount}
+        voteCount={data.voteCount}
+        followerCount={data.followerCount}
+        followingCount={data.followingCount}
       />
     </Container>
   );

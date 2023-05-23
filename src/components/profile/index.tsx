@@ -1,16 +1,27 @@
 import styled from 'styled-components';
 
+import FixedSpinner from '@/components/common/FixedSpinner';
+import LoadingHandler from '@/components/common/LoadingHandler';
+import useGetMyProfile from '@/hooks/api/useGetMyProfile';
+import ProfileType from '@/types/ProfileType';
+
 import InviteFriends from './InviteFriends';
 import ProfileHeader from './ProfileHeader';
 import ProfileInfo from './ProfileInfo';
 
 export default function Profile() {
+  const { isLoading, data } = useGetMyProfile();
+
   return (
     <Container>
-      <ProfileHeader />
-      <ProfileInfo />
-      <GrayBar data-testid="graybar" />
-      <InviteFriends />
+      <LoadingHandler isLoading={isLoading || !data} loadingComponent={<FixedSpinner type="normal" />}>
+        <>
+          <ProfileHeader />
+          <ProfileInfo data={data as ProfileType} />
+          <GrayBar data-testid="graybar" />
+          <InviteFriends />
+        </>
+      </LoadingHandler>
     </Container>
   );
 }

@@ -162,4 +162,14 @@ describe('ApiService', () => {
       expect(data.value.status).toEqual('START');
     });
   });
+
+  describe('fetchMyProfile', () => {
+    it('Fetch가 성공할 경우 데이터를 리턴한다.', async () => {
+      mock.onGet('/user/my').reply(200, { code: 0, value: fixtures.profile });
+
+      const data = await mockApiService.fetchMyProfile();
+
+      expect(data.value).toEqual(fixtures.profile);
+    });
+  });
 });

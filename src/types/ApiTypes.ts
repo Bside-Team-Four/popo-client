@@ -1,4 +1,5 @@
 import PollStatus from '@/types/PollStatus';
+import ProfileType from '@/types/ProfileType';
 import School from '@/types/School';
 
 type DefaultResponse = {
@@ -46,4 +47,8 @@ export type GetPollStatusResponse = DefaultResponse & {
   value:{
     status: PollStatus;
   }
+};
+
+export type GetMyProfileResponse = DefaultResponse & {
+  value: ProfileType;
 };
