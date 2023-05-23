@@ -18,7 +18,7 @@ describe('ProfileDetail', () => {
   );
 
   it('프로필 정보를 화면에 보여준다.', () => {
-    given('gender', () => 0);
+    given('gender', () => 'MALE');
 
     renderWithProviders(<ProfileDetail {...fixtures.profile} />);
 
@@ -30,7 +30,7 @@ describe('ProfileDetail', () => {
   });
 
   context('성별이 여성일 경우', () => {
-    given('gender', () => 1);
+    given('gender', () => 'FEMALE');
 
     it('여자 성별을 화면에 보여준다.', () => {
       renderProfileDetail();

@@ -19,8 +19,8 @@ export default function ProfileInfo() {
         profileImageUrl={profile.profileImageUrl}
       />
       <ProfileCount
-        selectedPOPOCount={profile.selectPOPOCount}
-        selectPOPOCount={profile.selectPOPOCount}
+        votedCount={profile.votedCount}
+        voteCount={profile.voteCount}
         followerCount={profile.followerCount}
         followingCount={profile.followingCount}
       />

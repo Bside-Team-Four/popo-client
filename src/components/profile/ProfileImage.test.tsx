@@ -14,7 +14,7 @@ describe('ProfileImage', () => {
 
     context('성별이 남성일 때', () => {
       it('남성 기본 이미지가 렌더링 된다.', () => {
-        given('gender', () => 0);
+        given('gender', () => 'MALE');
         renderProfileImage();
 
         const image = screen.getByAltText('profile default image');
@@ -26,7 +26,7 @@ describe('ProfileImage', () => {
 
     context('성별이 여성일 때', () => {
       it('여성 기본 이미지가 렌더링 된다.', () => {
-        given('gender', () => 1);
+        given('gender', () => 'FEMALE');
         renderProfileImage();
 
         const image = screen.getByAltText('profile default image');
