@@ -24,7 +24,7 @@ export default function ProfileInfo({ data }: ProfileInfoProps) {
         votedCount={data.votedCount}
         voteCount={data.voteCount}
         followerCount={data.followerCount}
-        followingCount={data.followingCount}
+        followeeCount={data.followeeCount}
       />
     </Container>
   );

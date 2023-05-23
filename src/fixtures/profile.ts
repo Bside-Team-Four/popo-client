@@ -10,7 +10,7 @@ const profile: ProfileType = {
   votedCount: 243,
   voteCount: 200,
   followerCount: 230,
-  followingCount: 50,
+  followeeCount: 50,
 };
 
 export default profile;

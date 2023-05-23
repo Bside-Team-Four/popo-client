@@ -6,10 +6,11 @@ import ApiException from '@/lib/excptions/ApiException';
 import CustomException from '@/lib/excptions/CustomException';
 import { ApiErrorScheme } from '@/lib/excptions/type';
 import {
-  AuthenticateResponse, GetMyProfileResponse, GetPollStatusResponse,
+  AuthenticateResponse, GetMyProfileResponse, GetPollListResponse, GetPollStatusResponse,
   GetSchoolsResponse, PasswordMissingAuthResponse,
   PasswordMissingResponse,
-  PasswordResetResponse, SignUpAuthEmailResponse, SignUpResponse, SignUpSendEmailResponse,
+  PasswordResetResponse, SignUpAuthEmailResponse,
+  SignUpResponse, SignUpSendEmailResponse, SkipResponse, VoteResponse,
 } from '@/types/ApiTypes';
 import SignUpUser from '@/types/SignUpUser';
 
@@ -127,6 +128,19 @@ export default class ApiService {
   );
 
   fetchMyProfile = () => this.get<GetMyProfileResponse>('/user/my');
+
+  fetchPollList = () => this.get<GetPollListResponse>('/poll', {
+    params: {
+      totalCandidatesNum: 8,
+    },
+  });
+
+  vote = ({ chosenId, questionId }:{ chosenId:number, questionId: number }) => this.post<VoteResponse>('/vote', {
+    chosenId,
+    questionId,
+  });
+
+  skip = ({ questionId }:{ questionId: number }) => this.post<SkipResponse>('/vote/skip', { questionId });
 }
 
 export const apiService = new ApiService();
