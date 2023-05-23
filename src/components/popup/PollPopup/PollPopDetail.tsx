@@ -3,8 +3,8 @@ import { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { useDarkMode } from 'usehooks-ts';
 
-import fixtures from '@/fixtures';
 import Category from '@/types/Category';
+import Poll from '@/types/Poll';
 import { getCategoryColor } from '@/utils/categoryHelper';
 
 import CandidateList from './CandidateList';
@@ -14,12 +14,15 @@ import Question from './Question';
 
 type PollPopDetailProps = {
   onClose: ()=>void;
+  totalQuestionCount: number;
+  userCurrentIndex: number;
+  polls: Poll[];
 };
 
-export default function PollPopDetail({ onClose }:PollPopDetailProps) {
-  const { polls } = fixtures;
-
-  const [currentStep, setCurrentStep] = useState(0);
+export default function PollPopDetail({
+  onClose, polls, userCurrentIndex, totalQuestionCount,
+}:PollPopDetailProps) {
+  const [currentStep, setCurrentStep] = useState(userCurrentIndex - 1);
   const [isChanged, setIsChanged] = useState(false);
 
   const { isDarkMode } = useDarkMode();
@@ -27,14 +30,14 @@ export default function PollPopDetail({ onClose }:PollPopDetailProps) {
   const { categoryName, content, candidates } = polls[currentStep];
 
   const goNextStep = useCallback(async () => {
-    if (currentStep === polls.length - 1) {
+    if (currentStep + 1 === totalQuestionCount) {
       onClose();
       return;
     }
 
     setCurrentStep((prev) => prev + 1);
     setIsChanged(false);
-  }, [currentStep, onClose, polls.length]);
+  }, [currentStep, onClose, totalQuestionCount]);
 
   return (
     <Container
@@ -43,7 +46,7 @@ export default function PollPopDetail({ onClose }:PollPopDetailProps) {
     >
       <PollHeader
         currentStep={currentStep}
-        stepCount={polls.length}
+        stepCount={totalQuestionCount}
         onClose={onClose}
       />
       <Question category={categoryName} content={content} />

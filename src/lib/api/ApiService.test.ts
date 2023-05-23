@@ -172,4 +172,14 @@ describe('ApiService', () => {
       expect(data.value).toEqual(fixtures.profile);
     });
   });
+
+  describe('fetchPollList', () => {
+    it('Fetch가 성공할 경우 데이터를 리턴한다.', async () => {
+      mock.onGet('/poll').reply(200, { code: 0, value: { polls: fixtures.polls } });
+
+      const data = await mockApiService.fetchPollList();
+
+      expect(data.value.polls).toEqual(fixtures.polls);
+    });
+  });
 });

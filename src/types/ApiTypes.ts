@@ -1,3 +1,4 @@
+import Poll from '@/types/Poll';
 import PollStatus from '@/types/PollStatus';
 import ProfileType from '@/types/ProfileType';
 import School from '@/types/School';
@@ -51,4 +52,12 @@ export type GetPollStatusResponse = DefaultResponse & {
 
 export type GetMyProfileResponse = DefaultResponse & {
   value: ProfileType;
+};
+
+export type GetPollListResponse = DefaultResponse & {
+  value:{
+    totalQuestionCount: number;
+    userCurrentIndex: number;
+    polls: Poll[];
+  }
 };

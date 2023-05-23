@@ -6,7 +6,7 @@ import ApiException from '@/lib/excptions/ApiException';
 import CustomException from '@/lib/excptions/CustomException';
 import { ApiErrorScheme } from '@/lib/excptions/type';
 import {
-  AuthenticateResponse, GetMyProfileResponse, GetPollStatusResponse,
+  AuthenticateResponse, GetMyProfileResponse, GetPollListResponse, GetPollStatusResponse,
   GetSchoolsResponse, PasswordMissingAuthResponse,
   PasswordMissingResponse,
   PasswordResetResponse, SignUpAuthEmailResponse, SignUpResponse, SignUpSendEmailResponse,
@@ -127,6 +127,12 @@ export default class ApiService {
   );
 
   fetchMyProfile = () => this.get<GetMyProfileResponse>('/user/my');
+
+  fetchPollList = () => this.get<GetPollListResponse>('/poll', {
+    params: {
+      totalCandidatesNum: 8,
+    },
+  });
 }
 
 export const apiService = new ApiService();
