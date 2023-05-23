@@ -3,7 +3,7 @@ import { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { useDarkMode } from 'usehooks-ts';
 
-import useGetPollStatus from '@/hooks/api/useGetPollStatus';
+import RewardPop from '@/components/popup/PollPopup/RewardPop';
 import useVoteAndSkipMutation from '@/hooks/api/useVoteAndSkipMutation';
 import Category from '@/types/Category';
 import Poll from '@/types/Poll';
@@ -25,10 +25,10 @@ export default function PollPopDetail({
   onClose, polls, userCurrentIndex, totalQuestionCount,
 }:PollPopDetailProps) {
   const { vote, skip } = useVoteAndSkipMutation();
-  const { refetch } = useGetPollStatus();
 
   const [currentStep, setCurrentStep] = useState(userCurrentIndex - 1);
   const [isChanged, setIsChanged] = useState(false);
+  const [showRewardPop, setShowRewardPop] = useState(false);
 
   const { isDarkMode } = useDarkMode();
 
@@ -38,14 +38,13 @@ export default function PollPopDetail({
 
   const goNextStep = useCallback(async () => {
     if (currentStep + 1 === totalQuestionCount) {
-      await refetch();
-      onClose();
+      setShowRewardPop(true);
       return;
     }
 
     setCurrentStep((prev) => prev + 1);
     setIsChanged(false);
-  }, [currentStep, onClose, refetch, totalQuestionCount]);
+  }, [currentStep, totalQuestionCount]);
 
   const onVoteAndSkip = useCallback(async (userId?: number) => {
     if (!userId) {
@@ -85,6 +84,7 @@ export default function PollPopDetail({
         setIsChanged={setIsChanged}
         onVoteAndSkip={onVoteAndSkip}
       />
+      <RewardPop show={showRewardPop} setShow={setShowRewardPop} onClose={onClose} />
     </Container>
   );
 }

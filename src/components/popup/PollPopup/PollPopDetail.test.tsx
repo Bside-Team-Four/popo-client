@@ -1,4 +1,6 @@
-import { fireEvent, screen, waitFor } from '@testing-library/react';
+import {
+  act, fireEvent, screen, waitFor,
+} from '@testing-library/react';
 
 import PollPopDetail from '@/components/popup/PollPopup/PollPopDetail';
 import fixtures from '@/fixtures';
@@ -12,6 +14,7 @@ jest.useFakeTimers();
 
 jest.mock('usehooks-ts', () => ({
   useDarkMode: () => ({ isDarkMode: false }),
+  useIsMounted: () => true,
 }));
 
 jest.mock('@/hooks/api/useGetPollStatus');
@@ -84,10 +87,11 @@ describe('PollPopup', () => {
 
       fireEvent.click(screen.getByTestId('건너뛰기 button'));
 
-      setTimeout(() => {
-        expect(mockRefetch).toHaveBeenCalled();
-        expect(onClose).toHaveBeenCalled();
-      }, 1000);
+      await act(() => {
+        setTimeout(() => {
+          expect(screen.getByText('100 리워드가 적립 완료.')).toBeInTheDocument();
+        }, 1000);
+      });
     });
   });
 });
