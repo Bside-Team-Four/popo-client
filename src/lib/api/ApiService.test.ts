@@ -182,4 +182,24 @@ describe('ApiService', () => {
       expect(data.value.polls).toEqual(fixtures.polls);
     });
   });
+
+  describe('vote', () => {
+    it('요청이 성공할 경우 데이터를 리턴한다.', async () => {
+      mock.onPost('/vote').reply(200, { code: 0, message: 'ok' });
+
+      const data = await mockApiService.vote({ chosenId: 1, questionId: 1 });
+
+      expect(data.message).toEqual('ok');
+    });
+  });
+
+  describe('skip', () => {
+    it('요청이 성공할 경우 데이터를 리턴한다.', async () => {
+      mock.onPost('/vote/skip').reply(200, { code: 0, message: 'ok' });
+
+      const data = await mockApiService.skip({ questionId: 1 });
+
+      expect(data.message).toEqual('ok');
+    });
+  });
 });

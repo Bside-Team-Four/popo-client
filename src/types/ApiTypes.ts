@@ -61,3 +61,7 @@ export type GetPollListResponse = DefaultResponse & {
     polls: Poll[];
   }
 };
+
+export type VoteResponse = DefaultResponse;
+
+export type SkipResponse = DefaultResponse;

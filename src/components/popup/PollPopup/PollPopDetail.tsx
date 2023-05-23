@@ -3,6 +3,8 @@ import { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { useDarkMode } from 'usehooks-ts';
 
+import useGetPollStatus from '@/hooks/api/useGetPollStatus';
+import useVoteAndSkipMutation from '@/hooks/api/useVoteAndSkipMutation';
 import Category from '@/types/Category';
 import Poll from '@/types/Poll';
 import { getCategoryColor } from '@/utils/categoryHelper';
@@ -22,22 +24,45 @@ type PollPopDetailProps = {
 export default function PollPopDetail({
   onClose, polls, userCurrentIndex, totalQuestionCount,
 }:PollPopDetailProps) {
+  const { vote, skip } = useVoteAndSkipMutation();
+  const { refetch } = useGetPollStatus();
+
   const [currentStep, setCurrentStep] = useState(userCurrentIndex - 1);
   const [isChanged, setIsChanged] = useState(false);
 
   const { isDarkMode } = useDarkMode();
 
-  const { categoryName, content, candidates } = polls[currentStep];
+  const {
+    questionId, categoryName, content, candidates,
+  } = polls[currentStep];
 
   const goNextStep = useCallback(async () => {
     if (currentStep + 1 === totalQuestionCount) {
+      await refetch();
       onClose();
       return;
     }
 
     setCurrentStep((prev) => prev + 1);
     setIsChanged(false);
-  }, [currentStep, onClose, totalQuestionCount]);
+  }, [currentStep, onClose, refetch, totalQuestionCount]);
+
+  const onVoteAndSkip = useCallback(async (userId?: number) => {
+    if (!userId) {
+      await skip({ questionId }, {
+        onSuccess: () => {
+          goNextStep();
+        },
+      });
+      return;
+    }
+
+    await vote({ questionId, chosenId: userId }, {
+      onSuccess: () => {
+        goNextStep();
+      },
+    });
+  }, [goNextStep, questionId, vote, skip]);
 
   return (
     <Container
@@ -53,12 +78,12 @@ export default function PollPopDetail({
       <CandidateList
         isChanged={isChanged}
         candidates={candidates}
-        goNextStep={goNextStep}
+        onVoteAndSkip={onVoteAndSkip}
       />
       <OptionButtons
         isChanged={candidates.length <= 4 || isChanged}
         setIsChanged={setIsChanged}
-        goNextStep={goNextStep}
+        onVoteAndSkip={onVoteAndSkip}
       />
     </Container>
   );

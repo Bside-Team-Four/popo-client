@@ -9,7 +9,8 @@ import {
   AuthenticateResponse, GetMyProfileResponse, GetPollListResponse, GetPollStatusResponse,
   GetSchoolsResponse, PasswordMissingAuthResponse,
   PasswordMissingResponse,
-  PasswordResetResponse, SignUpAuthEmailResponse, SignUpResponse, SignUpSendEmailResponse,
+  PasswordResetResponse, SignUpAuthEmailResponse,
+  SignUpResponse, SignUpSendEmailResponse, SkipResponse, VoteResponse,
 } from '@/types/ApiTypes';
 import SignUpUser from '@/types/SignUpUser';
 
@@ -133,6 +134,13 @@ export default class ApiService {
       totalCandidatesNum: 8,
     },
   });
+
+  vote = ({ chosenId, questionId }:{ chosenId:number, questionId: number }) => this.post<VoteResponse>('/vote', {
+    chosenId,
+    questionId,
+  });
+
+  skip = ({ questionId }:{ questionId: number }) => this.post<SkipResponse>('/vote/skip', { questionId });
 }
 
 export const apiService = new ApiService();

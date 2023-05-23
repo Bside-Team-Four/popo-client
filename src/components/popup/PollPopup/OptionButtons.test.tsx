@@ -10,7 +10,7 @@ jest.mock('usehooks-ts', () => ({
 
 describe('OptionButtons', () => {
   const setIsChanged = jest.fn();
-  const goNextStep = jest.fn();
+  const onVoteAndSkip = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -21,7 +21,7 @@ describe('OptionButtons', () => {
     <OptionButtons
       isChanged={given.isChanged}
       setIsChanged={setIsChanged}
-      goNextStep={goNextStep}
+      onVoteAndSkip={onVoteAndSkip}
     />,
   );
 
@@ -50,7 +50,7 @@ describe('OptionButtons', () => {
 
     fireEvent.click(skipButton);
 
-    expect(goNextStep).toHaveBeenCalled();
+    expect(onVoteAndSkip).toHaveBeenCalled();
   });
 
   context('isChanged가 false일 경우', () => {
