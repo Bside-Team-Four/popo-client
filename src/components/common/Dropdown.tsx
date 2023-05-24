@@ -10,13 +10,13 @@ export type DropdownProps = {
 export default function Dropdown({ options }: DropdownProps) {
   const [selectedOptionName, setSelectedOptionName] = useRecoilState(selectedOptionState);
 
-  const changeOption = (e: Event) => {
+  const changeOption = (e: Event): void => {
     const { value } = e?.target as HTMLOptionElement;
     setSelectedOptionName(value);
   };
 
   return (
-    <SelectBox onChange={changeOption}>
+    <SelectBox onChange={() => changeOption}>
       {options.map((optionItem: { key: string, name: string }) => (
         <OptionBox key={optionItem.key} value={optionItem.key}>{optionItem.name}</OptionBox>
       ))}

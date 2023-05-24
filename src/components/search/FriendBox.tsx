@@ -38,7 +38,7 @@ export default function FriendBox({
         <NameDiv>{name}</NameDiv>
         <SchoolDiv>{`${schoolName} ${grade}학년 ${gender === 'MALE' ? '남자' : '여자'}`}</SchoolDiv>
       </Container>
-      <FollowBtn active={isFollow ? 'true' : 'false'} onClick={doFollow}>
+      <FollowBtn active={!!isFollow} onClick={doFollow}>
         {isFollow === true ? '팔로우' : '팔로잉'}
       </FollowBtn>
     </Wrapper>
