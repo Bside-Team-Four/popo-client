@@ -12,7 +12,7 @@ import useGetUsers from '@/hooks/api/useGetUsers';
 import { fetchGetUsers } from '@/lib/api/ApiService';
 import { selectedOptionSelector } from '@/recoil/selector';
 
-export default function SearchPage() {
+export default function Search() {
   const [keyword, setKeyword] = useState('');
   const selectedOption = useRecoilValue(selectedOptionSelector);
   const [userInfo, setUserInfo] = useState(null);
