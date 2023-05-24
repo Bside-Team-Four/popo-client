@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import SmallButton from '@/components/common/SmallButton';
 import RewardSVG from '@/lib/assets/popo-reward-icon.svg';
+import Gender from '@/types/Gender';
 import { getCalAppWidth } from '@/utils/sizeHelper';
 
 import ProfileImage from './ProfileImage';
@@ -13,11 +14,11 @@ type ProfileDetailProps = {
   schoolName: string;
   grade: number;
   reward: number;
-  gender:number;
+  gender: Gender;
   profileImageUrl: string;
 };
 
-const getDefaultGenderText = (gender:number) => (gender === 0 ? '남자' : '여자');
+const getDefaultGenderText = (gender: Gender) => (gender === 'MALE' ? '남자' : '여자');
 
 export default function ProfileDetail({
   userName,

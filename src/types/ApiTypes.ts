@@ -1,4 +1,6 @@
+import Poll from '@/types/Poll';
 import PollStatus from '@/types/PollStatus';
+import ProfileType from '@/types/ProfileType';
 import School from '@/types/School';
 
 type DefaultResponse = {
@@ -85,3 +87,19 @@ export type GetPollStatusResponse = DefaultResponse & {
     status: PollStatus;
   }
 };
+
+export type GetMyProfileResponse = DefaultResponse & {
+  value: ProfileType;
+};
+
+export type GetPollListResponse = DefaultResponse & {
+  value:{
+    totalQuestionCount: number;
+    userCurrentIndex: number;
+    polls: Poll[];
+  }
+};
+
+export type VoteResponse = DefaultResponse;
+
+export type SkipResponse = DefaultResponse;

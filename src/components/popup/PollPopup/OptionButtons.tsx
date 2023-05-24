@@ -10,21 +10,17 @@ import OptionButton from './OptionButton';
 type OptionButtonsProps = {
   isChanged: boolean;
   setIsChanged: (isChanged: boolean) => void;
-  goNextStep:()=>void;
+  onVoteAndSkip:()=>void;
 };
 
 export default function OptionButtons({
-  isChanged, setIsChanged, goNextStep,
+  isChanged, setIsChanged, onVoteAndSkip,
 }:OptionButtonsProps) {
   const { isDarkMode } = useDarkMode();
 
   const onClickShuffle = useCallback(() => {
     setIsChanged(true);
   }, [setIsChanged]);
-
-  const onClickSkip = useCallback(() => {
-    goNextStep();
-  }, [goNextStep]);
 
   return (
     <ButtonsContainer>
@@ -39,7 +35,7 @@ export default function OptionButtons({
         imgSrc={isDarkMode ? '/images/skip-icon-dark.svg' : '/images/skip-icon.svg'}
         size={{ width: 28, height: 28 }}
         text="건너뛰기"
-        onClick={onClickSkip}
+        onClick={() => onVoteAndSkip()}
       />
     </ButtonsContainer>
   );

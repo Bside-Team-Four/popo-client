@@ -3,8 +3,10 @@ import { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import { useDarkMode } from 'usehooks-ts';
 
-import fixtures from '@/fixtures';
+import RewardPop from '@/components/popup/PollPopup/RewardPop';
+import useVoteAndSkipMutation from '@/hooks/api/useVoteAndSkipMutation';
 import Category from '@/types/Category';
+import Poll from '@/types/Poll';
 import { getCategoryColor } from '@/utils/categoryHelper';
 
 import CandidateList from './CandidateList';
@@ -14,27 +16,52 @@ import Question from './Question';
 
 type PollPopDetailProps = {
   onClose: ()=>void;
+  totalQuestionCount: number;
+  userCurrentIndex: number;
+  polls: Poll[];
 };
 
-export default function PollPopDetail({ onClose }:PollPopDetailProps) {
-  const { polls } = fixtures;
+export default function PollPopDetail({
+  onClose, polls, userCurrentIndex, totalQuestionCount,
+}:PollPopDetailProps) {
+  const { vote, skip } = useVoteAndSkipMutation();
 
-  const [currentStep, setCurrentStep] = useState(0);
+  const [currentStep, setCurrentStep] = useState(userCurrentIndex - 1);
   const [isChanged, setIsChanged] = useState(false);
+  const [showRewardPop, setShowRewardPop] = useState(false);
 
   const { isDarkMode } = useDarkMode();
 
-  const { categoryName, content, candidates } = polls[currentStep];
+  const {
+    questionId, categoryName, content, candidates,
+  } = polls[currentStep];
 
   const goNextStep = useCallback(async () => {
-    if (currentStep === polls.length - 1) {
-      onClose();
+    if (currentStep + 1 === totalQuestionCount) {
+      setShowRewardPop(true);
       return;
     }
 
     setCurrentStep((prev) => prev + 1);
     setIsChanged(false);
-  }, [currentStep, onClose, polls.length]);
+  }, [currentStep, totalQuestionCount]);
+
+  const onVoteAndSkip = useCallback(async (userId?: number) => {
+    if (!userId) {
+      await skip({ questionId }, {
+        onSuccess: () => {
+          goNextStep();
+        },
+      });
+      return;
+    }
+
+    await vote({ questionId, chosenId: userId }, {
+      onSuccess: () => {
+        goNextStep();
+      },
+    });
+  }, [goNextStep, questionId, vote, skip]);
 
   return (
     <Container
@@ -43,20 +70,21 @@ export default function PollPopDetail({ onClose }:PollPopDetailProps) {
     >
       <PollHeader
         currentStep={currentStep}
-        stepCount={polls.length}
+        stepCount={totalQuestionCount}
         onClose={onClose}
       />
       <Question category={categoryName} content={content} />
       <CandidateList
         isChanged={isChanged}
         candidates={candidates}
-        goNextStep={goNextStep}
+        onVoteAndSkip={onVoteAndSkip}
       />
       <OptionButtons
         isChanged={candidates.length <= 4 || isChanged}
         setIsChanged={setIsChanged}
-        goNextStep={goNextStep}
+        onVoteAndSkip={onVoteAndSkip}
       />
+      <RewardPop show={showRewardPop} setShow={setShowRewardPop} onClose={onClose} />
     </Container>
   );
 }

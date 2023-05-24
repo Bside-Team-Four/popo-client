@@ -15,7 +15,7 @@ jest.mock('framer-motion', () => ({
 jest.useFakeTimers();
 describe('CandidateList', () => {
   const ref = createRef();
-  const goNextStep = jest.fn();
+  const onVoteAndSkip = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -25,7 +25,7 @@ describe('CandidateList', () => {
     <CandidateList
       isChanged={given.isChanged}
       candidates={given.candidates}
-      goNextStep={goNextStep}
+      onVoteAndSkip={onVoteAndSkip}
     />,
   );
 
@@ -51,7 +51,7 @@ describe('CandidateList', () => {
 
       fireEvent.click(nameButton);
 
-      expect(goNextStep).toHaveBeenCalled();
+      expect(onVoteAndSkip).toHaveBeenCalled();
     });
   });
 

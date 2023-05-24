@@ -11,7 +11,7 @@ import CandidateItem from './CandidateItem';
 type CandidateListProps = {
   isChanged: boolean;
   candidates: Candidate[];
-  goNextStep: () => void;
+  onVoteAndSkip: (userId?: number) => void;
 };
 
 const getCandidateData = (candidates: Candidate[], isChanged:boolean) => {
@@ -28,14 +28,10 @@ const getCandidateData = (candidates: Candidate[], isChanged:boolean) => {
 };
 
 export default function CandidateList({
-  isChanged, candidates, goNextStep,
+  isChanged, candidates, onVoteAndSkip,
 }:CandidateListProps) {
   const candidateData = getCandidateData(candidates, isChanged);
   const [divRef, animate] = useAnimate();
-
-  const candidateOnClick = () => {
-    goNextStep();
-  };
 
   const onChangeAnimation = useCallback(async () => {
     await animate(divRef.current, { opacity: 0, x: -20 }, { duration: 0.3 });
@@ -55,7 +51,7 @@ export default function CandidateList({
         <CandidateItem
           key={`${candidate.userId}-${i}`}
           candidate={candidate}
-          onClick={() => candidateOnClick()}
+          onClick={() => onVoteAndSkip(candidate.userId)}
         />
       ))}
     </Container>
