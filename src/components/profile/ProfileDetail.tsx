@@ -1,5 +1,7 @@
 import { toast } from 'react-toastify';
 
+import { useRouter } from 'next/navigation';
+
 import styled from 'styled-components';
 
 import SmallButton from '@/components/common/SmallButton';
@@ -28,6 +30,8 @@ export default function ProfileDetail({
   gender,
   profileImageUrl,
 }:ProfileDetailProps) {
+  const router = useRouter();
+
   const handleCopyLink = async () => {
     await navigator.clipboard.writeText('https://popo-client.vercel.app');
     toast('링크를 복사했어요. 내 프로필을 공유하고 친구를 초대하세요.', {
@@ -38,13 +42,17 @@ export default function ProfileDetail({
     });
   };
 
+  const handleRewardClick = () => {
+    router.push('/reward-history');
+  };
+
   return (
     <Container>
       <ProfileImage gender={gender} profileImageUrl={profileImageUrl} />
       <DetailWrapper>
         <UserName>{userName}</UserName>
         <UserSchoolAndGrade>{`${schoolName} ${grade}학년 ${getDefaultGenderText(gender)}`}</UserSchoolAndGrade>
-        <RewardWrapper>
+        <RewardWrapper onClick={handleRewardClick}>
           <RewardIcon />
           <RewardText>{`${reward} PPP`}</RewardText>
         </RewardWrapper>
