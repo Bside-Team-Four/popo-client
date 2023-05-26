@@ -5,6 +5,10 @@ import { renderWithProviders } from '@/utils/testHelper';
 
 import ProfileInfo from './ProfileInfo';
 
+jest.mock('next/navigation', () => ({
+  useRouter: jest.fn(),
+}));
+
 describe('ProfileInfo', () => {
   it('프로필 정보를 화면에 보여준다.', () => {
     renderWithProviders(<ProfileInfo data={fixtures.profile} />);

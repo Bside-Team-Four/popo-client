@@ -1,16 +1,30 @@
+import { useRouter } from 'next/navigation';
+
 import { fireEvent, screen } from '@testing-library/react';
 
 import ProfileDetail from '@/components/profile/ProfileDetail';
 import fixtures from '@/fixtures';
 import { renderWithProviders } from '@/utils/testHelper';
 
+jest.mock('next/navigation', () => ({
+  useRouter: jest.fn(),
+}));
+
 describe('ProfileDetail', () => {
   const writeText = jest.fn();
+  const routerPush = jest.fn();
 
   Object.assign(navigator, {
     clipboard: {
       writeText,
     },
+  });
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+    (useRouter as jest.Mock).mockImplementation(() => ({
+      push: routerPush,
+    }));
   });
 
   const renderProfileDetail = () => renderWithProviders(
@@ -37,5 +51,14 @@ describe('ProfileDetail', () => {
 
       expect(screen.getByText('포포 고등학교 1학년 여자')).toBeInTheDocument();
     });
+  });
+
+  it('리워드 정보를 클릭할 경우, 리워드 이용내역 페이지로 이동한다.', () => {
+    given('gender', () => 'MALE');
+    renderProfileDetail();
+
+    fireEvent.click(screen.getByText('21 PPP'));
+
+    expect(routerPush).toHaveBeenCalledWith('/reward-history');
   });
 });
