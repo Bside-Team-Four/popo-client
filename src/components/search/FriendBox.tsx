@@ -24,11 +24,14 @@ export default function FriendBox({
   userId,
   gender,
 }: FriendBoxProps) {
-  const [followUserId, setFollowUserId] = useState<number>(0);
-  const { followData } = usePostFollowUser({ followeeId: followUserId });
+  const [followUserId, setFollowUserId] = useState<number>(userId);
+  const [followStatus, setFollowStatus] = useState<boolean>(isFollow);
+  const { followData, isLoading, refetch } = usePostFollowUser({ followeeId: followUserId });
 
   const doFollow = () => {
     setFollowUserId(userId);
+    setFollowStatus(true);
+    refetch();
   };
 
   return (
@@ -38,8 +41,8 @@ export default function FriendBox({
         <NameDiv>{name}</NameDiv>
         <SchoolDiv>{`${schoolName} ${grade}학년 ${gender === 'MALE' ? '남자' : '여자'}`}</SchoolDiv>
       </Container>
-      <FollowBtn active={!!isFollow} onClick={doFollow}>
-        {isFollow === true ? '팔로우' : '팔로잉'}
+      <FollowBtn active={followStatus} onClick={doFollow}>
+        {followStatus === true ? '팔로우' : '팔로잉'}
       </FollowBtn>
     </Wrapper>
   );

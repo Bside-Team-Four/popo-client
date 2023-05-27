@@ -8,7 +8,7 @@ const POST_FOLLOW_USER_KEY = 'postFollowUser';
 // @TO DO : 검색 조건 타입 추가 필요
 const usePostFollowUser = ({ followeeId }: PostFollowUserReq) => {
   // eslint-disable-next-line max-len
-  const { data: followData, isLoading } = useQuery(
+  const { data: followData, isLoading, refetch } = useQuery(
     [POST_FOLLOW_USER_KEY],
     () => apiService.fetchPostFollowUser({
       followeeId,
@@ -16,7 +16,7 @@ const usePostFollowUser = ({ followeeId }: PostFollowUserReq) => {
     { enabled: false },
   );
 
-  return { followData, isLoading };
+  return { followData, isLoading, refetch };
 };
 
 export default usePostFollowUser;

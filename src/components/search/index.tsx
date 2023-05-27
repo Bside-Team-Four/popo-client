@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from 'react';
 
 import Image from 'next/image';
 
-import { AxiosResponse } from 'axios';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { useDebounce } from 'usehooks-ts';
@@ -12,6 +11,15 @@ import FriendBox, { FriendBoxProps } from '@/components/search/FriendBox';
 import useGetUsers from '@/hooks/api/useGetUsers';
 import { selectedOptionSelector } from '@/recoil/selector';
 import { GetUserResponse } from '@/types/ApiTypes';
+
+type UserData = {
+  userId: number;
+  profileImg: string;
+  name: string;
+  schoolName: string;
+  grade: number;
+  isFollow: boolean;
+};
 
 export default function Search() {
   const [keyword, setKeyword] = useState('');
@@ -29,11 +37,11 @@ export default function Search() {
     lastId,
     size: 10,
   });
-  let userListData = userData;
+  let userListData: GetUserResponse[] | undefined | any = userData;
 
   useEffect(() => {
     if (userData && !isLoading) {
-      const lastUserId = userListData?.[userData.length - 1]?.userId;
+      const lastUserId = userData?.[userData.length - 1]?.userId;
       const loadMore = lastId !== undefined ? lastId > lastUserId : true;
       if (loadMore && userData.length === 10) {
         setLastId(lastUserId);
@@ -48,8 +56,9 @@ export default function Search() {
 
   useEffect(() => {
     if (debouncedKeyword.length >= 2 && !isLoading) {
-      refetch().then((res: AxiosResponse<GetUserResponse>) => {
-        userListData = [...userData, ...res?.data?.value || null];
+      refetch().then((res) => {
+        const responseData = res.data as GetUserResponse;
+        userListData = [...userData, ...(responseData?.value || [])];
       });
     }
   }, [lastId]);
@@ -71,7 +80,7 @@ export default function Search() {
         ]}
       />
       <Wrapper ref={targetRef}>
-        {userListData.length > 0 ? userListData?.map((eachFriend: FriendBoxProps) => <FriendBox key={eachFriend.userId} {...eachFriend} />)
+        {userListData ? userListData?.map((eachFriend: FriendBoxProps) => <FriendBox key={eachFriend.userId} {...eachFriend} />)
           : (
             <NoResultWrapper>
               <NoResultImg src="/images/search.svg" width="96" height="96" alt="" />

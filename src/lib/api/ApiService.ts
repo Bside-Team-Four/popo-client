@@ -76,7 +76,7 @@ export default class ApiService {
   }
 
   fetchGetSchools = ({ keyword, page }: {
-    keyword: string, page:number
+    keyword: string, page: number
   }) => this.get<GetSchoolsResponse>('/school/search', {
     params: {
       keyword,
@@ -92,19 +92,19 @@ export default class ApiService {
   });
 
   passwordMissing = ({ email }: {
-    email:string
+    email: string
   }) => this.post<PasswordMissingResponse>('/password/missing', {
     email,
   });
 
-  passwordMissingAuth = ({ userId, userCode }:{
+  passwordMissingAuth = ({ userId, userCode }: {
     userId?: number, userCode: string
   }) => this.post<PasswordMissingAuthResponse>('/password/missing/auth', {
     userId,
     userCode,
   });
 
-  passwordReset = ({ userId, toChangePassword }:{
+  passwordReset = ({ userId, toChangePassword }: {
     userId?: number, toChangePassword: string
   }) => this.post<PasswordResetResponse>('/password/reset', {
     userId,
@@ -117,7 +117,7 @@ export default class ApiService {
     email,
   });
 
-  signUpAuthEmail = ({ email, userCode } : {
+  signUpAuthEmail = ({ email, userCode }: {
     email: string, userCode: string
   }) => this.post<SignUpAuthEmailResponse>(
     '/user/sign-up/auth/email',
@@ -151,18 +151,12 @@ export default class ApiService {
 
   fetchPostFollowUser = async ({
     followeeId,
-  }: PostFollowUserReq) => {
-    const { data } = await this.instance.post<PostFollowUserRes>(
-      '/relation/request',
-      {
-        params: {
-          followeeId,
-        },
-      },
-    );
-
-    return data;
-  };
+  }: PostFollowUserReq) => this.instance.post<PostFollowUserRes>(
+    '/relation/request',
+    {
+      followeeId,
+    },
+  );
 
   fetchMyProfile = () => this.get<GetMyProfileResponse>('/user/my');
 
@@ -172,13 +166,12 @@ export default class ApiService {
     },
   });
 
-  vote = ({ chosenId, questionId }:{ chosenId:number, questionId: number }) => this.post<VoteResponse>('/vote', {
+  vote = ({ chosenId, questionId }: { chosenId: number, questionId: number }) => this.post<VoteResponse>('/vote', {
     chosenId,
     questionId,
   });
 
-  skip = ({ questionId }:{ questionId: number }) => this.post<SkipResponse>('/vote/skip', { questionId });
+  skip = ({ questionId }: { questionId: number }) => this.post<SkipResponse>('/vote/skip', { questionId });
 }
 
 export const apiService = new ApiService();
-export const { fetchGetUsers } = apiService;
