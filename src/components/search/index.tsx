@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import Image from 'next/image';
 
+import { AxiosResponse } from 'axios';
 import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 import { useDebounce } from 'usehooks-ts';
@@ -9,82 +10,53 @@ import { useDebounce } from 'usehooks-ts';
 import SearchField from '@/components/common/SearchField';
 import FriendBox, { FriendBoxProps } from '@/components/search/FriendBox';
 import useGetUsers from '@/hooks/api/useGetUsers';
-import { fetchGetUsers } from '@/lib/api/ApiService';
 import { selectedOptionSelector } from '@/recoil/selector';
-
-type UserInfo = Array<{
-  userId: number;
-  profileImg: string;
-  name: string;
-  schoolName: string;
-  grade: number;
-  isFollow: boolean;
-}>;
+import { GetUserResponse } from '@/types/ApiTypes';
 
 export default function Search() {
   const [keyword, setKeyword] = useState('');
   const selectedOption = useRecoilValue(selectedOptionSelector);
-  const [userInfo, setUserInfo] = useState<UserInfo>({});
+  const [lastId, setLastId] = useState<number | undefined>(undefined);
 
-  const observer = useRef<IntersectionObserver | null>(null);
+  const observer = useRef<IntersectionObserver | null | void>(null);
   const targetRef = useRef(null);
 
   const debouncedKeyword: string = useDebounce(keyword, 500);
 
-  const { data: userData } = useGetUsers({
+  const { userData, isLoading, refetch } = useGetUsers({
     keyword: debouncedKeyword,
     type: selectedOption,
+    lastId,
     size: 10,
   });
+  let userListData = userData;
 
   useEffect(() => {
-    setUserInfo(userData);
-  }, [debouncedKeyword]);
+    if (userData && !isLoading) {
+      const lastUserId = userListData?.[userData.length - 1]?.userId;
+      const loadMore = lastId !== undefined ? lastId > lastUserId : true;
+      if (loadMore && userData.length === 10) {
+        setLastId(lastUserId);
+      }
+    }
+  }, [userData]);
 
   useEffect(() => {
     setKeyword('');
+    setLastId(undefined);
   }, [selectedOption]);
 
-  const handleIntersection = (entries: IntersectionObserverEntry[]) => {
-    const target = entries[0];
-    if (target.isIntersecting) {
-      let lastUserId = userData?.value?.[userData.value.length - 1]?.userId;
-      if (debouncedKeyword?.length >= 2) {
-        fetchGetUsers({
-          keyword: debouncedKeyword,
-          type: selectedOption,
-          lastId: lastUserId,
-          size: 10,
-        }).then((res) => {
-          setUserInfo(lastUserId ? {
-            ...userData,
-            value: [...userData.value, ...res.value],
-          } : res);
-          lastUserId = null;
-        });
-      }
-    }
-  };
-
-  // IntersectionObserver로직
   useEffect(() => {
-    const options = {
-      rootMargin: '0px',
-      threshold: 0.5,
-    };
-
-    observer.current = new IntersectionObserver(handleIntersection, options);
-
-    if (targetRef.current) {
-      observer.current.observe(targetRef.current);
+    if (debouncedKeyword.length >= 2 && !isLoading) {
+      refetch().then((res: AxiosResponse<GetUserResponse>) => {
+        userListData = [...userData, ...res?.data?.value || null];
+      });
     }
+  }, [lastId]);
 
-    return () => {
-      if (observer.current) {
-        observer.current.disconnect();
-      }
-    };
-  }, [userData, debouncedKeyword]);
+  useEffect(() => {
+    setLastId(undefined);
+  }, [debouncedKeyword]);
 
   return (
     <Container>
@@ -99,7 +71,7 @@ export default function Search() {
         ]}
       />
       <Wrapper ref={targetRef}>
-        {userInfo ? userInfo?.value?.map((eachFriend: FriendBoxProps) => <FriendBox key={eachFriend.userId} {...eachFriend} />)
+        {userListData.length > 0 ? userListData?.map((eachFriend: FriendBoxProps) => <FriendBox key={eachFriend.userId} {...eachFriend} />)
           : (
             <NoResultWrapper>
               <NoResultImg src="/images/search.svg" width="96" height="96" alt="" />
@@ -130,10 +102,6 @@ const Wrapper = styled.div`
   overflow: scroll;
   height: auto;
   align-items: center;
-`;
-
-const FriendBoxWrapper = styled.div`
-  width: 100%
 `;
 
 const NoResultWrapper = styled.div`

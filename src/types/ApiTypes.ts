@@ -23,7 +23,7 @@ export type AuthenticateResponse = DefaultResponse & {
   };
 };
 
-export type GetUserBySchoolReq = {
+export type GetUserReq = {
   keyword: string,
   type: string,
   lastId?: number,
@@ -51,7 +51,7 @@ export type SignUpResponse = DefaultResponse & {
   };
 };
 
-export type GetUserBySchoolResponse = {
+export type GetUserResponse = {
   code: number;
   message: string;
   value: [

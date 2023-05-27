@@ -7,8 +7,8 @@ import CustomException from '@/lib/excptions/CustomException';
 import { ApiErrorScheme } from '@/lib/excptions/type';
 import {
   AuthenticateResponse, GetMyProfileResponse, GetPollListResponse,
-  GetPollStatusResponse, GetSchoolsResponse, GetUserBySchoolReq,
-  GetUserBySchoolResponse,
+  GetPollStatusResponse, GetSchoolsResponse, GetUserReq,
+  GetUserResponse,
   PasswordMissingAuthResponse,
   PasswordMissingResponse,
   PasswordResetResponse, PostFollowUserReq,
@@ -137,7 +137,7 @@ export default class ApiService {
     type,
     lastId,
     size,
-  }: GetUserBySchoolReq) => this.instance.get<GetUserBySchoolResponse>(
+  }: GetUserReq) => this.instance.get<GetUserResponse>(
     '/user/search',
     {
       params: {
