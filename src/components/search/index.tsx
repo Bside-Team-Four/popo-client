@@ -12,45 +12,55 @@ import useGetUsers from '@/hooks/api/useGetUsers';
 import { fetchGetUsers } from '@/lib/api/ApiService';
 import { selectedOptionSelector } from '@/recoil/selector';
 
+type UserInfo = Array<{
+  userId: number;
+  profileImg: string;
+  name: string;
+  schoolName: string;
+  grade: number;
+  isFollow: boolean;
+}>;
+
 export default function Search() {
   const [keyword, setKeyword] = useState('');
   const selectedOption = useRecoilValue(selectedOptionSelector);
-  const [userInfo, setUserInfo] = useState(null);
+  const [userInfo, setUserInfo] = useState<UserInfo>({});
 
-  const observer = useRef(null);
+  const observer = useRef<IntersectionObserver | null>(null);
   const targetRef = useRef(null);
 
   const debouncedKeyword: string = useDebounce(keyword, 500);
 
-  const { userData, isLoading } = useGetUsers({
+  const { data: userData } = useGetUsers({
     keyword: debouncedKeyword,
     type: selectedOption,
     size: 10,
   });
 
   useEffect(() => {
-    // Run the effect only when userData is initially set
-    if (!isLoading && userData && !userInfo) {
-      setUserInfo(userData);
-    }
-  }, [userData, userInfo, isLoading]);
+    setUserInfo(userData);
+  }, [debouncedKeyword]);
+
+  useEffect(() => {
+    setKeyword('');
+  }, [selectedOption]);
 
   const handleIntersection = (entries: IntersectionObserverEntry[]) => {
     const target = entries[0];
     if (target.isIntersecting) {
-      const lastUserId = userData?.value?.[userData.value.length - 1]?.userId;
-      if (lastUserId) {
+      let lastUserId = userData?.value?.[userData.value.length - 1]?.userId;
+      if (debouncedKeyword?.length >= 2) {
         fetchGetUsers({
           keyword: debouncedKeyword,
           type: selectedOption,
           lastId: lastUserId,
           size: 10,
         }).then((res) => {
-          const updatedData = {
+          setUserInfo(lastUserId ? {
             ...userData,
             value: [...userData.value, ...res.value],
-          };
-          setUserInfo(updatedData);
+          } : res);
+          lastUserId = null;
         });
       }
     }
@@ -60,7 +70,7 @@ export default function Search() {
   useEffect(() => {
     const options = {
       rootMargin: '0px',
-      threshold: 0.9,
+      threshold: 0.5,
     };
 
     observer.current = new IntersectionObserver(handleIntersection, options);
@@ -74,7 +84,7 @@ export default function Search() {
         observer.current.disconnect();
       }
     };
-  }, [userData, debouncedKeyword, selectedOption]);
+  }, [userData, debouncedKeyword]);
 
   return (
     <Container>
@@ -89,7 +99,7 @@ export default function Search() {
         ]}
       />
       <Wrapper ref={targetRef}>
-        {userData ? userInfo?.value?.map((eachFriend: FriendBoxProps) => <FriendBox key={eachFriend.userId} {...eachFriend} />)
+        {userInfo ? userInfo?.value?.map((eachFriend: FriendBoxProps) => <FriendBox key={eachFriend.userId} {...eachFriend} />)
           : (
             <NoResultWrapper>
               <NoResultImg src="/images/search.svg" width="96" height="96" alt="" />
@@ -100,9 +110,6 @@ export default function Search() {
     </Container>
   );
 }
-const Flexbox = styled.div`
-  display: flex;
-`;
 
 const Container = styled.div`
   position: relative;
