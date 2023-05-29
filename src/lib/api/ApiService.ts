@@ -7,6 +7,7 @@ import CustomException from '@/lib/excptions/CustomException';
 import { ApiErrorScheme } from '@/lib/excptions/type';
 import {
   AuthenticateResponse,
+  GetFollowReq,
   GetFollowRes,
   GetMyProfileResponse,
   GetPollListResponse,
@@ -53,7 +54,6 @@ export default class ApiService {
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
-      Authorization: 'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJpbnRoMTIzNEBuYXZlci5jb20iLCJhdXRoIjoiVVNFUl9ST0xFIiwidXNlcklkIjo4NCwiZXhwIjoxNjg0Njk2MDg4fQ.Q7-8eP_IgOo9Blwjcg_gi07nG3yDsfpjHRvZv78BR9oGN_Jz0vcB36R4h_m-_Wrfqrwlydgo3hvpEKgv9uo7Kw',
     },
   });
 
@@ -142,21 +142,25 @@ export default class ApiService {
     return data;
   };
 
-  fetchGetFollowee = async () => {
-    const { data } = await this.instance.get<GetFollowRes>(
-      '/relation/followee',
-    );
+  fetchGetFollowee = async ({ lastId, size }: GetFollowReq) => this.instance.get<GetFollowRes>(
+    '/relation/followee',
+    {
+      params: {
+        lastId,
+        size,
+      },
+    },
+  );
 
-    return data;
-  };
-
-  fetchGetFollower = async () => {
-    const { data } = await this.instance.get<GetFollowRes>(
-      '/relation/follower',
-    );
-
-    return data;
-  };
+  fetchGetFollower = async ({ lastId, size }: GetFollowReq) => this.instance.get<GetFollowRes>(
+    '/relation/follower',
+    {
+      params: {
+        lastId,
+        size,
+      },
+    },
+  );
 
   passwordMissing = ({ email }: {
     email: string
@@ -207,12 +211,12 @@ export default class ApiService {
     },
   });
 
-  vote = ({ chosenId, questionId }:{ chosenId:number, questionId: number }) => this.post<VoteResponse>('/vote', {
+  vote = ({ chosenId, questionId }: { chosenId: number, questionId: number }) => this.post<VoteResponse>('/vote', {
     chosenId,
     questionId,
   });
 
-  skip = ({ questionId }:{ questionId: number }) => this.post<SkipResponse>('/vote/skip', { questionId });
+  skip = ({ questionId }: { questionId: number }) => this.post<SkipResponse>('/vote/skip', { questionId });
 }
 
 export const apiService = new ApiService();
