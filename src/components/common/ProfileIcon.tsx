@@ -12,8 +12,8 @@ export default function ProfileIcon({ gender }: ProfileImgProps) {
       <ProfileImg
         src={`/images/profile-${gender}.svg`}
         alt="user profile picture"
-        width={15}
-        height={15}
+        width={30}
+        height={30}
       />
     </ImgContainer>
   );
@@ -27,6 +27,7 @@ const ImgContainer = styled.div`
   height: 30px;
   background-color: ${(props) => props.theme.color.componentBackground.bg03};
   border-radius: 50%;
+  overflow: hidden;
 `;
 
 const ProfileImg = styled(Image)``;
