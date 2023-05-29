@@ -1,3 +1,6 @@
+import Poll from '@/types/Poll';
+import PollStatus from '@/types/PollStatus';
+import ProfileType from '@/types/ProfileType';
 import School from '@/types/School';
 
 type DefaultResponse = {
@@ -34,7 +37,7 @@ export type SignUpSendEmailResponse = DefaultResponse;
 
 export type SignUpAuthEmailResponse = DefaultResponse;
 
-export type SignUpResponse = {
+export type SignUpResponse = DefaultResponse & {
   value:{
     token: string;
     userId: number;
@@ -86,3 +89,25 @@ export type GetFollowRes = {
   message: string,
   value: Array<FollowInfo>
 };
+
+export type GetPollStatusResponse = DefaultResponse & {
+  value:{
+    status: PollStatus;
+  }
+};
+
+export type GetMyProfileResponse = DefaultResponse & {
+  value: ProfileType;
+};
+
+export type GetPollListResponse = DefaultResponse & {
+  value:{
+    totalQuestionCount: number;
+    userCurrentIndex: number;
+    polls: Poll[];
+  }
+};
+
+export type VoteResponse = DefaultResponse;
+
+export type SkipResponse = DefaultResponse;

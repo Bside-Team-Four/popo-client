@@ -12,7 +12,7 @@ type FixedSpinnerProps = {
 
 export default function FixedSpinner({ type, opacity = 1 }: FixedSpinnerProps) {
   return (
-    <Container opacity={opacity}>
+    <Container opacity={opacity} data-testid="spinner">
       <Spinner type={type} />
     </Container>
   );

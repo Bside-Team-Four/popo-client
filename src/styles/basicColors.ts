@@ -9,12 +9,11 @@ const basicColors = {
   category: {
     romance: '#FF3B30',
     friendship: '#FF9500',
-    looks: '#FFCC00',
-    school_life: '#34C759',
-    speciality: '#5AC8FA',
-    personality: '#007AFF',
-    private: '#5856D6',
-    ect02: '#FF2D55',
+    school: '#FFCC00',
+    speciality: '#34C759',
+    etc: '#5AC8FA',
+    appearance: '#007AFF',
+    personality: '#5856D6',
   },
 };
 

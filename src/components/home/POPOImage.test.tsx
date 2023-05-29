@@ -1,24 +1,24 @@
 import { screen } from '@testing-library/react';
 
 import POPOImage from '@/components/home/POPOImage';
-import usePOPOState from '@/hooks/recoil/usePOPOState';
+import usePollStatus from '@/hooks/recoil/usePollStatus';
 import { renderWithProviders } from '@/utils/testHelper';
 
-jest.mock('@/hooks/recoil/usePOPOState');
+jest.mock('@/hooks/recoil/usePollStatus');
 
 describe('POPOImage', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    (usePOPOState as jest.Mock).mockImplementation(() => ({
-      popoState: given.popoState,
+    (usePollStatus as jest.Mock).mockImplementation(() => ({
+      pollStatus: given.pollStatus,
     }));
   });
   const popoImageRender = () => renderWithProviders(
     <POPOImage />,
   );
 
-  context('when popo state is sleep', () => {
-    given('popoState', () => 'sleep');
+  context('when pollStatus is sleep', () => {
+    given('pollStatus', () => 'SLEEP');
 
     it('render popo sleep image', () => {
       popoImageRender();
@@ -27,8 +27,8 @@ describe('POPOImage', () => {
     });
   });
 
-  context('when popo state is done', () => {
-    given('popoState', () => 'done');
+  context('when pollStatus is done', () => {
+    given('pollStatus', () => 'DONE');
 
     it('render popo done image', () => {
       popoImageRender();
@@ -37,8 +37,8 @@ describe('POPOImage', () => {
     });
   });
 
-  context('when popo state is start', () => {
-    given('popoState', () => 'start');
+  context('when pollStatus is start', () => {
+    given('pollStatus', () => 'START');
 
     it('render popo start image', () => {
       popoImageRender();

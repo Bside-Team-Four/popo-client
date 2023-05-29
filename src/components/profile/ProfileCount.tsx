@@ -3,24 +3,24 @@ import styled from 'styled-components';
 import CountItem from './CountItem';
 
 type ProfileCountProps = {
-  selectedPOPOCount: number,
-  selectPOPOCount: number,
+  votedCount: number,
+  voteCount: number,
   followerCount: number,
-  followingCount: number,
+  followeeCount: number,
 };
 
 export default function ProfileCount({
-  selectedPOPOCount,
-  selectPOPOCount,
+  votedCount,
+  voteCount,
   followerCount,
-  followingCount,
+  followeeCount,
 }: ProfileCountProps) {
   return (
     <Container>
-      <CountItem title="선택된 POPO" count={selectedPOPOCount} />
-      <CountItem title="선택한 POPO" count={selectPOPOCount} />
+      <CountItem title="선택된 POPO" count={votedCount} />
+      <CountItem title="선택한 POPO" count={voteCount} />
       <CountItem title="팔로워" count={followerCount} />
-      <CountItem title="팔로잉" count={followingCount} />
+      <CountItem title="팔로잉" count={followeeCount} />
     </Container>
   );
 }

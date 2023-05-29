@@ -2,16 +2,16 @@ import Image from 'next/image';
 
 import styled from 'styled-components';
 
-import usePOPOState from '@/hooks/recoil/usePOPOState';
+import usePollStatus from '@/hooks/recoil/usePollStatus';
 
 export default function POPOImage() {
-  const { popoState } = usePOPOState();
+  const { pollStatus } = usePollStatus();
 
-  if (popoState === 'sleep') {
+  if (pollStatus === 'SLEEP') {
     return <SleepImage src="/images/popo-sleep.svg" width={272} height={212} alt="popo-sleep-image" priority />;
   }
 
-  if (popoState === 'done') {
+  if (pollStatus === 'DONE') {
     return <DoneImage src="/images/popo-done.svg" width={256} height={151} alt="popo-done-image" priority />;
   }
 

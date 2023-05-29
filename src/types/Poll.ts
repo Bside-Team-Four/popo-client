@@ -1,10 +1,10 @@
 import Candidate from '@/types/Candidate';
+import Category from '@/types/Category';
 
 type Poll = {
   questionId: number;
   content: string;
-  // TODO: Category 가 기획쪽에서 정해지면 Type 으로 빼야할듯
-  categoryName: string;
+  categoryName: Category;
   candidates: Candidate[];
 };
 

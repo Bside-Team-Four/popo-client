@@ -9,10 +9,10 @@ export default function ProfileSetting() {
   return (
     <Container>
       <TextField label="이름" value={profile.userName} readOnly />
-      <TextField label="나이" value={`${profile.age}세`} readOnly />
+      <TextField label="나이" value="18세" readOnly />
       <TextField label="학교" value={profile.schoolName} readOnly />
       <TextField label="학년" value={`${profile.grade}학년`} readOnly />
-      <TextField label="이메일" value={profile.email} readOnly />
+      <TextField label="이메일" value="popo@gmail.com" readOnly />
     </Container>
   );
 }

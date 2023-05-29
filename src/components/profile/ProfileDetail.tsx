@@ -1,7 +1,12 @@
+import { toast } from 'react-toastify';
+
+import { useRouter } from 'next/navigation';
+
 import styled from 'styled-components';
 
 import SmallButton from '@/components/common/SmallButton';
 import RewardSVG from '@/lib/assets/popo-reward-icon.svg';
+import Gender from '@/types/Gender';
 import { getCalAppWidth } from '@/utils/sizeHelper';
 
 import ProfileImage from './ProfileImage';
@@ -11,11 +16,11 @@ type ProfileDetailProps = {
   schoolName: string;
   grade: number;
   reward: number;
-  gender:number;
+  gender: Gender;
   profileImageUrl: string;
 };
 
-const getDefaultGenderText = (gender:number) => (gender === 0 ? '남자' : '여자');
+const getDefaultGenderText = (gender: Gender) => (gender === 'MALE' ? '남자' : '여자');
 
 export default function ProfileDetail({
   userName,
@@ -25,10 +30,20 @@ export default function ProfileDetail({
   gender,
   profileImageUrl,
 }:ProfileDetailProps) {
-  // TODO: 링크 관련 기획 이후 추가(Toast 포함)
-  const handleCopyLink = () => {
-    // eslint-disable-next-line no-console
-    console.log('복사');
+  const router = useRouter();
+
+  const handleCopyLink = async () => {
+    await navigator.clipboard.writeText('https://popo-client.vercel.app');
+    toast('링크를 복사했어요. 내 프로필을 공유하고 친구를 초대하세요.', {
+      position: 'top-center',
+      type: 'success',
+      autoClose: 1000,
+      hideProgressBar: true,
+    });
+  };
+
+  const handleRewardClick = () => {
+    router.push('/reward-history');
   };
 
   return (
@@ -37,7 +52,7 @@ export default function ProfileDetail({
       <DetailWrapper>
         <UserName>{userName}</UserName>
         <UserSchoolAndGrade>{`${schoolName} ${grade}학년 ${getDefaultGenderText(gender)}`}</UserSchoolAndGrade>
-        <RewardWrapper>
+        <RewardWrapper onClick={handleRewardClick}>
           <RewardIcon />
           <RewardText>{`${reward} PPP`}</RewardText>
         </RewardWrapper>

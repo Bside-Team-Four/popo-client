@@ -1,8 +1,14 @@
+import { getSession } from 'next-auth/react';
+
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
 import fixtures from '@/fixtures';
 import ApiService, { apiService } from '@/lib/api/ApiService';
+
+jest.mock('next-auth/react', () => ({
+  getSession: jest.fn(),
+}));
 
 describe('ApiService', () => {
   let mockApiService: ApiService;
@@ -10,6 +16,7 @@ describe('ApiService', () => {
 
   beforeEach(() => {
     mockApiService = new ApiService();
+    (getSession as jest.Mock).mockImplementation(() => Promise.resolve(given.user));
   });
 
   it('apiService', () => {
@@ -57,14 +64,6 @@ describe('ApiService', () => {
     });
   });
 
-  describe('setToken', () => {
-    it('사용자의 토큰 저장', () => {
-      mockApiService.setToken('test-token');
-
-      expect(mockApiService.accessToken).toEqual('test-token');
-    });
-  });
-
   describe('authenticate', () => {
     it('사용자 인증이 성공할 경우 데이터를 리턴한다.', async () => {
       mock.onPost('/user/authenticate').reply(200, { ...fixtures.authenticate });
@@ -72,7 +71,6 @@ describe('ApiService', () => {
       const data = await mockApiService.authenticate({ email: 'test@test.com', password: '1234' });
 
       expect(data).toEqual(fixtures.authenticate);
-      expect(mockApiService.accessToken).toEqual('test-token');
     });
 
     it('사용자 인증이 실패할 경우 value값이 없는 데이터를 리턴한다.', async () => {
@@ -85,12 +83,12 @@ describe('ApiService', () => {
   });
 
   describe('fetchGetSchools', () => {
-    it('Fetch가 성공할 경우(200) 데이터를 리턴한다.', async () => {
-      mock.onGet('/school/search').reply(200, { code: 0, content: fixtures.school });
+    it('Fetch가 성공할 경우 데이터를 리턴한다.', async () => {
+      mock.onGet('/school/search').reply(200, { code: 0, message: 'ok' });
 
       const data = await mockApiService.fetchGetSchools({ keyword: 'test', page: 0 });
 
-      expect(data.content).toEqual(fixtures.school);
+      expect(data.message).toEqual('ok');
     });
   });
 
@@ -149,6 +147,57 @@ describe('ApiService', () => {
       mock.onPost('/user/sign-up').reply(200, { code: 0, message: 'ok' });
 
       const data = await mockApiService.signUp(fixtures.signupUser);
+
+      expect(data.message).toEqual('ok');
+    });
+  });
+
+  describe('fetchGetPollStatus', () => {
+    it('Fetch가 성공할 경우 데이터를 리턴한다.', async () => {
+      given('user', () => ({ accessToken: 'aabbcc' }));
+      mock.onGet('/poll/status').reply(200, { code: 0, value: { status: 'START' } });
+
+      const data = await mockApiService.fetchGetPollStatus();
+
+      expect(data.value.status).toEqual('START');
+    });
+  });
+
+  describe('fetchMyProfile', () => {
+    it('Fetch가 성공할 경우 데이터를 리턴한다.', async () => {
+      mock.onGet('/user/my').reply(200, { code: 0, value: fixtures.profile });
+
+      const data = await mockApiService.fetchMyProfile();
+
+      expect(data.value).toEqual(fixtures.profile);
+    });
+  });
+
+  describe('fetchPollList', () => {
+    it('Fetch가 성공할 경우 데이터를 리턴한다.', async () => {
+      mock.onGet('/poll').reply(200, { code: 0, value: { polls: fixtures.polls } });
+
+      const data = await mockApiService.fetchPollList();
+
+      expect(data.value.polls).toEqual(fixtures.polls);
+    });
+  });
+
+  describe('vote', () => {
+    it('요청이 성공할 경우 데이터를 리턴한다.', async () => {
+      mock.onPost('/vote').reply(200, { code: 0, message: 'ok' });
+
+      const data = await mockApiService.vote({ chosenId: 1, questionId: 1 });
+
+      expect(data.message).toEqual('ok');
+    });
+  });
+
+  describe('skip', () => {
+    it('요청이 성공할 경우 데이터를 리턴한다.', async () => {
+      mock.onPost('/vote/skip').reply(200, { code: 0, message: 'ok' });
+
+      const data = await mockApiService.skip({ questionId: 1 });
 
       expect(data.message).toEqual('ok');
     });

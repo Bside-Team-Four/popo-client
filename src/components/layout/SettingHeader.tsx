@@ -15,6 +15,7 @@ const settingTitle:{ [key: string]: string } = {
   '/setting/remove-account': '회원 탈퇴',
   '/setting/tos/use': 'POPO 서비스 이용약관',
   '/setting/tos/privacy': '개인정보 처리방침',
+  '/reward-history': '이용내역',
 };
 
 export default function SettingHeader() {

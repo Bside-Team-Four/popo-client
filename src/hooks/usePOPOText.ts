@@ -4,8 +4,8 @@ import dayjs from 'dayjs';
 import _ from 'lodash/fp';
 import { useInterval } from 'usehooks-ts';
 
-import usePOPOState from '@/hooks/recoil/usePOPOState';
-import POPOState from '@/types/POPOState';
+import usePollStatus from '@/hooks/recoil/usePollStatus';
+import PollStatus from '@/types/PollStatus';
 
 const padInt = (length: number): ((a1: number) => string) => _.flow(
   String,
@@ -21,10 +21,10 @@ const getNowTime = () => {
   };
 };
 
-const getTimerText = (state: POPOState) => {
+const getTimerText = (pollStatus: PollStatus) => {
   const { minute, second } = getNowTime();
 
-  if (state === 'sleep') {
+  if (pollStatus === 'SLEEP') {
     return {
       hourText: '00',
       minuteText: '00',
@@ -40,10 +40,10 @@ const getTimerText = (state: POPOState) => {
   };
 };
 
-const getTitleText = (state:POPOState) => {
+const getTitleText = (pollStatus:PollStatus) => {
   const { hour } = getNowTime();
 
-  if (state === 'start') {
+  if (pollStatus === 'START') {
     const timeText = hour <= 12 ? `오전 ${hour}시` : `오후 ${hour - 12}시`;
 
     return `POPO_${timeText}`;
@@ -53,23 +53,23 @@ const getTitleText = (state:POPOState) => {
 };
 
 const usePOPOText = () => {
-  const { popoState, setPOPOState } = usePOPOState();
+  const { pollStatus, setPollStatus } = usePollStatus();
 
-  const [titleText, setTitleText] = useState(getTitleText(popoState));
-  const [timer, setTimer] = useState(getTimerText(popoState));
+  const [titleText, setTitleText] = useState(getTitleText(pollStatus));
+  const [timer, setTimer] = useState(getTimerText(pollStatus));
 
   useInterval(() => {
     const { hour, minute, second } = getNowTime();
 
-    setTitleText(getTitleText(popoState));
-    setTimer(getTimerText(popoState));
+    setTitleText(getTitleText(pollStatus));
+    setTimer(getTimerText(pollStatus));
 
     if (hour === 3 && minute + second === 0) {
-      setPOPOState('sleep');
+      setPollStatus('SLEEP');
     }
 
     if (!(hour >= 3 && hour < 7) && (minute + second === 0)) {
-      setPOPOState('start');
+      setPollStatus('START');
     }
   }, 1000);
 
