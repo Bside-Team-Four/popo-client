@@ -1,6 +1,6 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 import styled from 'styled-components';
 
@@ -8,14 +8,15 @@ import CloseIcon from '@/lib/assets/close-icon.svg';
 
 export default function Header() {
   const router = useRouter();
+  const pathname = usePathname();
 
   const onClick = () => {
-    router.replace('/');
+    router.replace('/signin');
   };
 
   return (
     <Container>
-      <CloseButton onClick={onClick} />
+      {pathname !== '/signin' && <CloseButton onClick={onClick} />}
     </Container>
   );
 }

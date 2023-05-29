@@ -1,9 +1,9 @@
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
 import styled from 'styled-components';
 
 import FixedSpinner from '@/components/common/FixedSpinner';
-import SignTitle from '@/components/common/SignTitle';
 import SmallButton from '@/components/common/SmallButton';
 import LoginButtons from '@/components/signin/LoginButtons';
 import LoginForm from '@/components/signin/LoginForm';
@@ -22,7 +22,7 @@ export default function SignIn() {
 
   return (
     <Container onSubmit={onSubmit}>
-      <SignTitle>{'이메일로\n로그인 할게요'}</SignTitle>
+      <SignImage />
       <LoginForm
         email={email}
         password={password}
@@ -37,8 +37,18 @@ export default function SignIn() {
 const Container = styled.form`
   display: flex;
   width: 100%;
-  flex-direction: column;;
+  flex-direction: column;
   justify-content: center;
   padding: 0 24px;
   overflow: hidden;
+`;
+
+const SignImage = styled(Image).attrs({
+  src: '/images/sign-main.svg',
+  width: 199,
+  height: 82,
+  alt: 'sign main image',
+  priority: true,
+})`
+  margin: 16px auto 34px;
 `;
