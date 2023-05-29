@@ -27,8 +27,8 @@ export default function ProfileImage({ gender, profileImageUrl }:ProfileImagePro
               <PImage
                 src={`/images/profile-${getDefaultGenderIcon(gender)}.svg`}
                 alt="profile default image"
-                width={24}
-                height={24}
+                width={72}
+                height={72}
                 priority
               />
             )
@@ -45,6 +45,7 @@ const Container = styled.div<{ $hasImage: boolean }>`
   border-radius: 100px;
   margin-right: 14px;
   background-color: ${({ theme }) => theme.color.componentBackground.bg02};
+  overflow: hidden;
   ${({ $hasImage }) => (!$hasImage && css`
     align-items: center;
     justify-content: center;
