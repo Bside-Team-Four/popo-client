@@ -9,7 +9,7 @@ import { useDebounce } from 'usehooks-ts';
 import SearchField from '@/components/common/SearchField';
 import FriendBox, { FriendBoxProps } from '@/components/search/FriendBox';
 import useGetUsers from '@/hooks/api/useGetUsers';
-import { selectedOptionSelector } from '@/recoil/selector';
+import { selectedOptionSelector } from '@/store/popo/selector';
 import { GetUserResponse } from '@/types/ApiTypes';
 
 type UserData = {

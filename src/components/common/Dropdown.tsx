@@ -3,7 +3,7 @@ import { ChangeEvent } from 'react';
 import { useRecoilState } from 'recoil';
 import styled from 'styled-components';
 
-import { selectedOptionState } from '@/recoil/atom';
+import { selectedOptionState } from '@/store/popo';
 
 export type DropdownProps = {
   options: Array<{ key: string, name: string }>;

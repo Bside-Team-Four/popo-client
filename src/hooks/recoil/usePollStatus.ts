@@ -1,6 +1,6 @@
 import { useRecoilState } from 'recoil';
 
-import popoState from '@/store/popo';
+import { popoState } from '@/store/popo';
 
 const usePollStatus = () => {
   const [pollStatus, setPollStatus] = useRecoilState(popoState);

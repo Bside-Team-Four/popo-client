@@ -5,7 +5,7 @@ import fixtures from '@/fixtures';
 import useGetPolls from '@/hooks/api/useGetPolls';
 import useGetPollStatus from '@/hooks/api/useGetPollStatus';
 import useVoteAndSkipMutation from '@/hooks/api/useVoteAndSkipMutation';
-import popoState from '@/store/popo';
+import { popoState } from '@/store/popo';
 import MockTheme from '@/test/MockTheme';
 import ReactQueryWrapper from '@/test/ReactQueryWrapper';
 import { renderWithPortal } from '@/utils/testHelper';

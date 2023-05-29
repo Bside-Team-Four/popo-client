@@ -20,7 +20,6 @@ const useGetUsers = ({
     },
   );
 
-  // const userData = data ? data?.value : [];
   return { userData: data, isLoading, refetch };
 };
 

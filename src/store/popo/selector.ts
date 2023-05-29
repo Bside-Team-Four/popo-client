@@ -1,6 +1,6 @@
 import { selector } from 'recoil';
 
-import { selectedOptionState } from './atom';
+import { selectedOptionState } from '@/store/popo';
 
 // eslint-disable-next-line import/prefer-default-export
 export const selectedOptionSelector = selector({
