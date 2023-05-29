@@ -9,7 +9,7 @@ type DefaultResponse = {
 };
 
 export type GetSchoolsResponse = DefaultResponse & {
-  value:{
+  value: {
     content: School[]
     first: boolean;
     last: boolean;
@@ -18,13 +18,13 @@ export type GetSchoolsResponse = DefaultResponse & {
 };
 
 export type AuthenticateResponse = DefaultResponse & {
-  value:{
+  value: {
     token: string;
   }
 };
 
 export type PasswordMissingResponse = DefaultResponse & {
-  value:{
+  value: {
     userId: number;
   }
 };
@@ -38,14 +38,67 @@ export type SignUpSendEmailResponse = DefaultResponse;
 export type SignUpAuthEmailResponse = DefaultResponse;
 
 export type SignUpResponse = DefaultResponse & {
-  value:{
+  value: {
     token: string;
     userId: number;
-  }
+  };
+};
+
+export type GetUserBySchoolResponse = {
+  code: number;
+  message: string;
+  value: [
+    {
+      userId: number;
+      profileImg: string;
+      name: string;
+      schoolName: string;
+      grade: number;
+      isFollow: boolean;
+    },
+  ];
+};
+
+export type GetUserBySchoolReq = {
+  keyword: string,
+  type: string,
+  lastId?: number,
+  size: number,
+};
+
+export type PostFollowUserReq = {
+  followeeId: number
+};
+
+export type FollowInfo = {
+  gender: string,
+  grade: number,
+  isFollow: boolean,
+  name: string,
+  profileImg?: string,
+  schoolName: string,
+  userId: number
+};
+
+export type PostFollowUserRes = {
+  code: number,
+  message: string,
+  value: FollowInfo
+};
+
+export type GetFollowReq = {
+  lastId?: number,
+  size: number,
+};
+
+export type GetFollowRes = {
+  code: number,
+  message: string,
+  value: Array<FollowInfo>
 };
 
 export type GetPollStatusResponse = DefaultResponse & {
-  value:{
+  value: {
     status: PollStatus;
   }
 };
@@ -55,7 +108,7 @@ export type GetMyProfileResponse = DefaultResponse & {
 };
 
 export type GetPollListResponse = DefaultResponse & {
-  value:{
+  value: {
     totalQuestionCount: number;
     userCurrentIndex: number;
     polls: Poll[];

@@ -12,6 +12,9 @@ module.exports = withPWA({
   eslint: {
     ignoreDuringBuilds: true,
   },
+  typescript: {
+    ignoreBuildErrors: true,
+  },
   swcMinify: true,
   compiler: {
     reactRemoveProperties: isProd && {

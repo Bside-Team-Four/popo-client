@@ -6,11 +6,25 @@ import ApiException from '@/lib/excptions/ApiException';
 import CustomException from '@/lib/excptions/CustomException';
 import { ApiErrorScheme } from '@/lib/excptions/type';
 import {
-  AuthenticateResponse, GetMyProfileResponse, GetPollListResponse, GetPollStatusResponse,
-  GetSchoolsResponse, PasswordMissingAuthResponse,
+  AuthenticateResponse,
+  GetFollowReq,
+  GetFollowRes,
+  GetMyProfileResponse,
+  GetPollListResponse,
+  GetPollStatusResponse,
+  GetSchoolsResponse,
+  GetUserBySchoolReq,
+  GetUserBySchoolResponse,
+  PasswordMissingAuthResponse,
   PasswordMissingResponse,
-  PasswordResetResponse, SignUpAuthEmailResponse,
-  SignUpResponse, SignUpSendEmailResponse, SkipResponse, VoteResponse,
+  PasswordResetResponse,
+  PostFollowUserReq,
+  PostFollowUserRes,
+  SignUpAuthEmailResponse,
+  SignUpResponse,
+  SignUpSendEmailResponse,
+  SkipResponse,
+  VoteResponse,
 } from '@/types/ApiTypes';
 import SignUpUser from '@/types/SignUpUser';
 
@@ -71,7 +85,7 @@ export default class ApiService {
   }
 
   fetchGetSchools = ({ keyword, page }: {
-    keyword: string, page:number
+    keyword: string, page: number
   }) => this.get<GetSchoolsResponse>('/school/search', {
     params: {
       keyword,
@@ -86,20 +100,82 @@ export default class ApiService {
     fcmToken: 'test',
   });
 
+  /**
+   * 유저 검색 관련
+   */
+  fetchGetUsersBySchool = async ({
+    keyword,
+    type,
+    lastId,
+    size,
+  }: GetUserBySchoolReq) => {
+    const { data } = await this.instance.get<GetUserBySchoolResponse>(
+      '/user/search',
+      {
+        params: {
+          keyword,
+          type,
+          lastId,
+          size,
+        },
+      },
+    );
+
+    return data;
+  };
+
+  /**
+   * 팔로우 관련
+   */
+  fetchPostFollowUser = async ({
+    followeeId,
+  }: PostFollowUserReq) => {
+    const { data } = await this.instance.post<PostFollowUserRes>(
+      '/relation/request',
+      {
+        params: {
+          followeeId,
+        },
+      },
+    );
+
+    return data;
+  };
+
+  fetchGetFollowee = async ({ lastId, size }: GetFollowReq) => this.instance.get<GetFollowRes>(
+    '/relation/followee',
+    {
+      params: {
+        lastId,
+        size,
+      },
+    },
+  );
+
+  fetchGetFollower = async ({ lastId, size }: GetFollowReq) => this.instance.get<GetFollowRes>(
+    '/relation/follower',
+    {
+      params: {
+        lastId,
+        size,
+      },
+    },
+  );
+
   passwordMissing = ({ email }: {
-    email:string
+    email: string
   }) => this.post<PasswordMissingResponse>('/password/missing', {
     email,
   });
 
-  passwordMissingAuth = ({ userId, userCode }:{
+  passwordMissingAuth = ({ userId, userCode }: {
     userId?: number, userCode: string
   }) => this.post<PasswordMissingAuthResponse>('/password/missing/auth', {
     userId,
     userCode,
   });
 
-  passwordReset = ({ userId, toChangePassword }:{
+  passwordReset = ({ userId, toChangePassword }: {
     userId?: number, toChangePassword: string
   }) => this.post<PasswordResetResponse>('/password/reset', {
     userId,
@@ -112,7 +188,7 @@ export default class ApiService {
     email,
   });
 
-  signUpAuthEmail = ({ email, userCode } : {
+  signUpAuthEmail = ({ email, userCode }: {
     email: string, userCode: string
   }) => this.post<SignUpAuthEmailResponse>(
     '/user/sign-up/auth/email',
@@ -135,12 +211,12 @@ export default class ApiService {
     },
   });
 
-  vote = ({ chosenId, questionId }:{ chosenId:number, questionId: number }) => this.post<VoteResponse>('/vote', {
+  vote = ({ chosenId, questionId }: { chosenId: number, questionId: number }) => this.post<VoteResponse>('/vote', {
     chosenId,
     questionId,
   });
 
-  skip = ({ questionId }:{ questionId: number }) => this.post<SkipResponse>('/vote/skip', { questionId });
+  skip = ({ questionId }: { questionId: number }) => this.post<SkipResponse>('/vote/skip', { questionId });
 }
 
 export const apiService = new ApiService();
