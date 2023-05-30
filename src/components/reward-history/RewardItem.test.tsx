@@ -6,7 +6,7 @@ import RewardItem from './RewardItem';
 
 describe('RewardItem', () => {
   const renderRewardItem = () => renderWithProviders(
-    <RewardItem type={given.type} date="23일 23:59" point={100} />,
+    <RewardItem type={given.type} regDt="23일 23:59" amount={100} remainAmount={10} />,
   );
 
   context('리워드가 적립(ADD) 상태일 경우', () => {

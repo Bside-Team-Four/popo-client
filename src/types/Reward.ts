@@ -1,10 +1,11 @@
 export type RewardType = 'ADD' | 'USE';
 
 type Reward = {
-  id: number;
+  historyId: number;
   type: RewardType;
-  date: string;
-  point: number;
+  regDt: string;
+  amount: number;
+  remainAmount: number;
 };
 
 export default Reward;

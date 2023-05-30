@@ -2,23 +2,28 @@ import styled from 'styled-components';
 
 import Reward, { RewardType } from '@/types/Reward';
 
-type RewardItemProps = Omit<Reward, 'id'>;
+type RewardItemProps = Omit<Reward, 'historyId'>;
 
 const getTypeText = (type: RewardType) => (type === 'ADD' ? '적립' : '사용');
 
 const getPointText = (type: RewardType, point: number) => `${type === 'ADD' ? '+' : '-'}${point} PPP`;
 
-export default function RewardItem({ type, date, point }:RewardItemProps) {
+export default function RewardItem({
+  type, regDt, amount, remainAmount,
+}:RewardItemProps) {
   const typeText = getTypeText(type);
-  const pointText = getPointText(type, point);
+  const pointText = getPointText(type, amount);
 
   return (
     <Container>
-      <RewardInfo>
+      <TypeInfo>
         <RewardTypeText>{typeText}</RewardTypeText>
-        <DateText>{date}</DateText>
-      </RewardInfo>
-      <PointText type={type}>{pointText}</PointText>
+        <SmallText>{regDt}</SmallText>
+      </TypeInfo>
+      <AmountInfo>
+        <AmountText type={type}>{pointText}</AmountText>
+        <RemainAmountText>{`${remainAmount} PPP`}</RemainAmountText>
+      </AmountInfo>
     </Container>
   );
 }
@@ -32,9 +37,15 @@ const Container = styled.div`
   margin: 24px 0;
 `;
 
-const RewardInfo = styled.div`
+const TypeInfo = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+const AmountInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 `;
 
 const RewardTypeText = styled.div`
@@ -44,7 +55,7 @@ const RewardTypeText = styled.div`
   color: ${({ theme }) => theme.color.text.title01};
 `;
 
-const DateText = styled.div`
+const SmallText = styled.div`
   font-size: 12px;
   line-height: 20px;
   font-weight: 500;
@@ -52,9 +63,17 @@ const DateText = styled.div`
   color: ${({ theme }) => theme.color.text.subTitle02};
 `;
 
-const PointText = styled.div<{ type: RewardType }>`
+const AmountText = styled.div<{ type: RewardType }>`
   font-size: 16px;
   line-height: 24px;
   font-weight: 500;
   color: ${({ theme, type }) => (type === 'ADD' ? theme.color.primary : theme.color.text.title01)};
+`;
+
+const RemainAmountText = styled.div`
+  font-size: 14px;
+  line-height: 24px;
+  font-weight: 500;
+  margin-top: 2px;
+  color: ${({ theme }) => theme.color.text.subTitle02};
 `;

@@ -13,9 +13,15 @@ export default function RewardHistory({ reward }:RewardHistoryProps) {
   return (
     <Container>
       {reward.length ? reward.map(({
-        id, type, date, point,
+        historyId, type, regDt, amount, remainAmount,
       }) => (
-        <RewardItem key={id} type={type} date={date} point={point} />
+        <RewardItem
+          key={historyId}
+          type={type}
+          regDt={regDt}
+          amount={amount}
+          remainAmount={remainAmount}
+        />
       ))
         : <NotHistory /> }
     </Container>
