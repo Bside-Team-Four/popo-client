@@ -20,7 +20,14 @@ export type GetSchoolsResponse = DefaultResponse & {
 export type AuthenticateResponse = DefaultResponse & {
   value:{
     token: string;
-  }
+  };
+};
+
+export type GetUserReq = {
+  keyword: string,
+  type: string,
+  lastId?: number,
+  size: number,
 };
 
 export type PasswordMissingResponse = DefaultResponse & {
@@ -41,6 +48,57 @@ export type SignUpResponse = DefaultResponse & {
   value:{
     token: string;
     userId: number;
+  };
+};
+
+export type GetUserResponse = {
+  code: number;
+  message: string;
+  value: [
+    {
+      userId: number;
+      profileImg: string;
+      name: string;
+      schoolName: string;
+      grade: number;
+      isFollow: boolean;
+    },
+  ];
+};
+
+export type PostFollowUserReq = {
+  followeeId: number
+};
+
+export type FollowInfo = {
+  gender: string,
+  grade: number,
+  isFollow: boolean,
+  name: string,
+  profileImg?: string,
+  schoolName: string,
+  userId: number
+};
+
+export type PostCancelFollowUserReq = {
+  relationId: number
+};
+
+export type PostCancelFollowUserRes = {
+  code: number,
+  message: string,
+  value: any
+};
+
+export type PostFollowUserRes = {
+  code: number,
+  message: string,
+  value: {
+    relationId: number,
+    followerId: number,
+    followerName: string,
+    followerProfileImage: string,
+    gender: string
   }
 };
 

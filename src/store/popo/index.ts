@@ -2,9 +2,13 @@ import { atom } from 'recoil';
 
 import PollStatus from '@/types/PollStatus';
 
-const popoState = atom<PollStatus>({
+export const popoState = atom<PollStatus>({
   key: 'popoState',
   default: 'START',
 });
 
-export default popoState;
+// eslint-disable-next-line import/prefer-default-export
+export const selectedOptionState = atom({
+  key: 'selectedOptionState',
+  default: 'SCHOOL',
+});
