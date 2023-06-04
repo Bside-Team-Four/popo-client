@@ -24,7 +24,7 @@ export default function SearchField({
   return (
     <Container>
       <SearchWrapper>
-        {searchOption?.length && <Dropdown options={searchOption} />}
+        {searchOption && searchOption.length && <Dropdown options={searchOption} />}
         <InputField
           type="text"
           value={keyword}

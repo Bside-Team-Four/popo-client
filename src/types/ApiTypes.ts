@@ -70,6 +70,26 @@ export type PostFollowUserReq = {
   followeeId: number
 };
 
+export type FollowInfo = {
+  gender: string,
+  grade: number,
+  isFollow: boolean,
+  name: string,
+  profileImg?: string,
+  schoolName: string,
+  userId: number
+};
+
+export type PostCancelFollowUserReq = {
+  relationId: number
+};
+
+export type PostCancelFollowUserRes = {
+  code: number,
+  message: string,
+  value: any
+};
+
 export type PostFollowUserRes = {
   code: number,
   message: string,

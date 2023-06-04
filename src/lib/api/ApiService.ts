@@ -6,15 +6,22 @@ import ApiException from '@/lib/excptions/ApiException';
 import CustomException from '@/lib/excptions/CustomException';
 import { ApiErrorScheme } from '@/lib/excptions/type';
 import {
-  AuthenticateResponse, GetMyProfileResponse, GetPollListResponse,
-  GetPollStatusResponse, GetSchoolsResponse, GetUserReq,
+  AuthenticateResponse,
+  GetMyProfileResponse,
+  GetPollListResponse,
+  GetPollStatusResponse,
+  GetSchoolsResponse,
+  GetUserReq,
   GetUserResponse,
   PasswordMissingAuthResponse,
   PasswordMissingResponse,
-  PasswordResetResponse, PostFollowUserReq,
+  PasswordResetResponse, PostCancelFollowUserReq, PostCancelFollowUserRes, PostFollowUserReq,
   PostFollowUserRes,
-  SignUpAuthEmailResponse, SignUpResponse, SignUpSendEmailResponse,
-  SkipResponse, VoteResponse,
+  SignUpAuthEmailResponse,
+  SignUpResponse,
+  SignUpSendEmailResponse,
+  SkipResponse,
+  VoteResponse,
 } from '@/types/ApiTypes';
 import SignUpUser from '@/types/SignUpUser';
 
@@ -155,6 +162,12 @@ export default class ApiService {
     {
       followeeId,
     },
+  );
+
+  fetchPostCancelFollowUser = async ({
+    relationId,
+  }: PostCancelFollowUserReq) => this.instance.post<PostCancelFollowUserRes>(
+    `/relation/cancel/${relationId}`,
   );
 
   fetchMyProfile = () => this.get<GetMyProfileResponse>('/user/my');

@@ -3,9 +3,11 @@ import { useState } from 'react';
 import styled from 'styled-components';
 
 import SearchUserProfile from '@/components/common/SearchUserProfile';
+import usePostCancelFollowUser from '@/hooks/api/usePostCancelFollowUser';
 import usePostFollowUser from '@/hooks/api/usePostFollowUser';
 
 export type FriendBoxProps = {
+  relationId: number;
   grade: number;
   profileImg?: string;
   name: string;
@@ -16,6 +18,7 @@ export type FriendBoxProps = {
 };
 
 export default function FriendBox({
+  relationId,
   grade,
   profileImg,
   name,
@@ -25,14 +28,33 @@ export default function FriendBox({
   gender,
 }: FriendBoxProps) {
   const [followUserId, setFollowUserId] = useState<number>(userId);
-  const [followStatus, setFollowStatus] = useState<boolean>(isFollow);
+  const [followStatus, setFollowStatus] = useState<boolean>(!!isFollow);
   const { followData, isLoading, refetch } = usePostFollowUser({ followeeId: followUserId });
+  // eslint-disable-next-line max-len
+  const { cancelFollowData, refetch: refetchCancelFollow } = usePostCancelFollowUser({ relationId });
 
-  const doFollow = () => {
+  const handleFollow = () => {
     setFollowUserId(userId);
+
+    if (followStatus === true) {
+      // 만약 현재 팔로우 중이라면?
+      // alert('팔로우중입니다.');
+      setFollowStatus(false);
+      refetchCancelFollow({ relationId });
+    } else {
+      // 만약 현재 팔로우 중이 아니라면?
+      setFollowUserId(userId);
+      setFollowStatus(true);
+      refetch();
+    }
+
     setFollowStatus(true);
-    refetch();
   };
+
+  // useEffect(() => {
+  //   console.log("followData", followData)
+  //   setRelationId(followData.relationId || 0);
+  // }, [followData]);
 
   return (
     <Wrapper>
@@ -41,7 +63,7 @@ export default function FriendBox({
         <NameDiv>{name}</NameDiv>
         <SchoolDiv>{`${schoolName} ${grade}학년 ${gender === 'MALE' ? '남자' : '여자'}`}</SchoolDiv>
       </Container>
-      <FollowBtn active={followStatus} onClick={doFollow}>
+      <FollowBtn active={followStatus} onClick={handleFollow}>
         {followStatus === true ? '팔로우' : '팔로잉'}
       </FollowBtn>
     </Wrapper>
