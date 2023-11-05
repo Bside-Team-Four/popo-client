@@ -3,7 +3,7 @@ import { ChangeEvent, useCallback } from 'react';
 import styled from 'styled-components';
 import { useDarkMode } from 'usehooks-ts';
 
-type DropdownProps = {
+export type DropdownProps = {
   options: Array<{ label: string; value: string }>;
   value: string;
   onChange: (value:string) => void;
@@ -51,7 +51,7 @@ const SelectBox = styled.select<{ $isDarkMode:boolean }>`
   border: none;
 
   color: ${({ theme }) => theme.color.text.title02};
-  background: ${({ theme, $isDarkMode }) => `${theme.color.componentBackground.bg01} url("/images/${$isDarkMode ? 'black' : 'light'}-triangle-down-icon.svg") no-repeat;`} 
+  background: ${({ theme, $isDarkMode }) => `${theme.color.componentBackground.bg02} url("/images/${$isDarkMode ? 'black' : 'light'}-triangle-down-icon.svg") no-repeat;`} 
   background-position: right 0px top 50%;
   padding-right: 20px;
 
