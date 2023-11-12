@@ -48,7 +48,7 @@ function SearchFieldPropsTypeGuard(props:SearchFieldProps):props is SearchInputP
 
 export function SearchFieldMain(props:SearchFieldProps) {
   const isUnified = SearchFieldPropsTypeGuard(props);
-  const hasTwoChild = isUnified || Children.toArray(props.children).length === 2;
+  const hasTwoChild = !isUnified && Children.toArray(props.children).length === 2;
 
   return (
     <Container>
