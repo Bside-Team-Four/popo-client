@@ -1,7 +1,12 @@
 type User = {
-  gender: '남성' | '여성';
-  schoolInfo: string;
-  gradeInfo: string;
+  userId: number;
+  profileImg: string;
+  name: string;
+  schoolName: string;
+  grade: number;
+  gender: 'MALE' | 'FEMALE';
+  isFollow: boolean;
+  relationId: number;
 };
 
 export default User;

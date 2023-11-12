@@ -7,7 +7,7 @@ import CustomException from '@/lib/excptions/CustomException';
 import { ApiErrorScheme } from '@/lib/excptions/type';
 import {
   AuthenticateResponse, GetMyProfileResponse, GetPollListResponse, GetPollStatusResponse,
-  GetSchoolsResponse, PasswordMissingAuthResponse,
+  GetSchoolsResponse, GetUsersResponse, PasswordMissingAuthResponse,
   PasswordMissingResponse,
   PasswordResetResponse, SignUpAuthEmailResponse,
   SignUpResponse, SignUpSendEmailResponse, SkipResponse, VoteResponse,
@@ -77,6 +77,17 @@ export default class ApiService {
       keyword,
       size: 30,
       page,
+    },
+  });
+
+  fetchGetUsers = ({ type, keyword, lastId }: {
+    type:'NAME' | 'SCHOOL', keyword: string, lastId?: number
+  }) => this.get<GetUsersResponse>('/user/search', {
+    params: {
+      type,
+      keyword,
+      size: 30,
+      lastId,
     },
   });
 

@@ -1,7 +1,9 @@
-export default function Search() {
+'use client';
+
+import Search from '@/components/search';
+
+export default function SearchPage() {
   return (
-    <div>
-      <h1>Search</h1>
-    </div>
+    <Search />
   );
 }
