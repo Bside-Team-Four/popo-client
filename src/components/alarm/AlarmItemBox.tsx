@@ -2,35 +2,37 @@ import styled from 'styled-components';
 
 import ProfileIcon from '@/components/common/ProfileIcon';
 import Alarm from '@/types/Alarm';
+import Hint from '@/types/Hint';
 
 import HintBox from './HintBox';
 
 type AlarmItemBoxProps = {
   item: Alarm;
+  hints?: Hint[];
 };
 
-export default function AlarmItemBox({ item }: AlarmItemBoxProps) {
+export default function AlarmItemBox({ item, hints }: AlarmItemBoxProps) {
   return (
     <Container>
       <TopContainer>
         <ProfileIcon
-          gender={item.userInfo.gender === '남성' ? 'male' : 'female'}
+          gender={item.gender}
+          variant="circle"
         />
-        <QuestionBox>{item.title}</QuestionBox>
+        <QuestionBox>{item.questionContent}</QuestionBox>
       </TopContainer>
       <MiddleContainer>
         <TextContainer>
-          <B3>익명의 투표자</B3>
           <InfoContainer>
-            <B3Gray>{`${item.userInfo.gender} | ${item.userInfo.schoolInfo}`}</B3Gray>
+            <B3Gray>{`${item.schoolName} ${item.grade}학년 ${item.gender === 'MALE' ? '남자' : '여자'}`}</B3Gray>
           </InfoContainer>
         </TextContainer>
         <TimeContainer>
-          <B3Gray>{item.createdAt}</B3Gray>
+          <B3Gray>{item.regDatetime}</B3Gray>
         </TimeContainer>
       </MiddleContainer>
-      {item.hints && (
-      <HintBox key={item.hints + item.createdAt} hintData={item.hints} test-id="hint-box" />
+      {hints && (
+      <HintBox hintData={hints} test-id="hint-box" />
       )}
     </Container>
   );

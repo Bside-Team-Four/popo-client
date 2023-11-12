@@ -1,11 +1,10 @@
-import Hint from '@/types/Hint';
-import User from '@/types/User';
+import User from './User';
 
-type Alarm = {
-  title: string;
-  createdAt: string;
-  userInfo: User;
-  hints?: Hint[];
+type Alarm = Omit<User, 'profileImg' | 'name' | 'isFollow' | 'relationId'> & {
+  questionContent: string,
+  voteId: number,
+  questionId: number,
+  regDatetime: string
 };
 
 export default Alarm;
