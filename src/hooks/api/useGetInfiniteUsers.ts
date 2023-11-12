@@ -9,11 +9,11 @@ type GetUsersProps = {
   keyword: string;
 };
 
-const GET_INFINITE_USERS_KEY = 'getInfiniteUsers';
+export const GET_INFINITE_USERS_KEY = 'getInfiniteUsers';
 
 export default function useGetInfiniteUsers({ type, keyword }:GetUsersProps) {
   const query = useInfiniteQuery(
-    [GET_INFINITE_USERS_KEY, type, keyword],
+    [GET_INFINITE_USERS_KEY],
     async ({ pageParam: lastId }) => apiService.fetchGetUsers({ type, keyword, lastId }),
     {
       getNextPageParam: (res) => {

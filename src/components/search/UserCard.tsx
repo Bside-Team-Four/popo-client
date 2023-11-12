@@ -1,5 +1,7 @@
 import { styled } from 'styled-components';
 
+import useFollowMutation from '@/hooks/api/useFollowMutation';
+
 import ProfileIcon from '../common/ProfileIcon';
 
 type UserCardProps = {
@@ -9,11 +11,23 @@ type UserCardProps = {
   schoolName: string;
   grade: number;
   gender:'MALE' | 'FEMALE'
+  relationId: number | null;
 };
 
 export default function UserCard({
-  userId, name, profileImg, schoolName, grade, gender,
+  userId, name, profileImg, schoolName, grade, gender, relationId,
 }:UserCardProps) {
+  const $hasRelation = typeof relationId === 'number';
+
+  const { followMutation, unfollowMutation } = useFollowMutation();
+
+  function handleFollow() {
+    if ($hasRelation) {
+      unfollowMutation.mutate(relationId);
+    } else {
+      followMutation.mutate(userId);
+    }
+  }
   return (
     <Container key={userId}>
       <ProfileIcon
@@ -25,7 +39,7 @@ export default function UserCard({
         <UserName>{name}</UserName>
         <UserInpo>{`${schoolName} ${grade}학년`}</UserInpo>
       </InpoWrapper>
-      <RelationButton>팔로우</RelationButton>
+      <RelationButton $hasRelation={$hasRelation} onClick={() => { handleFollow(); }}>{relationId ? '팔로잉' : '팔로우'}</RelationButton>
     </Container>
   );
 }
@@ -66,8 +80,9 @@ const UserInpo = styled.div`
   color: ${({ theme }) => theme.color.text.title02};
 `;
 
-const RelationButton = styled.div`
-  color: ${({ theme }) => theme.color.primary};
+const RelationButton = styled.div<{ $hasRelation:boolean }>`
+  color: ${({ theme, $hasRelation }) => ($hasRelation ? theme.color.primary : theme.color.text.reverseText)};
+  background: ${({ theme, $hasRelation }) => ($hasRelation ? theme.color.componentBackground.bg02 : theme.color.primary)};
   text-align: center;
   font-size: 15px;
   font-style: normal;
@@ -76,9 +91,11 @@ const RelationButton = styled.div`
   letter-spacing: -0.375px;
   
   display: flex;
-  text-overflow: nowrap;
-  width: max-content;
-  padding: 7px 4px 8px 0px;
+  flex-shrink: 0;
+  width: 54px;
+  height: 32px;
+  justify-content: center;
   align-items: center;
   text-wrap:nowrap;
+  border-radius: 8px;
 `;

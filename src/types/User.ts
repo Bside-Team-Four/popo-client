@@ -6,7 +6,7 @@ type User = {
   grade: number;
   gender: 'MALE' | 'FEMALE';
   isFollow: boolean;
-  relationId: number;
+  relationId: number | null;
 };
 
 export default User;

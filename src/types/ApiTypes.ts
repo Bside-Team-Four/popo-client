@@ -67,6 +67,17 @@ export type GetPollListResponse = DefaultResponse & {
   }
 };
 
+export type FollowResponse = DefaultResponse & {
+  value:{
+    relationId: number,
+    followerId: number,
+    followerName: string,
+    followerProfileImage?: string,
+    gender: 'MALE' | 'FEMALE' }
+};
+
+export type UnfollowResponse = DefaultResponse;
+
 export type VoteResponse = DefaultResponse;
 
 export type SkipResponse = DefaultResponse;
