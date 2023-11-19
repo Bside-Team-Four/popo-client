@@ -28,8 +28,9 @@ export default function UserCard({
       followMutation.mutate(userId);
     }
   }
+
   return (
-    <Container key={userId}>
+    <Container key={userId} data-testid="user-card">
       <ProfileIcon
         variant="square"
         img={profileImg}
