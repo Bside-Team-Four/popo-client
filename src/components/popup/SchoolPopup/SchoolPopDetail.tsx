@@ -29,12 +29,15 @@ export default function SchoolPopDetail({ onClose, onChangeSchool }:SchoolPopDet
 
   return (
     <Container>
-      <SearchField
-        keyword={keyword}
-        setKeyword={setKeyword}
-        placeholder="학교 검색 (지역+학교명으로 검색)"
-        onClose={onClose}
-      />
+      <SearchFieldWrapper>
+        <SearchField
+          keyword={keyword}
+          setKeyword={setKeyword}
+          placeholder="학교 검색 (지역+학교명으로 검색)"
+        />
+
+        <CloseText onClick={onClose}>취소</CloseText>
+      </SearchFieldWrapper>
       <Wrapper>
         {schoolData && schoolData.map((item) => (
           <SchoolItem key={item.id} school={item} onClick={() => onSelectItem(item)} />
@@ -56,11 +59,25 @@ const Container = styled.div`
   background-color: ${({ theme }) => theme.color.background};
 `;
 
+const SearchFieldWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  width: 100%;
+`;
+
 const Wrapper = styled.div`
   display: flex;
   width: 100%;
-  margin-top: 72px;
   flex-direction: column;
-  overflow: scroll;
+  overflow-y: scroll;
   height: auto;
+`;
+
+const CloseText = styled.div`
+  width: 50px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 23px;
+  color: ${({ theme }) => theme.color.text.title01};
+  margin-left: 16px;
 `;

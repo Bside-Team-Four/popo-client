@@ -28,7 +28,7 @@ describe('HintBox', () => {
 
     fireEvent.click(hintButton);
 
-    expect(screen.getByText(/랜덤 초성 : ㄱ/)).toBeInTheDocument();
+    expect(screen.getByText(/ㄱ이 들어가는 이름/)).toBeInTheDocument();
   });
 
   context('힌트가 2개 이상일 경우', () => {
@@ -53,7 +53,7 @@ describe('HintBox', () => {
 
       fireEvent.click(moreButton);
 
-      expect(screen.getByText(/초성 위치/)).toBeInTheDocument();
+      expect(screen.getByText(/ㄴ이 들어가는 이름/)).toBeInTheDocument();
     });
   });
 });

@@ -23,7 +23,7 @@ export default function HintBox({ hintData }: HintBoxProps) {
     setOtherHintOpen({ open: true, index: otherHintOpen.index + 1 });
   };
 
-  const getHintText = (hint: Hint) => `${hint.hintTitle} : ${hint.hintContent}`;
+  const getHintText = (hint: Hint) => `${hint.content}`;
 
   return (
     <Container>

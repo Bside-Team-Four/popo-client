@@ -6,11 +6,12 @@ import ApiException from '@/lib/excptions/ApiException';
 import CustomException from '@/lib/excptions/CustomException';
 import { ApiErrorScheme } from '@/lib/excptions/type';
 import {
-  AuthenticateResponse, GetMyProfileResponse, GetPollListResponse, GetPollStatusResponse,
-  GetSchoolsResponse, PasswordMissingAuthResponse,
+  AuthenticateResponse, FollowResponse, GetMyProfileResponse,
+  GetPollListResponse, GetPollStatusResponse,
+  GetSchoolsResponse, GetUsersResponse, PasswordMissingAuthResponse,
   PasswordMissingResponse,
   PasswordResetResponse, SignUpAuthEmailResponse,
-  SignUpResponse, SignUpSendEmailResponse, SkipResponse, VoteResponse,
+  SignUpResponse, SignUpSendEmailResponse, SkipResponse, UnfollowResponse, VoteResponse,
 } from '@/types/ApiTypes';
 import SignUpUser from '@/types/SignUpUser';
 
@@ -79,6 +80,23 @@ export default class ApiService {
       page,
     },
   });
+
+  fetchGetUsers = ({ type, keyword, lastId }: {
+    type:'NAME' | 'SCHOOL', keyword: string, lastId?: number
+  }) => this.get<GetUsersResponse>('/user/search', {
+    params: {
+      type,
+      keyword,
+      size: 30,
+      lastId,
+    },
+  });
+
+  follow = (followeeId : number) => this.post<FollowResponse>('/relation/request', {
+    followeeId,
+  });
+
+  unfollow = (relationId : number) => this.post<UnfollowResponse>(`/relation/cancel/${relationId}`);
 
   authenticate = async (payload: { email: string, password: string }) => this.post<AuthenticateResponse>('/user/authenticate', {
     email: payload.email,

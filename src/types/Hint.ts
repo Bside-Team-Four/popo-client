@@ -1,7 +1,10 @@
 type Hint = {
-  hintTitle: string;
-  hintContent: string;
-  hintId: number;
+  hintId: number,
+  hintOrder: number,
+  content: string,
+  price: number,
+  isPurchased: boolean,
+  isLast: boolean
 };
 
 export default Hint;

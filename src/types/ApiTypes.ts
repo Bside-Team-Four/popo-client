@@ -2,6 +2,7 @@ import Poll from '@/types/Poll';
 import PollStatus from '@/types/PollStatus';
 import ProfileType from '@/types/ProfileType';
 import School from '@/types/School';
+import User from '@/types/User';
 
 type DefaultResponse = {
   code: number;
@@ -15,6 +16,10 @@ export type GetSchoolsResponse = DefaultResponse & {
     last: boolean;
     number: number;
   };
+};
+
+export type GetUsersResponse = DefaultResponse & {
+  value: User[]
 };
 
 export type AuthenticateResponse = DefaultResponse & {
@@ -61,6 +66,17 @@ export type GetPollListResponse = DefaultResponse & {
     polls: Poll[];
   }
 };
+
+export type FollowResponse = DefaultResponse & {
+  value:{
+    relationId: number,
+    followerId: number,
+    followerName: string,
+    followerProfileImage?: string,
+    gender: 'MALE' | 'FEMALE' }
+};
+
+export type UnfollowResponse = DefaultResponse;
 
 export type VoteResponse = DefaultResponse;
 

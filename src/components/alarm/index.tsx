@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import alarm from '@/fixtures/alarm';
+import hint from '@/fixtures/hint';
 import Alarm from '@/types/Alarm';
 
 import AlarmItemBox from './AlarmItemBox';
@@ -12,7 +13,7 @@ export default function AlarmPage() {
         <Title>나를 뽑은 사람</Title>
       </TitleContainer>
       {alarm.map((item: Alarm) => (
-        <AlarmItemBox key={item.title + item.createdAt} item={item} />
+        <AlarmItemBox key={item.questionId} item={item} hints={hint} />
       ))}
     </Container>
   );

@@ -1,59 +1,104 @@
-import { ChangeEvent } from 'react';
+/* eslint-disable react/destructuring-assignment */
+import React, { ChangeEvent, Children } from 'react';
 
 import styled from 'styled-components';
 
 import SearchIcon from '@/lib/assets/search-icon.svg';
+import { getChildByType } from '@/utils/utils';
+
+import Dropdown, { DropdownProps } from './Dropdown';
 
 type SearchFieldProps = {
+  children?:Array<React.ReactElement<DropdownProps | SearchInputProps>>;
+} | SearchInputProps;
+
+type SearchInputProps = {
   keyword: string;
   setKeyword: (keyword: string) => void;
   placeholder: string;
-  onClose?: () => void;
 };
 
-export default function SearchField({
-  keyword, setKeyword, placeholder, onClose,
-}:SearchFieldProps) {
+const DropdownType = React.createElement(Dropdown).type;
+const SearchInputType = React.createElement(SearchInput).type;
+
+function SearchInput({
+  keyword, setKeyword, placeholder,
+}:SearchInputProps) {
   const onChangeKeyword = (e: ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
     setKeyword(e.target.value);
   };
 
   return (
+    <SearchInputWrapper>
+      <InputField
+        type="text"
+        value={keyword}
+        onChange={onChangeKeyword}
+        placeholder={placeholder}
+      />
+      <SearchImage />
+    </SearchInputWrapper>
+  );
+}
+
+function SearchFieldPropsTypeGuard(props:SearchFieldProps):props is SearchInputProps {
+  return (props as SearchInputProps).keyword !== undefined;
+}
+
+export function SearchFieldMain(props:SearchFieldProps) {
+  const isUnified = SearchFieldPropsTypeGuard(props);
+  const hasTwoChild = !isUnified && Children.toArray(props.children).length === 2;
+
+  return (
     <Container>
       <SearchWrapper>
-        <InputField
-          type="text"
-          value={keyword}
-          onChange={onChangeKeyword}
-          placeholder={placeholder}
-        />
-        <SearchImage />
+        {isUnified ? <SearchInput {...props} />
+          : (
+            <>
+              {getChildByType(DropdownType, props.children)}
+              {hasTwoChild && <Spacer />}
+              {getChildByType(SearchInputType, props.children)}
+            </>
+          )}
       </SearchWrapper>
-      {onClose && <CloseText onClick={onClose}>취소</CloseText>}
     </Container>
   );
 }
 
+const SearchField = Object.assign(SearchFieldMain, {
+  Input: SearchInput,
+  Dropdown,
+});
+
+export default SearchField;
+
 const Container = styled.div`
-  position: absolute;
-  top: 0;
   display: flex;
   align-items: center;
   width: 100%;
   height: 72px;
-  padding: 16px 24px;
 `;
 
 const SearchWrapper = styled.div`
   display: flex;
   align-items: center;  
+  gap:18px;
   position: relative;
   width: 100%;
   height: 40px;
   background-color: ${({ theme }) => theme.color.componentBackground.bg02};
   border-radius: 36px;
   padding: 8px 16px;
+`;
+
+const SearchInputWrapper = styled.div`
+  display: flex;
+  align-items: center;  
+  position: relative;
+  width: 100%;
+  height: 40px;
+  background-color: transparent;
 `;
 
 const InputField = styled.input`
@@ -80,11 +125,8 @@ const SearchImage = styled(SearchIcon)`
   }
 `;
 
-const CloseText = styled.div`
-  width: 50px;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 23px;
-  color: ${({ theme }) => theme.color.text.title01};
-  padding-left: 16px;
+const Spacer = styled.div`
+  width: 1px;
+  height: 100%;
+  background-color: ${({ theme }) => theme.color.text.title02};
 `;

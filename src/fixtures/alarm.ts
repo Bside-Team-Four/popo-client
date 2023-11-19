@@ -2,105 +2,44 @@ import Alarm from '@/types/Alarm';
 
 const alarm: Alarm[] = [
   {
-    title: '우리반의 분위기 메이커는 누구야',
-    createdAt: '1분전', // @TO DO: epoch타임으로 response올 시 변환 필요
-    userInfo: {
-      gender: '남성',
-      schoolInfo: '휘문고',
-      gradeInfo: '1학년',
-    },
-    hints: [
-      {
-        hintTitle: '랜덤 초성',
-        hintContent: 'ㄱ',
-        hintId: 1,
-      },
-    ],
+    questionId: 1,
+    questionContent: '우리반의 분위기 메이커는 누구야1',
+    regDatetime: '2023-11-12T12:46:44.871Z', // @TO DO: epoch타임으로 response올 시 변환 필요
+    gender: 'MALE',
+    schoolName: '휘문고',
+    grade: 1,
+    userId: 0,
+    voteId: 0,
   },
   {
-    title: '우리반의 제일 개구쟁이가 누구야?',
-    createdAt: '5분전', // @TO DO: epoch타임으로 response올 시 변환 필요
-    userInfo: {
-      gender: '여성',
-      schoolInfo: '쌍문고',
-      gradeInfo: '3학년',
-    },
-    hints: [
-      {
-        hintTitle: '랜덤 초성',
-        hintContent: 'ㄱ',
-        hintId: 2,
-      },
-      {
-        hintTitle: '초성 위치',
-        hintContent: '두 번째',
-        hintId: 3,
-      },
-    ],
+    questionId: 2,
+    questionContent: '우리반의 분위기 메이커는 누구야2',
+    regDatetime: '2023-11-12T12:46:44.871Z', // @TO DO: epoch타임으로 response올 시 변환 필요
+    gender: 'MALE',
+    schoolName: '휘문고',
+    grade: 3,
+    userId: 0,
+    voteId: 0,
   },
   {
-    title:
-      '우리반의 분위기 메이커는 누구야 우리반의 분위기 메이커는 누구야 우리반의 분위기 메이커는 누구야 우리반의 분위기 메이커는 누구야',
-    createdAt: '12분전', // @TO DO: epoch타임으로 response올 시 변환 필요
-    userInfo: {
-      gender: '남성',
-      schoolInfo: '휘문고',
-      gradeInfo: '1학년',
-    },
+    questionId: 3,
+    questionContent: '우리반의 분위기 메이커는 누구야3',
+    regDatetime: '2023-11-12T12:46:44.871Z', // @TO DO: epoch타임으로 response올 시 변환 필요
+    gender: 'FEMALE',
+    schoolName: '휘문고',
+    grade: 1,
+    userId: 0,
+    voteId: 0,
   },
   {
-    title: '우리반의 분위기 메이커는 누구야',
-    createdAt: '17분전', // @TO DO: epoch타임으로 response올 시 변환 필요
-    userInfo: {
-      gender: '남성',
-      schoolInfo: '휘문고',
-      gradeInfo: '1학년',
-    },
-  },
-  {
-    title: '우리반의 분위기 메이커는 누구야',
-    createdAt: '30분전', // @TO DO: epoch타임으로 response올 시 변환 필요
-    userInfo: {
-      gender: '남성',
-      schoolInfo: '휘문고',
-      gradeInfo: '1학년',
-    },
-  },
-  {
-    title: '우리반의 분위기 메이커는 누구야',
-    createdAt: '32분전', // @TO DO: epoch타임으로 response올 시 변환 필요
-    userInfo: {
-      gender: '남성',
-      schoolInfo: '휘문고',
-      gradeInfo: '1학년',
-    },
-  },
-  {
-    title: '우리반의 제일 개구쟁이가 누구야?',
-    createdAt: '45분전', // @TO DO: epoch타임으로 response올 시 변환 필요
-    userInfo: {
-      gender: '여성',
-      schoolInfo: '쌍문고',
-      gradeInfo: '3학년',
-    },
-  },
-  {
-    title: '우리반의 분위기 메이커는 누구야',
-    createdAt: '50분전', // @TO DO: epoch타임으로 response올 시 변환 필요
-    userInfo: {
-      gender: '남성',
-      schoolInfo: '휘문고',
-      gradeInfo: '1학년',
-    },
-  },
-  {
-    title: '우리반의 제일 개구쟁이가 누구야?',
-    createdAt: '60분전', // @TO DO: epoch타임으로 response올 시 변환 필요
-    userInfo: {
-      gender: '여성',
-      schoolInfo: '쌍문고',
-      gradeInfo: '3학년',
-    },
+    questionId: 4,
+    questionContent: '우리반의 분위기 메이커는 누구야4',
+    regDatetime: '2023-11-12T12:46:44.871Z', // @TO DO: epoch타임으로 response올 시 변환 필요
+    gender: 'MALE',
+    schoolName: '가락고',
+    grade: 2,
+    userId: 0,
+    voteId: 0,
   },
 ];
 

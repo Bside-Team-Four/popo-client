@@ -4,6 +4,10 @@ import { renderWithProviders } from '@/utils/testHelper';
 
 import AlarmPage from './index';
 
+jest.mock('usehooks-ts', () => ({
+  useDarkMode: () => ({ isDarkMode: false }),
+}));
+
 describe('Alarm', () => {
   const renderAlarm = () => renderWithProviders(<AlarmPage />);
 
