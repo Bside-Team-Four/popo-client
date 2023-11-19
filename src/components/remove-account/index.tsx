@@ -1,27 +1,23 @@
 import { useState } from 'react';
 
 import Image from 'next/image';
-import { signOut } from 'next-auth/react';
 
 import styled from 'styled-components';
 
 import Button from '@/components/common/Button';
 import NormalPopup from '@/components/popup/NormalPopup';
+import useRemoveAccount from '@/hooks/useRemoveAccount';
 
 export default function RemoveAccount() {
   const [isChecked, setIsChecked] = useState(false);
-  const [show, setShow] = useState(false);
+  const { removeAccount, popInfo: onRemoveSuccessPopInfo } = useRemoveAccount();
 
   const onToggleCheck = () => {
     setIsChecked((prev) => !prev);
   };
 
   const onClickRemove = () => {
-    setShow(true);
-  };
-
-  const onClosePopup = () => {
-    signOut();
+    removeAccount();
   };
 
   const checkText = isChecked ? 'check' : 'uncheck';
@@ -47,7 +43,7 @@ export default function RemoveAccount() {
         </CheckContainer>
         <RemoveButton disabled={!isChecked} onClick={onClickRemove}>POPO 탈퇴</RemoveButton>
       </RemoveContainer>
-      <NormalPopup show={show} onClose={onClosePopup} title="POPO 탈퇴가 완료되었습니다." okText="확인" />
+      <NormalPopup {...onRemoveSuccessPopInfo} />
     </Container>
   );
 }

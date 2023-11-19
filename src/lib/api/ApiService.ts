@@ -10,7 +10,7 @@ import {
   GetPollListResponse, GetPollStatusResponse,
   GetSchoolsResponse, GetUsersResponse, PasswordMissingAuthResponse,
   PasswordMissingResponse,
-  PasswordResetResponse, SignUpAuthEmailResponse,
+  PasswordResetResponse, RemoveAccountResponse, SignUpAuthEmailResponse,
   SignUpResponse, SignUpSendEmailResponse, SkipResponse, UnfollowResponse, VoteResponse,
 } from '@/types/ApiTypes';
 import SignUpUser from '@/types/SignUpUser';
@@ -69,6 +69,10 @@ export default class ApiService {
 
   post<T>(...args: Parameters<typeof this.instance.post>) {
     return this.instance.post<T, T>(...args);
+  }
+
+  delete<T>(...args: Parameters<typeof this.instance.delete>) {
+    return this.instance.delete<T, T>(...args);
   }
 
   fetchGetSchools = ({ keyword, page }: {
@@ -143,6 +147,10 @@ export default class ApiService {
   signUp = (payload: SignUpUser) => this.post<SignUpResponse>(
     '/user/sign-up',
     { ...payload, fcmToken: 'test' },
+  );
+
+  removeAccount = () => this.delete<RemoveAccountResponse>(
+    '/user/leave',
   );
 
   fetchMyProfile = () => this.get<GetMyProfileResponse>('/user/my');

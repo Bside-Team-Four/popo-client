@@ -80,4 +80,6 @@ export type UnfollowResponse = DefaultResponse;
 
 export type VoteResponse = DefaultResponse;
 
+export type RemoveAccountResponse = DefaultResponse;
+
 export type SkipResponse = DefaultResponse;
