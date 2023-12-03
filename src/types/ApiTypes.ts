@@ -83,3 +83,10 @@ export type VoteResponse = DefaultResponse;
 export type RemoveAccountResponse = DefaultResponse;
 
 export type SkipResponse = DefaultResponse;
+
+export type NotificationSettingsResponse = DefaultResponse & {
+  value:{
+    'chosenOption': boolean,
+    'hourOption': boolean
+  }
+};

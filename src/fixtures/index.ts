@@ -2,6 +2,7 @@ import alarm from './alarm';
 import authenticate from './authenticate';
 import candidate from './candidate';
 import hint from './hint';
+import notificationSettings from './notificationSettings';
 import polls from './polls';
 import profile from './profile';
 import reward from './reward';
@@ -22,4 +23,5 @@ export default {
   profile,
   signupUser,
   reward,
+  notificationSettings,
 };

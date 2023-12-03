@@ -8,7 +8,7 @@ import { ApiErrorScheme } from '@/lib/excptions/type';
 import {
   AuthenticateResponse, FollowResponse, GetMyProfileResponse,
   GetPollListResponse, GetPollStatusResponse,
-  GetSchoolsResponse, GetUsersResponse, PasswordMissingAuthResponse,
+  GetSchoolsResponse, GetUsersResponse, NotificationSettingsResponse, PasswordMissingAuthResponse,
   PasswordMissingResponse,
   PasswordResetResponse, RemoveAccountResponse, SignUpAuthEmailResponse,
   SignUpResponse, SignUpSendEmailResponse, SkipResponse, UnfollowResponse, VoteResponse,
@@ -167,6 +167,10 @@ export default class ApiService {
   });
 
   skip = ({ questionId }:{ questionId: number }) => this.post<SkipResponse>('/vote/skip', { questionId });
+
+  fetchNotificationSettings = () => this.get<NotificationSettingsResponse>('/fcm');
+
+  toggleNotificationSetting = (type:'hour' | 'chosen') => this.post<NotificationSettingsResponse>(`/fcm/${type}`);
 }
 
 export const apiService = new ApiService();
