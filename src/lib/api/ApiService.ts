@@ -128,6 +128,13 @@ export default class ApiService {
     toChangePassword,
   });
 
+  passwordChange = ({ currPassword, toChangePassword }:{
+    currPassword:string, toChangePassword:string
+  }) => this.post('/user/change/password', {
+    currPassword,
+    toChangePassword,
+  });
+
   fetchGetPollStatus = () => this.get<GetPollStatusResponse>('/poll/status');
 
   signUpSendEmail = ({ email }: { email: string }) => this.post<SignUpSendEmailResponse>('/user/sign-up/send/email', {

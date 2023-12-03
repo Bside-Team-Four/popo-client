@@ -12,13 +12,12 @@ describe('useChangePasswordMutation', () => {
 
     (apiService.passwordMissing as jest.Mock).mockImplementation(() => ({
       code: 0,
-      value: {
-        userId: 100,
-      },
+      message: 'ok',
+      value: {},
     }));
   });
 
-  const renderUseChangePasswordMutationHook = () => renderHook(
+  const renderuseChangePasswordMutationHook = () => renderHook(
     () => useChangePasswordMutation(),
     {
       wrapper,
@@ -27,10 +26,8 @@ describe('useChangePasswordMutation', () => {
 
   // eslint-disable-next-line jest/expect-expect
   it('호출 Test', async () => {
-    const { result } = renderUseChangePasswordMutationHook();
+    const { result } = renderuseChangePasswordMutationHook();
 
-    await result.current.passwordMissingMutation.mutate({ email: 'popo@gmail.com' });
-    await result.current.passwordMissingAuthMutation.mutate({ userId: 100, userCode: '1234' });
-    await result.current.passwordResetMutation.mutate({ userId: 100, toChangePassword: '1234' });
+    await result.current.mutate({ currPassword: 'currPassword!23', toChangePassword: 'toChangePassword!23' });
   });
 });

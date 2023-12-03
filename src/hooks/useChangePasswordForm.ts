@@ -1,11 +1,11 @@
 import { useState } from 'react';
 
+import useChangePasswordMutation from '@/hooks/api/useChangePasswordMutation';
 import usePOPOForm from '@/hooks/usePOPOForm';
 
 export type ChangePasswordName = 'currentPassword' | 'password' | 'passwordConfirm';
 
 export type ChangePasswordForm = {
-
   currentPassword: string;
   password: string;
   passwordConfirm: string;
@@ -13,13 +13,18 @@ export type ChangePasswordForm = {
 
 const useChangePasswordForm = () => {
   const [showPop, setShowPop] = useState(false);
+  const passwordChangeMutation = useChangePasswordMutation();
 
   const {
     watch, getError, getDefaultRegister, getActiveCheck, reset, handleSubmit,
   } = usePOPOForm<ChangePasswordForm>();
 
-  const onSubmit = handleSubmit(() => {
-    setShowPop(true);
+  const onSubmit = handleSubmit(({ currentPassword, password }) => {
+    passwordChangeMutation.mutate({ currPassword: currentPassword, toChangePassword: password }, {
+      onSuccess: () => {
+        setShowPop(true);
+      },
+    });
   });
 
   const closeModal = () => {
