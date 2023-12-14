@@ -1,27 +1,27 @@
-import { signOut } from 'next-auth/react';
-
 import { fireEvent, screen } from '@testing-library/react';
 
+import useRemoveAccountMutation from '@/hooks/api/useRemoveAccountMutation';
 import MockTheme from '@/test/MockTheme';
+import ReactQueryWrapper from '@/test/ReactQueryWrapper';
 import { renderWithPortal } from '@/utils/testHelper';
 
 import RemoveAccount from './index';
 
-jest.mock('next-auth/react', () => ({
-  signOut: jest.fn(),
-}));
+jest.mock('@/hooks/api/useRemoveAccountMutation');
 
 describe('RemoveAccount', () => {
-  const signOutMock = jest.fn();
-
+  const removeAccountMock = jest.fn();
+  (useRemoveAccountMutation as jest.Mock).mockImplementation(() => removeAccountMock);
   beforeEach(() => {
     jest.clearAllMocks();
-    (signOut as jest.Mock).mockImplementation(() => signOutMock());
   });
+
   const renderRemoveAccount = () => renderWithPortal(
-    <MockTheme>
-      <RemoveAccount />
-    </MockTheme>,
+    <ReactQueryWrapper>
+      <MockTheme>
+        <RemoveAccount />
+      </MockTheme>
+    </ReactQueryWrapper>,
   );
 
   it('탈퇴 타이틀과 메세지가 보여야 한다.', () => {
@@ -40,29 +40,16 @@ describe('RemoveAccount', () => {
 
       expect(screen.getByAltText('check icon')).toBeInTheDocument();
     });
-
-    it('버튼 이미지가 변경된다.', async () => {
-      renderRemoveAccount();
-
-      fireEvent.click(screen.getByAltText('uncheck icon'));
-
-      expect(screen.getByAltText('check icon')).toBeInTheDocument();
-
-      fireEvent.click(screen.getByText('POPO 탈퇴'));
-
-      expect(screen.getByText('POPO 탈퇴가 완료되었습니다.')).toBeInTheDocument();
-    });
   });
 
-  context('회원탈퇴 팝업을 닫으면', () => {
-    it('회원탈퇴와 동시에 로그아웃된다.', () => {
+  context('회원탈퇴 버튼을 누르면', () => {
+    it('회원탈퇴 함수를 호출한다.', () => {
       renderRemoveAccount();
 
       fireEvent.click(screen.getByAltText('uncheck icon'));
       fireEvent.click(screen.getByText('POPO 탈퇴'));
-      fireEvent.click(screen.getByText('확인'));
 
-      expect(signOutMock).toHaveBeenCalled();
+      expect(removeAccountMock).toHaveBeenCalled();
     });
   });
 });

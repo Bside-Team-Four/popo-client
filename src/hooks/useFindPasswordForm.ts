@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
-import useChangePasswordMutation from '@/hooks/api/useChangePasswordMutation';
+import useFindPasswordMutation from '@/hooks/api/useFindPasswordMutation';
 import PopInfo, { getDefaultPopInfo } from '@/types/PopInfo';
 
 import usePOPOForm from './usePOPOForm';
@@ -31,7 +31,7 @@ const useFindPasswordForm = () => {
     passwordMissingMutation,
     passwordMissingAuthMutation,
     passwordResetMutation,
-  } = useChangePasswordMutation();
+  } = useFindPasswordMutation();
 
   const getActive = useCallback((currentStep: number) => {
     if (currentStep === 0) {

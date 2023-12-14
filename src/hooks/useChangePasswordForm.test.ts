@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import { act, renderHook } from '@testing-library/react';
 
 import testRegister from '@/fixtures/testRegister';
+import { apiService } from '@/lib/api/ApiService';
 import wrapper from '@/test/ReactQueryWrapper';
 import { getTestForm } from '@/utils/testHelper';
 
@@ -12,7 +13,16 @@ jest.mock('react-hook-form', () => ({
   useForm: jest.fn(),
 }));
 
+jest.mock('@/lib/api/ApiService');
+
 describe('useChangePasswordForm', () => {
+  (apiService.passwordChange as jest.Mock).mockImplementation(
+    () => ({
+      code: 0,
+      message: 'ok',
+    }),
+  );
+
   const {
     resetField, formState, setError, setFocus,
   } = getTestForm();

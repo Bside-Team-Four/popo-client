@@ -8,9 +8,9 @@ import { ApiErrorScheme } from '@/lib/excptions/type';
 import {
   AuthenticateResponse, FollowResponse, GetMyProfileResponse,
   GetPollListResponse, GetPollStatusResponse,
-  GetSchoolsResponse, GetUsersResponse, PasswordMissingAuthResponse,
+  GetSchoolsResponse, GetUsersResponse, NotificationSettingsResponse, PasswordMissingAuthResponse,
   PasswordMissingResponse,
-  PasswordResetResponse, SignUpAuthEmailResponse,
+  PasswordResetResponse, RemoveAccountResponse, SignUpAuthEmailResponse,
   SignUpResponse, SignUpSendEmailResponse, SkipResponse, UnfollowResponse, VoteResponse,
 } from '@/types/ApiTypes';
 import SignUpUser from '@/types/SignUpUser';
@@ -71,6 +71,10 @@ export default class ApiService {
     return this.instance.post<T, T>(...args);
   }
 
+  delete<T>(...args: Parameters<typeof this.instance.delete>) {
+    return this.instance.delete<T, T>(...args);
+  }
+
   fetchGetSchools = ({ keyword, page }: {
     keyword: string, page:number
   }) => this.get<GetSchoolsResponse>('/school/search', {
@@ -124,6 +128,13 @@ export default class ApiService {
     toChangePassword,
   });
 
+  passwordChange = ({ currPassword, toChangePassword }:{
+    currPassword:string, toChangePassword:string
+  }) => this.post('/user/change/password', {
+    currPassword,
+    toChangePassword,
+  });
+
   fetchGetPollStatus = () => this.get<GetPollStatusResponse>('/poll/status');
 
   signUpSendEmail = ({ email }: { email: string }) => this.post<SignUpSendEmailResponse>('/user/sign-up/send/email', {
@@ -145,6 +156,10 @@ export default class ApiService {
     { ...payload, fcmToken: 'test' },
   );
 
+  removeAccount = () => this.delete<RemoveAccountResponse>(
+    '/user/leave',
+  );
+
   fetchMyProfile = () => this.get<GetMyProfileResponse>('/user/my');
 
   fetchPollList = () => this.get<GetPollListResponse>('/poll', {
@@ -159,6 +174,10 @@ export default class ApiService {
   });
 
   skip = ({ questionId }:{ questionId: number }) => this.post<SkipResponse>('/vote/skip', { questionId });
+
+  fetchNotificationSettings = () => this.get<NotificationSettingsResponse>('/fcm');
+
+  toggleNotificationSetting = (type:'hour' | 'chosen') => this.post<NotificationSettingsResponse>(`/fcm/${type}`);
 }
 
 export const apiService = new ApiService();

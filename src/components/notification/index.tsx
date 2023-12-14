@@ -1,26 +1,28 @@
-import { useState } from 'react';
-
 import styled from 'styled-components';
 
 import SettingItem from '@/components/common/SettingItem';
+import useNotificationSetting from '@/hooks/useNotificationSetting';
 
 export default function Notification() {
-  const [isStartPush, setIsStartPush] = useState(false);
-  const [isSelectPush, setIsSelectPush] = useState(false);
+  const {
+    settings = { chosenOption: false, hourOption: false },
+    toggleNotificationSettingChosenType,
+    toggleNotificationSettingHourType,
+  } = useNotificationSetting();
 
-  const onClickStartPush = () => {
-    setIsStartPush((prev) => !prev);
+  const handleClickHourPush = () => {
+    toggleNotificationSettingHourType();
   };
 
-  const onClickSelectPush = () => {
-    setIsSelectPush((prev) => !prev);
+  const handleClickChosenPush = () => {
+    toggleNotificationSettingChosenType();
   };
 
   return (
     <Container>
-      <SettingItem title="POPO 회차 시작 푸시" switchValue={{ isOn: isStartPush, onClick: onClickStartPush }} />
+      <SettingItem title="POPO 회차 시작 푸시" switchValue={{ isOn: settings.hourOption, onClick: handleClickHourPush }} />
       <GrayBar />
-      <SettingItem title="선택된 POPO 알림 푸시" switchValue={{ isOn: isSelectPush, onClick: onClickSelectPush }} />
+      <SettingItem title="선택된 POPO 알림 푸시" switchValue={{ isOn: settings.chosenOption, onClick: handleClickChosenPush }} />
       <GrayBar />
     </Container>
   );

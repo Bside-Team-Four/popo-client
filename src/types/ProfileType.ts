@@ -11,6 +11,7 @@ type ProfileType = {
   reward: number,
   gender: Gender,
   profileImageUrl: string,
+  email: string,
 };
 
 export default ProfileType;
