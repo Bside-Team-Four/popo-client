@@ -2,21 +2,24 @@ import styled from 'styled-components';
 
 import Reward, { RewardType } from '@/types/Reward';
 
-type RewardItemProps = Omit<Reward, 'id'>;
+type RewardItemProps = Omit<Reward, 'historyId'>;
 
 const getTypeText = (type: RewardType) => (type === 'ADD' ? '적립' : '사용');
 
 const getPointText = (type: RewardType, point: number) => `${type === 'ADD' ? '+' : '-'}${point} PPP`;
 
-export default function RewardItem({ type, date, point }:RewardItemProps) {
+const getRegDtText = (regDt:string) => `${regDt.slice(8, 10)}일 ${regDt.slice(11, 13)}:${regDt.slice(14, 16)}`;
+
+export default function RewardItem({ type, regDt, amount }:RewardItemProps) {
   const typeText = getTypeText(type);
-  const pointText = getPointText(type, point);
+  const pointText = getPointText(type, amount);
+  const regDtText = getRegDtText(regDt);
 
   return (
     <Container>
       <RewardInfo>
         <RewardTypeText>{typeText}</RewardTypeText>
-        <DateText>{date}</DateText>
+        <DateText>{regDtText}</DateText>
       </RewardInfo>
       <PointText type={type}>{pointText}</PointText>
     </Container>

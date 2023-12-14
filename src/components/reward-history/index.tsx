@@ -1,23 +1,29 @@
 import styled from 'styled-components';
 
-import Reward from '@/types/Reward';
+import useGetInfiniteReward from '@/hooks/api/useGetInfiniteRewards';
 
 import NotHistory from './NotHistory';
 import RewardItem from './RewardItem';
 
-type RewardHistoryProps = {
-  reward: Reward[];
-};
-
-export default function RewardHistory({ reward }:RewardHistoryProps) {
+export default function RewardHistory() {
+  const {
+    rewards, isLoading, isFetchingNextPage, refState,
+  } = useGetInfiniteReward();
   return (
     <Container>
-      {reward.length ? reward.map(({
-        id, type, date, point,
+      {rewards.length ? rewards.map(({
+        historyId, type, regDt, amount, remainAmount,
       }) => (
-        <RewardItem key={id} type={type} date={date} point={point} />
+        <RewardItem
+          key={historyId}
+          type={type}
+          regDt={regDt}
+          amount={amount}
+          remainAmount={remainAmount}
+        />
       ))
-        : <NotHistory /> }
+        : <NotHistory />}
+      {!isLoading && !isFetchingNextPage && <div ref={refState.lastItemRef} />}
     </Container>
   );
 }
