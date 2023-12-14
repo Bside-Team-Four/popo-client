@@ -1,18 +1,29 @@
 import styled from 'styled-components';
 
 import TextField from '@/components/common/TextField';
-import fixtures from '@/fixtures';
+import useGetMyProfile from '@/hooks/api/useGetMyProfile';
+
+import FixedSpinner from '../common/FixedSpinner';
+import LoadingHandler from '../common/LoadingHandler';
 
 export default function ProfileSetting() {
-  const { profile } = fixtures;
+  const {
+    isLoading, data = {
+      userName: '',
+      schoolName: '',
+      grade: 0,
+      email: '',
+    },
+  } = useGetMyProfile();
 
   return (
     <Container>
-      <TextField label="이름" value={profile.userName} readOnly />
-      <TextField label="나이" value="18세" readOnly />
-      <TextField label="학교" value={profile.schoolName} readOnly />
-      <TextField label="학년" value={`${profile.grade}학년`} readOnly />
-      <TextField label="이메일" value="popo@gmail.com" readOnly />
+      <LoadingHandler isLoading={isLoading || !data} loadingComponent={<FixedSpinner type="normal" />}>
+        <TextField label="이름" value={data.userName} readOnly key="userName" />
+        <TextField label="학교" value={data.schoolName} readOnly key="schoolName" />
+        <TextField label="학년" value={`${data.grade}학년`} readOnly key="grade" />
+        <TextField label="이메일" value={data.email} readOnly />
+      </LoadingHandler>
     </Container>
   );
 }

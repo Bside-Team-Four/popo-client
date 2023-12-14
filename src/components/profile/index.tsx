@@ -15,12 +15,10 @@ export default function Profile() {
   return (
     <Container>
       <LoadingHandler isLoading={isLoading || !data} loadingComponent={<FixedSpinner type="normal" />}>
-        <>
-          <ProfileHeader />
-          <ProfileInfo data={data as ProfileType} />
-          <GrayBar data-testid="graybar" />
-          <InviteFriends />
-        </>
+        <ProfileHeader />
+        <ProfileInfo data={data as ProfileType} />
+        <GrayBar data-testid="graybar" />
+        <InviteFriends />
       </LoadingHandler>
     </Container>
   );
