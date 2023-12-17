@@ -4,6 +4,8 @@ import ProfileType from '@/types/ProfileType';
 import School from '@/types/School';
 import User from '@/types/User';
 
+import Reward from './Reward';
+
 type DefaultResponse = {
   code: number;
   message: string;
@@ -20,6 +22,10 @@ export type GetSchoolsResponse = DefaultResponse & {
 
 export type GetUsersResponse = DefaultResponse & {
   value: User[]
+};
+
+export type GetRewardsResponse = DefaultResponse & {
+  value: Reward[]
 };
 
 export type AuthenticateResponse = DefaultResponse & {

@@ -8,7 +8,10 @@ import { ApiErrorScheme } from '@/lib/excptions/type';
 import {
   AuthenticateResponse, FollowResponse, GetMyProfileResponse,
   GetPollListResponse, GetPollStatusResponse,
-  GetSchoolsResponse, GetUsersResponse, NotificationSettingsResponse, PasswordMissingAuthResponse,
+  GetRewardsResponse,
+  GetSchoolsResponse, GetUsersResponse,
+  NotificationSettingsResponse,
+  PasswordMissingAuthResponse,
   PasswordMissingResponse,
   PasswordResetResponse, RemoveAccountResponse, SignUpAuthEmailResponse,
   SignUpResponse, SignUpSendEmailResponse, SkipResponse, UnfollowResponse, VoteResponse,
@@ -91,6 +94,15 @@ export default class ApiService {
     params: {
       type,
       keyword,
+      size: 30,
+      lastId,
+    },
+  });
+
+  fetchGetRewards = (
+    lastId?: number,
+  ) => this.get<GetRewardsResponse>('/user/reward', {
+    params: {
       size: 30,
       lastId,
     },
