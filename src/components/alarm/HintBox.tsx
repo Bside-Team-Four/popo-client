@@ -1,41 +1,49 @@
-import { useState } from 'react';
-
 import styled from 'styled-components';
 
-import Hint from '@/types/Hint';
+import useGetHints from '@/hooks/api/useGetHints';
+import usePurchaseHintMutation from '@/hooks/api/usePurchaseHintMutation';
 
 type HintBoxProps = {
-  hintData: Hint[];
+  userId: number;
+  voteId: number;
 };
 
-export default function HintBox({ hintData }: HintBoxProps) {
-  const mainHint = hintData[0];
-  const otherHints = hintData.slice(1);
+export default function HintBox({ userId, voteId }: HintBoxProps) {
+  const { data: hints = [] } = useGetHints({ targetUserId: userId, voteId });
 
-  const [mainHintOpen, setMainHintOpen] = useState(false);
-  const [otherHintOpen, setOtherHintOpen] = useState({ open: false, index: 0 });
+  const purchaseHint = usePurchaseHintMutation();
+  const purchasedHints = hints.filter((hint) => hint.isPurchased);
 
-  const openMainHint = () => {
-    setMainHintOpen(true);
+  const hasUnpurchasedHint = hints.some((hint) => !hint.isPurchased);
+
+  const hasPurchasedHint = purchasedHints.length > 0;
+
+  const purchasableHint = hints.find((hint) => !hint.isPurchased);
+
+  const handlePurchaseClick = () => {
+    if (purchasableHint !== undefined) {
+      purchaseHint({ voteId, hintId: purchasableHint.hintId });
+    }
   };
-
-  const openOtherHint = () => {
-    setOtherHintOpen({ open: true, index: otherHintOpen.index + 1 });
-  };
-
-  const getHintText = (hint: Hint) => `${hint.content}`;
 
   return (
     <Container>
-      <HintOpenButton onClick={openMainHint} disabled={mainHintOpen}>힌트 보기</HintOpenButton>
-      {mainHintOpen && (<HintText>{getHintText(mainHint)}</HintText>)}
-      {otherHintOpen.open && otherHints.map((otherHint) => ((
-        <HintText key={otherHint.hintId}>
-          {getHintText(otherHint)}
-        </HintText>
-      )))}
-      {mainHintOpen && otherHintOpen.index < otherHints.length && (
-      <MoreButton onClick={openOtherHint}>더보기...</MoreButton>
+      {!hasPurchasedHint
+       && (
+       <HintOpenButton
+         onClick={handlePurchaseClick}
+         disabled={!hasUnpurchasedHint}
+       >
+         힌트 보기
+       </HintOpenButton>
+       )}
+
+      {purchasedHints.map(({
+        content, hintId,
+      }) => <HintText key={hintId}>{content}</HintText>)}
+
+      {hasUnpurchasedHint && hasPurchasedHint && (
+        <MoreButton onClick={handlePurchaseClick} disabled={!hasUnpurchasedHint}>더보기...</MoreButton>
       )}
     </Container>
   );
