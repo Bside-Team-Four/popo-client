@@ -4,6 +4,8 @@ import ProfileType from '@/types/ProfileType';
 import School from '@/types/School';
 import User from '@/types/User';
 
+import Alarm from './Alarm';
+import Hint from './Hint';
 import Reward from './Reward';
 
 type DefaultResponse = {
@@ -26,6 +28,14 @@ export type GetUsersResponse = DefaultResponse & {
 
 export type GetRewardsResponse = DefaultResponse & {
   value: Reward[]
+};
+
+export type GetAlarmsResponse = DefaultResponse & {
+  value: Alarm[]
+};
+
+export type GetHintsResponse = DefaultResponse & {
+  value: Hint[]
 };
 
 export type AuthenticateResponse = DefaultResponse & {

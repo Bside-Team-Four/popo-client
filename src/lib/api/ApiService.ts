@@ -6,10 +6,11 @@ import ApiException from '@/lib/excptions/ApiException';
 import CustomException from '@/lib/excptions/CustomException';
 import { ApiErrorScheme } from '@/lib/excptions/type';
 import {
-  AuthenticateResponse, FollowResponse, GetMyProfileResponse,
+  AuthenticateResponse, FollowResponse, GetAlarmsResponse, GetHintsResponse, GetMyProfileResponse,
   GetPollListResponse, GetPollStatusResponse,
   GetRewardsResponse,
-  GetSchoolsResponse, GetUsersResponse,
+  GetSchoolsResponse,
+  GetUsersResponse,
   NotificationSettingsResponse,
   PasswordMissingAuthResponse,
   PasswordMissingResponse,
@@ -106,6 +107,35 @@ export default class ApiService {
       size: 30,
       lastId,
     },
+  });
+
+  fetchGetAlarms = (
+    lastId?: number,
+  ) => this.get<GetAlarmsResponse>('/vote', {
+    params: {
+      size: 30,
+      lastId,
+    },
+  });
+
+  fetchHints = ({
+    targetUserId,
+    voteId,
+  }:{
+    targetUserId: number,
+    voteId: number,
+  }) => this.get<GetHintsResponse>('/hint', {
+    params: {
+      targetUserId,
+      voteId,
+    },
+  });
+
+  purchaseHint = (
+    { voteId, hintId }:{ voteId: number, hintId: number },
+  ) => this.post('/hint', {
+    voteId,
+    hintId,
   });
 
   follow = (followeeId : number) => this.post<FollowResponse>('/relation/request', {

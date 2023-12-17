@@ -1,19 +1,38 @@
+/* eslint-disable no-nested-ternary */
 import styled from 'styled-components';
 
 import ProfileIcon from '@/components/common/ProfileIcon';
 import Alarm from '@/types/Alarm';
-import Hint from '@/types/Hint';
+import getTimeDiff from '@/utils/getTimeDiff';
 
 import HintBox from './HintBox';
 
 type AlarmItemBoxProps = {
   item: Alarm;
-  hints?: Hint[];
 };
 
-export default function AlarmItemBox({ item, hints }: AlarmItemBoxProps) {
+function getTimeDiffStr(regDatetime:string) {
+  const diff = getTimeDiff(regDatetime);
+  if (diff.months > 0) {
+    return `${diff.months}개월 전`;
+  }
+  if (diff.days > 0) {
+    return `${diff.days}일 전`;
+  }
+  if (diff.hours > 0) {
+    return `${diff.hours}시간 전`;
+  }
+  if (diff.minutes > 0) {
+    return `${diff.hours}분 전`;
+  }
+  return '방금 전';
+}
+
+export default function AlarmItemBox({ item }: AlarmItemBoxProps) {
+  const diffStr = getTimeDiffStr(item.regDatetime);
+
   return (
-    <Container>
+    <Container data-testid="alarm_item_box">
       <TopContainer>
         <ProfileIcon
           gender={item.gender}
@@ -28,12 +47,10 @@ export default function AlarmItemBox({ item, hints }: AlarmItemBoxProps) {
           </InfoContainer>
         </TextContainer>
         <TimeContainer>
-          <B3Gray>{item.regDatetime}</B3Gray>
+          <B3Gray>{diffStr}</B3Gray>
         </TimeContainer>
       </MiddleContainer>
-      {hints && (
-      <HintBox hintData={hints} test-id="hint-box" />
-      )}
+      <HintBox test-id="hint-box" voteId={item.voteId} userId={item.userId} />
     </Container>
   );
 }
