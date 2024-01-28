@@ -1,4 +1,4 @@
-import { getSession } from 'next-auth/react';
+import { getSession, signOut } from 'next-auth/react';
 
 import axios, { AxiosError, AxiosResponse } from 'axios';
 
@@ -30,6 +30,10 @@ function interceptorResponseFulfilled(res: AxiosResponse) {
 }
 
 function interceptorResponseRejected(error: AxiosError<ApiErrorScheme>) {
+  if (error.response?.status === 401) {
+    signOut();
+  }
+
   if (error.response?.data?.message) {
     return Promise.reject(new ApiException(error.response.data, error.response.status));
   }
