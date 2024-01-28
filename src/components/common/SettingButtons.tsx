@@ -18,7 +18,7 @@ export default function SettingButtons({ isSetting, onClick, onSkip }:SettingBut
 }
 
 const Container = styled.div`
-  position: absolute;
+  position: fixed;
   display: flex;
   flex-direction: column;
   align-items: center;

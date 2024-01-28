@@ -88,7 +88,7 @@ const Message = styled.li`
 `;
 
 const RemoveContainer = styled.div`
-  position: absolute;
+  position: fixed;
   display: flex;
   flex-direction: column;
   align-items: center;

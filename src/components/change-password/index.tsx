@@ -84,7 +84,7 @@ const PasswordInput = styled(TextField)`
 `;
 
 const SubmitButton = styled(Button).attrs({ type: 'submit' })`
-  position: absolute;
+  position: fixed;
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -31,7 +31,7 @@ export default function SignUpButton({ step, isActive }:SignUpButtonProps) {
 }
 
 const Container = styled.div`
-  position: absolute;
+  position: fixed;
   display: flex;
   flex-direction: column;
   align-items: center;
