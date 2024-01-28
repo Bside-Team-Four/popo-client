@@ -28,7 +28,7 @@ export default function StepButton({ step, isActive }:StepButtonProps) {
 }
 
 const Container = styled.div`
-  position: absolute;
+  position: fixed;
   display: flex;
   flex-direction: column;
   align-items: center;
