@@ -7,7 +7,7 @@ const queryClient = new QueryClient(
         suspense: false,
         retry: process.env.NODE_ENV === 'development' ? false : 3,
         refetchOnWindowFocus: false,
-        refetchOnMount: false,
+        refetchOnMount: true,
       },
     },
   },
