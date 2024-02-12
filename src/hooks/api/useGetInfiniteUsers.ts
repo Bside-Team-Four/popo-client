@@ -13,7 +13,7 @@ export const GET_INFINITE_USERS_KEY = 'getInfiniteUsers';
 
 export default function useGetInfiniteUsers({ type, keyword }:GetUsersProps) {
   const query = useInfiniteQuery(
-    [GET_INFINITE_USERS_KEY],
+    [GET_INFINITE_USERS_KEY, type, keyword],
     async ({ pageParam: lastId }) => apiService.fetchGetUsers({ type, keyword, lastId }),
     {
       getNextPageParam: (res) => {
@@ -22,6 +22,7 @@ export default function useGetInfiniteUsers({ type, keyword }:GetUsersProps) {
         return lastId;
       },
       enabled: keyword.length >= 2,
+      cacheTime: 0,
     },
   );
 

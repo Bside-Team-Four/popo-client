@@ -23,14 +23,18 @@ export default function useFollowMutation() {
   const queryClient = useQueryClient();
 
   function onFollowSuccess(res: FollowResponse, followeeId: number) {
-    queryClient.setQueryData<InfiniteData<GetUsersResponse>>(
-      [GET_INFINITE_USERS_KEY],
+    queryClient.setQueriesData(
+      {
+        exact: false,
+        queryKey: [GET_INFINITE_USERS_KEY],
+        predicate: (query) => Boolean(query),
+      },
       (oldData) => {
         if (oldData === undefined) {
           return undefined;
         }
         return infiniteDataTrasformer(
-          oldData,
+          oldData as InfiniteData<GetUsersResponse>,
           (user) => (user.userId === followeeId
             ? { ...user, isFollow: true, relationId: res.value.relationId }
             : user),
@@ -40,14 +44,18 @@ export default function useFollowMutation() {
   }
 
   function onUnfollowMutate(_: UnfollowResponse, relationId: number) {
-    queryClient.setQueryData<InfiniteData<GetUsersResponse>>(
-      [GET_INFINITE_USERS_KEY],
+    queryClient.setQueriesData(
+      {
+        exact: false,
+        queryKey: [GET_INFINITE_USERS_KEY],
+        predicate: (query) => Boolean(query),
+      },
       (oldData) => {
         if (oldData === undefined) {
           return undefined;
         }
         return infiniteDataTrasformer(
-          oldData,
+          oldData as InfiniteData<GetUsersResponse>,
           (user) => (user.relationId === relationId
             ? { ...user, isFollow: false, relationId: null }
             : user),
