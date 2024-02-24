@@ -111,7 +111,10 @@ const useSignUpForm = () => {
           email: payload.email, password: payload.password, redirect: false,
         });
 
-        router.replace('/profile-image');
+        /*
+        *TODO: 회원가입 후 프로필 사진 등록 페이지로 이동
+        */
+        router.replace('/');
       },
       onError: () => {
         setPopInfo({

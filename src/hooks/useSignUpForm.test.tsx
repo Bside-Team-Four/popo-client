@@ -246,7 +246,7 @@ describe('useSignUpForm', () => {
             await result.current.onSubmit();
           });
 
-          expect(routerReplace).toHaveBeenCalledWith('/profile-image');
+          expect(routerReplace).toHaveBeenCalledWith('/');
         });
       });
 
