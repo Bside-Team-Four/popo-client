@@ -24,6 +24,8 @@ jest.mock('next-auth/react');
 
 jest.mock('@/lib/api/ApiService');
 
+jest.mock('@/utils/nativeBridge');
+
 jest.useFakeTimers();
 
 describe('useSignUpForm', () => {

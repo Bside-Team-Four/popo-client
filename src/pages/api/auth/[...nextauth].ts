@@ -9,10 +9,13 @@ const authOptions:NextAuthOptions = {
       name: 'Credentials',
       credentials: {},
       async authorize(credentials) {
-        const { email, password } = credentials as { email: string, password: string };
+        const {
+          email,
+          password,
+          fcmToken,
+        } = credentials as { email: string, password: string, fcmToken?: string };
 
-        const { message, value } = await apiService.authenticate({ email, password });
-
+        const { message, value } = await apiService.authenticate({ email, password, fcmToken });
         if (value) {
           return {
             state: 'success',
@@ -20,7 +23,6 @@ const authOptions:NextAuthOptions = {
             token: value.token,
           };
         }
-
         throw new Error(message);
       },
     }),

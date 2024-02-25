@@ -148,10 +148,10 @@ export default class ApiService {
 
   unfollow = (relationId : number) => this.post<UnfollowResponse>(`/relation/cancel/${relationId}`);
 
-  authenticate = async (payload: { email: string, password: string }) => this.post<AuthenticateResponse>('/user/authenticate', {
+  authenticate = async (payload: { email: string, password: string, fcmToken?:string }) => this.post<AuthenticateResponse>('/user/authenticate', {
     email: payload.email,
     password: payload.password,
-    fcmToken: 'test',
+    fcmToken: payload.fcmToken,
   });
 
   passwordMissing = ({ email }: {
