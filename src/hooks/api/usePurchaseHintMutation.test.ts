@@ -6,6 +6,10 @@ import wrapper from '@/test/ReactQueryWrapper';
 import usePurchaseHintMutation from './usePurchaseHintMutation';
 
 jest.mock('@/lib/api/ApiService');
+jest.mock('@/hooks/recoil/useOutOfReword', () => jest.fn(() => ({
+  outOfReword: false,
+  setOutOfReword: jest.fn(),
+})));
 
 describe('usePurchaseHintMutation', () => {
   beforeEach(() => {
@@ -17,7 +21,7 @@ describe('usePurchaseHintMutation', () => {
     }));
   });
 
-  const renderusePurchaseHintMutationHook = () => renderHook(
+  const renderUsePurchaseHintMutationHook = () => renderHook(
     () => usePurchaseHintMutation(),
     {
       wrapper,
@@ -26,7 +30,7 @@ describe('usePurchaseHintMutation', () => {
 
   // eslint-disable-next-line jest/expect-expect
   it('Mutation Test', async () => {
-    const { result } = renderusePurchaseHintMutationHook();
+    const { result } = renderUsePurchaseHintMutationHook();
 
     await result.current({ voteId: 0, hintId: 0 });
   });

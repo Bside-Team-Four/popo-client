@@ -8,6 +8,7 @@ import AlarmPage from './index';
 
 jest.mock('usehooks-ts', () => ({
   useDarkMode: () => ({ isDarkMode: false }),
+  useIsMounted: () => true,
 }));
 
 jest.mock('@/hooks/api/useGetInfiniteAlarms');

@@ -3,12 +3,19 @@ import Image from 'next/image';
 import styled from 'styled-components';
 
 import useGetInfiniteAlarms from '@/hooks/api/useGetInfiniteAlarms';
+import useOutOfReword from '@/hooks/recoil/useOutOfReword';
 import Alarm from '@/types/Alarm';
+
+import NormalPopup from '../popup/NormalPopup';
 
 import AlarmItemBox from './AlarmItemBox';
 
 export default function AlarmPage() {
   const { alarms } = useGetInfiniteAlarms();
+  const { outOfReword, setOutOfReword } = useOutOfReword();
+  const handleOutOfRewordPopupClose = () => {
+    setOutOfReword(false);
+  };
   return (
     <Container>
       <TitleContainer>
@@ -30,7 +37,12 @@ export default function AlarmPage() {
           <NoDataText>나를 뽑은 사람이 아직 없어요.</NoDataText>
         </NoDataContainer>
       )}
-
+      <NormalPopup
+        show={outOfReword}
+        okText="확인"
+        title="리워드가 부족해요"
+        onClose={handleOutOfRewordPopupClose}
+      />
     </Container>
   );
 }
