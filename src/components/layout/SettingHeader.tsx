@@ -16,6 +16,7 @@ const settingTitle:{ [key: string]: string } = {
   '/setting/tos/use': 'POPO 서비스 이용약관',
   '/setting/tos/privacy': '개인정보 처리방침',
   '/reward-history': '이용내역',
+  '/follow': '',
 };
 
 export default function SettingHeader() {
@@ -38,6 +39,7 @@ const Container = styled.div`
   position: relative;
   display: flex;
   width: 100%;
+  min-height: 72px;
   height: 72px;
   justify-content: center;
   align-items: center;

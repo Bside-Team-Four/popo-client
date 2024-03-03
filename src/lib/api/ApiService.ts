@@ -104,6 +104,24 @@ export default class ApiService {
     },
   });
 
+  fetchGetFollower = ({ lastId }: {
+    lastId?: number
+  }) => this.get<GetUsersResponse>('/relation/follower', {
+    params: {
+      size: 30,
+      lastId,
+    },
+  });
+
+  fetchGetFollowee = ({ lastId }: {
+    lastId?: number
+  }) => this.get<GetUsersResponse>('/relation/followee', {
+    params: {
+      size: 30,
+      lastId,
+    },
+  });
+
   fetchGetRewards = (
     lastId?: number,
   ) => this.get<GetRewardsResponse>('/user/reward', {
