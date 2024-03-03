@@ -1,7 +1,5 @@
 import { styled } from 'styled-components';
 
-import useFollowMutation from '@/hooks/api/useFollowMutation';
-
 import ProfileIcon from '../common/ProfileIcon';
 
 type UserCardProps = {
@@ -12,21 +10,23 @@ type UserCardProps = {
   grade: number;
   gender:'MALE' | 'FEMALE'
   relationId: number | null;
+  toggleRelation: (userId:number, relationId:number | null) => void;
 };
 
 export default function UserCard({
-  userId, name, profileImg, schoolName, grade, gender, relationId,
+  userId,
+  name,
+  profileImg,
+  schoolName,
+  grade,
+  gender,
+  relationId,
+  toggleRelation,
 }:UserCardProps) {
   const $hasRelation = typeof relationId === 'number';
 
-  const { followMutation, unfollowMutation } = useFollowMutation();
-
-  function handleFollow() {
-    if ($hasRelation) {
-      unfollowMutation.mutate(relationId);
-    } else {
-      followMutation.mutate(userId);
-    }
+  function handleRelationBtnClick() {
+    toggleRelation(userId, relationId);
   }
 
   return (
@@ -40,7 +40,7 @@ export default function UserCard({
         <UserName>{name}</UserName>
         <UserInpo>{`${schoolName} ${grade}학년`}</UserInpo>
       </InpoWrapper>
-      <RelationButton $hasRelation={$hasRelation} onClick={() => { handleFollow(); }}>{relationId ? '팔로잉' : '팔로우'}</RelationButton>
+      <RelationButton $hasRelation={$hasRelation} onClick={() => handleRelationBtnClick()}>{relationId ? '팔로잉' : '팔로우'}</RelationButton>
     </Container>
   );
 }

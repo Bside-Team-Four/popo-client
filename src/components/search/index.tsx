@@ -5,7 +5,8 @@ import { useDebounce } from 'usehooks-ts';
 
 import SearchField from '@/components/common/SearchField';
 import UserCard from '@/components/search/UserCard';
-import useGetInfiniteUsers from '@/hooks/api/useGetInfiniteUsers';
+import useGetInfiniteUsers, { GET_INFINITE_USERS_KEY } from '@/hooks/api/useGetInfiniteUsers';
+import useToggleRelation from '@/hooks/api/useToggleRelation';
 
 const options = [{ label: '이름', value: 'NAME' }, { label: '학교', value: 'SCHOOL' }];
 
@@ -25,6 +26,8 @@ export default function Search() {
     setType(value as 'NAME' | 'SCHOOL');
   }
 
+  const { toggleRelation } = useToggleRelation(GET_INFINITE_USERS_KEY);
+
   return (
     <Container>
       <SearchField>
@@ -37,7 +40,8 @@ export default function Search() {
       </SearchField>
       <CardList>
         {userData && userData.map((item) => (
-          <UserCard key={item.userId} {...item} />
+          // eslint-disable-next-line react/jsx-no-bind
+          <UserCard key={item.userId} {...item} toggleRelation={toggleRelation} />
         ))}
         {!isLoading && !isFetchingNextPage && <div ref={refState.lastItemRef} />}
       </CardList>

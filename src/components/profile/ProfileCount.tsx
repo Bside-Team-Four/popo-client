@@ -1,3 +1,5 @@
+import Link from 'next/link';
+
 import styled from 'styled-components';
 
 import CountItem from './CountItem';
@@ -19,8 +21,12 @@ export default function ProfileCount({
     <Container>
       <CountItem title="선택된 POPO" count={votedCount} />
       <CountItem title="선택한 POPO" count={voteCount} />
-      <CountItem title="팔로워" count={followerCount} />
-      <CountItem title="팔로잉" count={followeeCount} />
+      <Link href="/relation?defaultType=follower">
+        <CountItem title="팔로워" count={followerCount} />
+      </Link>
+      <Link href="/relation?defaultType=followee">
+        <CountItem title="팔로잉" count={followeeCount} />
+      </Link>
     </Container>
   );
 }
