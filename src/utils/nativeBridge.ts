@@ -1,23 +1,23 @@
-if (typeof window !== 'undefined') {
-  (window ?? {}).popoProtocol = window.popoProtocol ?? { postMessage: () => {} };
-}
-
 export default class PoPoNativeBridge {
-  private popoProtocol = window.popoProtocol;
+  private popoProtocol = typeof window === 'undefined' ? {
+    postMessage: () => {},
+    resolve: () => {},
+    reject: () => {},
+  } : window.popoProtocol;
 
-  private call({ action, data }:{ action: string, data: any }) {
-    this.popoProtocol.postMessage(JSON.stringify({ action, data }));
+  private call({ action }:{ action: string }) {
+    this.popoProtocol.postMessage(JSON.stringify({ action }));
   }
 
-  private withResultCall<T>({ action, data }: { action: string; data?: any }): Promise<T> {
+  private withResultCall<T>({ action }: { action: string; }): Promise<T> {
     return new Promise<T>((resolve, reject) => {
       this.popoProtocol.resolve = (result: T) => {
         resolve(result);
       };
-      this.popoProtocol.reject = (result: any) => {
+      this.popoProtocol.reject = (result: Error) => {
         reject(result);
       };
-      this.call({ action, data });
+      this.call({ action });
     });
   }
 
