@@ -24,6 +24,8 @@ jest.mock('next-auth/react');
 
 jest.mock('@/lib/api/ApiService');
 
+jest.mock('@/utils/nativeBridge');
+
 jest.useFakeTimers();
 
 describe('useSignUpForm', () => {
@@ -246,7 +248,7 @@ describe('useSignUpForm', () => {
             await result.current.onSubmit();
           });
 
-          expect(routerReplace).toHaveBeenCalledWith('/profile-image');
+          expect(routerReplace).toHaveBeenCalledWith('/');
         });
       });
 

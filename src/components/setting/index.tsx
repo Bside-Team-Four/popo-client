@@ -24,7 +24,7 @@ export default function Setting() {
       <GrayBar />
       <SettingItem
         title="문의"
-        message="popo@popo.co.kr"
+        message="sasimpopo@gmail.com"
       />
       <SettingItem
         title="이용약관"

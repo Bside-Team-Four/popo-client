@@ -19,6 +19,8 @@ jest.mock('react-hook-form', () => ({
 
 jest.mock('next-auth/react');
 
+jest.mock('@/utils/nativeBridge');
+
 describe('useSignInForm', () => {
   const routerReplace = jest.fn();
 

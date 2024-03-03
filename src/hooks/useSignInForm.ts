@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { signIn } from 'next-auth/react';
 
+import { nativeBridge } from '@/utils/nativeBridge';
+
 import usePOPOForm from './usePOPOForm';
 
 export type SignInForm = {
@@ -20,9 +22,9 @@ const useSignInForm = () => {
 
   const onValid = async (data: SignInForm) => {
     setIsLoading(true);
-
+    const fcmToken = await nativeBridge.getFcmToken();
     const res = await signIn('credentials', {
-      email: data.email, password: data.password, redirect: false,
+      email: data.email, password: data.password, fcmToken, redirect: false,
     });
 
     setIsLoading(false);

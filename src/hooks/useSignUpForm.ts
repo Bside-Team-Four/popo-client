@@ -11,6 +11,7 @@ import useSignUpMutation from '@/hooks/api/useSignUpMutation';
 import Gender from '@/types/Gender';
 import PopInfo, { getDefaultPopInfo } from '@/types/PopInfo';
 import School from '@/types/School';
+import { nativeBridge } from '@/utils/nativeBridge';
 
 import usePOPOForm from './usePOPOForm';
 
@@ -107,11 +108,15 @@ const useSignUpForm = () => {
           hideProgressBar: true,
         });
 
+        const fcmToken = await nativeBridge.getFcmToken();
         await signIn('credentials', {
-          email: payload.email, password: payload.password, redirect: false,
+          email: payload.email, password: payload.password, fcmToken, redirect: false,
         });
 
-        router.replace('/profile-image');
+        /*
+        *TODO: 회원가입 후 프로필 사진 등록 페이지로 이동
+        */
+        router.replace('/');
       },
       onError: () => {
         setPopInfo({
