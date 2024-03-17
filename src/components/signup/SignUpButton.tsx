@@ -8,13 +8,13 @@ type SignUpButtonProps = {
 };
 
 const getButtonText = (step: number) => {
-  if (step === 0) {
+  if (step === 1) {
     return '이메일로 인증번호 전송';
   }
-  if (step === 1) {
+  if (step === 2) {
     return '확인';
   }
-  if (step === 7) {
+  if (step === 8) {
     return '가입 완료';
   }
   return '다음';

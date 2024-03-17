@@ -3,12 +3,14 @@ import { useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 
 import { styled } from 'styled-components';
+import { useDarkMode } from 'usehooks-ts';
 
 import UserCard from '@/components/search/UserCard';
 import useGetInfiniteFollow, { GET_INFINITE_FOLLOW_KEY } from '@/hooks/api/useGetInfiniteRelations';
 import useToggleRelation from '@/hooks/api/useToggleRelation';
 
 export default function Relation() {
+  const { isDarkMode } = useDarkMode();
   const searchParams = useSearchParams();
   const search = searchParams?.get('defaultType');
   const [type, setType] = useState<'follower' | 'followee'>((search ?? 'follower') as ('follower' | 'followee'));
@@ -58,7 +60,7 @@ const TabContainer = styled.div`
 const TabItem = styled.div<{ active?: boolean }>`
   font-size: 36px;
   font-weight: 200;
-  color: ${({ active }) => (active ? '#000' : '#BDBDBD')};
+  color: ${({ theme, active }) => (active ? theme.color.text.title01 : theme.color.text.subTitle02)};
   cursor: pointer;
 `;
 

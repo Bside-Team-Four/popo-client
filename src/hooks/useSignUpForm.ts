@@ -32,6 +32,7 @@ const useSignUpForm = () => {
 
   const [step, setStep] = useState(0);
 
+  const [tosAgree, setTosAgree] = useState<boolean>(false);
   const [gender, setGender] = useState<Gender | null>(null);
   const [school, setSchool] = useState<School | null>(null);
   const [popInfo, setPopInfo] = useState<PopInfo>(getDefaultPopInfo());
@@ -48,12 +49,12 @@ const useSignUpForm = () => {
   const signUp = useSignUpMutation();
 
   const onSubmit = handleSubmit(() => {
-    if (step === 0) {
+    if (step === 1) {
       signUpSendEmailMutation.mutate({
         email: watch('email'),
       }, {
         onSuccess: () => {
-          setStep(1);
+          setStep(2);
         },
         onError: () => {
           setPopInfo({
@@ -67,13 +68,13 @@ const useSignUpForm = () => {
       return;
     }
 
-    if (step === 1) {
+    if (step === 2) {
       signUpAuthEmailMutation.mutate({
         email: watch('email'),
         userCode: watch('certificationNumber'),
       }, {
         onSuccess: () => {
-          setStep(2);
+          setStep(3);
         },
         onError: () => {
           setPopInfo({
@@ -87,7 +88,7 @@ const useSignUpForm = () => {
       return;
     }
 
-    if (step < 7) {
+    if (step < 8) {
       setStep((prev) => prev + 1);
       return;
     }
@@ -131,29 +132,32 @@ const useSignUpForm = () => {
 
   const getActive = useCallback((currentStep: number) => {
     if (currentStep === 0) {
-      return getActiveCheck('email');
+      return tosAgree !== false;
     }
     if (currentStep === 1) {
-      return getActiveCheck('certificationNumber');
+      return getActiveCheck('email');
     }
     if (currentStep === 2) {
-      return getActiveCheck('password') && getActiveCheck('passwordConfirm');
+      return getActiveCheck('certificationNumber');
     }
     if (currentStep === 3) {
-      return getActiveCheck('name');
+      return getActiveCheck('password') && getActiveCheck('passwordConfirm');
     }
     if (currentStep === 4) {
-      return getActiveCheck('year');
+      return getActiveCheck('name');
     }
     if (currentStep === 5) {
-      return gender !== null;
+      return getActiveCheck('year');
     }
     if (currentStep === 6) {
+      return gender !== null;
+    }
+    if (currentStep === 7) {
       return school !== null && getActiveCheck('grade');
     }
 
     return true;
-  }, [gender, getActiveCheck, school]);
+  }, [tosAgree, gender, getActiveCheck, school]);
 
   const onResend = () => {
     signUpSendEmailMutation.mutate({
@@ -173,6 +177,10 @@ const useSignUpForm = () => {
   return {
     step,
     formData: {
+      tosAgree: {
+        value: tosAgree,
+        onChangeTosAgree: (agree: boolean) => setTosAgree(agree),
+      },
       email: {
         register: getDefaultRegister({ name: 'email' }),
         value: watch('email'),

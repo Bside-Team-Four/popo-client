@@ -1,10 +1,8 @@
 'use client';
 
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 
-import styled from 'styled-components';
-
-import BackIcon from '@/lib/assets/back-icon.svg';
+import Header from '../common/Header';
 
 const settingTitle:{ [key: string]: string } = {
   '/setting': '설정',
@@ -21,42 +19,10 @@ const settingTitle:{ [key: string]: string } = {
 
 export default function SettingHeader() {
   const pathname = usePathname();
-  const router = useRouter();
 
   const title = settingTitle[pathname || '/setting'];
 
-  const onBack = () => router.back();
-
   return (
-    <Container>
-      <BackButton data-testid="back-button" onClick={onBack} />
-      <Title>{title}</Title>
-    </Container>
+    <Header title={title ?? ''} />
   );
 }
-
-const Container = styled.div`
-  position: relative;
-  display: flex;
-  width: 100%;
-  min-height: 72px;
-  height: 72px;
-  justify-content: center;
-  align-items: center;
-`;
-
-const BackButton = styled(BackIcon)`
-  position: absolute;
-  left: 16px;
-  top: 21px;
-  path{
-    fill: ${({ theme }) => theme.color.text.title02};
-  }
-`;
-
-const Title = styled.div`
-  font-weight: 500;
-  font-size: 18px;
-  line-height: 26px;
-  color: ${({ theme }) => theme.color.text.title01};
-`;

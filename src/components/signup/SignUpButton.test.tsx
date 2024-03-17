@@ -16,7 +16,7 @@ describe('StepButton', () => {
   });
 
   context('회원가입 첫 번째 페이지일 경우', () => {
-    given('step', () => 0);
+    given('step', () => 1);
     it('"이메일로 인증번호 전송"버튼을 화면에 보여준다.', () => {
       renderStepButton();
 
@@ -25,7 +25,7 @@ describe('StepButton', () => {
   });
 
   context('회원가입 두 번째 페이지일 경우', () => {
-    given('step', () => 1);
+    given('step', () => 2);
     it('"확인"버튼을 화면에 보여준다.', () => {
       renderStepButton();
 
@@ -34,7 +34,7 @@ describe('StepButton', () => {
   });
 
   context('회원가입 마지막 페이지일 경우', () => {
-    given('step', () => 7);
+    given('step', () => 8);
     it('"가입 완료"버튼을 화면에 보여준다.', () => {
       renderStepButton();
 
@@ -43,7 +43,7 @@ describe('StepButton', () => {
   });
 
   context('그 외의 페이지의 경우', () => {
-    given('step', () => 5);
+    given('step', () => 6);
     it('"다음"버튼을 화면에 보여준다.', () => {
       renderStepButton();
 

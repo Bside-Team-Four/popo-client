@@ -33,7 +33,7 @@ describe('Tos', () => {
 
       fireEvent.click(settingItem);
 
-      expect(routerPush).toHaveBeenCalledWith('/setting/tos/use');
+      expect(routerPush).toHaveBeenCalledWith('/tos/use');
     });
   });
 
@@ -47,7 +47,7 @@ describe('Tos', () => {
 
       fireEvent.click(settingItem);
 
-      expect(routerPush).toHaveBeenCalledWith('/setting/tos/privacy');
+      expect(routerPush).toHaveBeenCalledWith('/tos/privacy');
     });
   });
 });

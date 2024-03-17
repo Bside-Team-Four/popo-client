@@ -10,11 +10,12 @@ describe('SignUpForm', () => {
     <SignUpForm
       step={given.step}
       formData={signupField}
+      onResend={jest.fn()}
     />,
   );
 
   context('회원가입 첫 번째 화면일 때', () => {
-    given('step', () => 0);
+    given('step', () => 1);
 
     it('이메일 입력 필드를 화면에 보여준다.', () => {
       renderSignUpForm();
@@ -24,7 +25,7 @@ describe('SignUpForm', () => {
   });
 
   context('회원가입 네 번째 화면일 때', () => {
-    given('step', () => 3);
+    given('step', () => 4);
 
     it('이름 입력 필드를 화면에 보여준다.', () => {
       renderSignUpForm();

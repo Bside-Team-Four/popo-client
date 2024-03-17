@@ -12,11 +12,16 @@ import GenderSelector from './StepField/GenderSelector';
 import NameField from './StepField/NameField';
 import PasswordField from './StepField/PasswordField';
 import SchoolField from './StepField/SchoolField';
+import TosField from './StepField/TosField';
 import YearField from './StepField/YearField';
 
 type SignUpFormProps = {
   step: number;
   formData:{
+    tosAgree: {
+      value: boolean;
+      onChangeTosAgree: (agree:boolean) => void;
+    }
     email: InputItem<string>;
     certificationNumber: InputItem<string>;
     password: InputItem<string>;
@@ -38,25 +43,27 @@ type SignUpFormProps = {
 
 export default function SignUpForm({ step, formData, onResend }:SignUpFormProps) {
   const {
-    email, certificationNumber, password, passwordConfirm, name, year, grade, gender, school,
+    tosAgree, email, certificationNumber, password,
+    passwordConfirm, name, year, grade, gender, school,
   } = formData;
 
   const renderData = [
-    <EmailField key={0} email={email} />,
+    <TosField key={0} value={tosAgree.value} onChange={tosAgree.onChangeTosAgree} />,
+    <EmailField key={1} email={email} />,
     <>
-      <CertificationField key={1} certificationNumber={certificationNumber} />
+      <CertificationField key={2} certificationNumber={certificationNumber} />
       <SmallButton onClick={onResend}>인증번호 재전송</SmallButton>
     </>,
-    <PasswordField key={2} password={password} passwordConfirm={passwordConfirm} />,
-    <NameField key={3} name={name} />,
-    <YearField key={4} year={year} />,
+    <PasswordField key={3} password={password} passwordConfirm={passwordConfirm} />,
+    <NameField key={4} name={name} />,
+    <YearField key={5} year={year} />,
     <GenderSelector
-      key={5}
+      key={6}
       value={gender.value}
       onChangeGender={gender.onChangeGender}
     />,
-    <SchoolField key={6} school={school} grade={grade} />,
-    <ConfirmField key={7} name={name} year={year} gender={gender} school={school} grade={grade} />,
+    <SchoolField key={7} school={school} grade={grade} />,
+    <ConfirmField key={8} name={name} year={year} gender={gender} school={school} grade={grade} />,
   ];
 
   return (
