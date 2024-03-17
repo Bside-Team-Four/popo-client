@@ -1,6 +1,7 @@
 import testRegister from '@/fixtures/testRegister';
 
 const signupField = {
+  tosAgree: { value: true, onChangeTosAgree: jest.fn() },
   year: { register: { ...testRegister, name: 'year' }, value: 1997, onClickReset: jest.fn() },
   grade: { register: { ...testRegister, name: 'grade' }, value: 1, onClickReset: jest.fn() },
   password: { register: { ...testRegister, name: 'password' }, value: '1234', onClickReset: jest.fn() },

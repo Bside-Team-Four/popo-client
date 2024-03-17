@@ -87,11 +87,15 @@ describe('useSignUpForm', () => {
   );
 
   describe('STEP 별 Submit TEST', () => {
-    describe('step0', () => {
+    describe('step1', () => {
       context('이메일이 유효하지 않은 경우', () => {
         given('signUpSendEmail', () => Promise.reject());
         it('실패 팝업을 띄운다.', async () => {
           const { result } = renderSignUpFormHook();
+
+          await act(async () => {
+            await result.current.onSubmit();
+          });
 
           await act(async () => {
             await result.current.onSubmit();
@@ -118,12 +122,16 @@ describe('useSignUpForm', () => {
             await result.current.onSubmit();
           });
 
-          expect(result.current.step).toEqual(1);
+          await act(async () => {
+            await result.current.onSubmit();
+          });
+
+          expect(result.current.step).toEqual(2);
         });
       });
     });
 
-    describe('step1', () => {
+    describe('step2', () => {
       given('signUpSendEmail', () => ({
         code: 0,
         message: 'ok',
@@ -132,6 +140,10 @@ describe('useSignUpForm', () => {
         given('signUpAuthEmail', () => Promise.reject());
         it('실패 팝업을 띄운다.', async () => {
           const { result } = renderSignUpFormHook();
+
+          await act(async () => {
+            await result.current.onSubmit();
+          });
 
           await act(async () => {
             await result.current.onSubmit();
@@ -167,12 +179,16 @@ describe('useSignUpForm', () => {
             await result.current.onSubmit();
           });
 
-          expect(result.current.step).toEqual(2);
+          await act(async () => {
+            await result.current.onSubmit();
+          });
+
+          expect(result.current.step).toEqual(3);
         });
       });
     });
 
-    describe('step < 7', () => {
+    describe('step <', () => {
       beforeEach(() => {
         given('signUpSendEmail', () => ({
           code: 0,
@@ -194,13 +210,17 @@ describe('useSignUpForm', () => {
           await result.current.onSubmit();
         });
 
+        await act(async () => {
+          await result.current.onSubmit();
+        });
+
         Array.from({ length: 5 }).forEach(() => {
           act(() => {
             result.current.onSubmit();
           });
         });
 
-        expect(result.current.step).toEqual(7);
+        expect(result.current.step).toEqual(8);
       });
     });
 
@@ -226,6 +246,11 @@ describe('useSignUpForm', () => {
 
           await act(async () => {
             await result.current.onSubmit();
+          });
+
+          await act(async () => {
+            await result.current.onSubmit();
+            result.current.formData.tosAgree.onChangeTosAgree(true);
             result.current.formData.gender.onChangeGender('FEMALE');
             result.current.formData.school.onChangeSchool({
               id: 106,
@@ -256,6 +281,11 @@ describe('useSignUpForm', () => {
         given('signUp', () => Promise.reject());
         it('실패 팝업을 띄운다.', async () => {
           const { result } = renderSignUpFormHook();
+
+          await act(async () => {
+            result.current.formData.tosAgree.onChangeTosAgree(true);
+            await result.current.onSubmit();
+          });
 
           await act(async () => {
             await result.current.onSubmit();

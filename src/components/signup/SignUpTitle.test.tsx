@@ -12,12 +12,21 @@ describe('SignUpTitle', () => {
     it('이메일 입력 타이틀을 화면에 보여준다.', () => {
       renderStepTitle();
 
-      expect(screen.getByText(/가입할 이메일을/)).toBeInTheDocument();
+      expect(screen.getByText(/약관을 확인/)).toBeInTheDocument();
     });
   });
 
   context('회원가입 두 번째 페이지일 경우', () => {
     given('step', () => 1);
+    it('이메일 입력 타이틀을 화면에 보여준다.', () => {
+      renderStepTitle();
+
+      expect(screen.getByText(/가입할 이메일을/)).toBeInTheDocument();
+    });
+  });
+
+  context('회원가입 세 번째 페이지일 경우', () => {
+    given('step', () => 2);
     it('인증번호 입력 타이틀을 화면에 보여준다.', () => {
       renderStepTitle();
 
@@ -25,8 +34,8 @@ describe('SignUpTitle', () => {
     });
   });
 
-  context('회원가입 세 번째 페이지일 경우', () => {
-    given('step', () => 2);
+  context('회원가입 네 번째 페이지일 경우', () => {
+    given('step', () => 3);
     it('비밀번호 입력 타이틀을 화면에 보여준다.', () => {
       renderStepTitle();
 
@@ -34,8 +43,8 @@ describe('SignUpTitle', () => {
     });
   });
 
-  context('회원가입 네 번째 페이지일 경우', () => {
-    given('step', () => 3);
+  context('회원가입 다섯 번째 페이지일 경우', () => {
+    given('step', () => 4);
     it('이름 입력 타이틀을 화면에 보여준다.', () => {
       renderStepTitle();
 
@@ -43,8 +52,8 @@ describe('SignUpTitle', () => {
     });
   });
 
-  context('회원가입 다섯 번째 페이지일 경우', () => {
-    given('step', () => 4);
+  context('회원가입 여섯 번째 페이지일 경우', () => {
+    given('step', () => 5);
     it('년도 입력 타이틀을 화면에 보여준다.', () => {
       renderStepTitle();
 
@@ -52,8 +61,8 @@ describe('SignUpTitle', () => {
     });
   });
 
-  context('회원가입 여섯 번째 페이지일 경우', () => {
-    given('step', () => 5);
+  context('회원가입 일곱 번째 페이지일 경우', () => {
+    given('step', () => 6);
     it('성별 선택 타이틀을 화면에 보여준다.', () => {
       renderStepTitle();
 
@@ -61,8 +70,8 @@ describe('SignUpTitle', () => {
     });
   });
 
-  context('회원가입 일곱 번째 페이지일 경우', () => {
-    given('step', () => 6);
+  context('회원가입 여덟 번째 페이지일 경우', () => {
+    given('step', () => 7);
     it('학교 선택 타이틀을 화면에 보여준다.', () => {
       renderStepTitle();
 
@@ -71,7 +80,7 @@ describe('SignUpTitle', () => {
   });
 
   context('회원가입 마지막 페이지일 경우', () => {
-    given('step', () => 7);
+    given('step', () => 8);
     it('입력한 정보 확인 타이틀을 화면에 보여준다.', () => {
       renderStepTitle();
 
