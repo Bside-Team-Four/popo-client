@@ -23,7 +23,7 @@ describe('SignUp', () => {
   const renderSignUp = () => renderWithProviders(<SignUp />);
 
   it('onSubmit 호출', () => {
-    given('step', () => 0);
+    given('step', () => 1);
     renderSignUp();
 
     const button = screen.getByRole('button', { name: '이메일로 인증번호 전송' });
