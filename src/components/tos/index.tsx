@@ -11,13 +11,13 @@ export default function Tos() {
     <Container>
       <SettingItem
         title="POPO 서비스 이용약관"
-        onClick={() => router.push('/setting/tos/use')}
+        onClick={() => router.push('/tos/use')}
         showArrow
       />
       <GrayBar />
       <SettingItem
         title="개인정보처리방침"
-        onClick={() => router.push('/setting/tos/privacy')}
+        onClick={() => router.push('/tos/privacy')}
         showArrow
       />
       <GrayBar />

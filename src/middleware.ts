@@ -9,7 +9,7 @@ export async function middleware(req:NextRequest) {
 
   const { pathname } = req.nextUrl;
 
-  if (/^(\/signin|\/signup|\/find-password)$/.test(pathname)) {
+  if (/^(\/signin|\/signup|\/find-password|\/tos\/use|\/tos\/privacy)$/.test(pathname)) {
     if (token) {
       return NextResponse.redirect(new URL('/', req.url));
     }
@@ -27,6 +27,8 @@ export const config = {
     '/signup',
     '/find-password',
     '/find-following',
+    '/tos/privacy',
+    '/tos/use',
     '/profile-image',
     '/',
     '/alarm',
@@ -38,7 +40,5 @@ export const config = {
     '/setting/tos',
     '/setting/change-password',
     '/setting/remove-account',
-    '/setting/tos/use',
-    '/setting/tos/privacy',
   ],
 };
