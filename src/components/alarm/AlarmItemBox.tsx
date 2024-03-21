@@ -97,6 +97,7 @@ const TimeContainer = styled(Flexbox)`
 `;
 
 const QuestionBox = styled.div`
+  position: relative;
   font-size: 16px;
   line-height: 24px;
   display: flex;
@@ -112,15 +113,14 @@ const QuestionBox = styled.div`
   &:after {
     content: '';
     position: absolute;
-    left: 0;
+    left: -3px;
+    bottom: 0;
     width: 0;
     height: 0;
     border: 15px solid transparent;
     border-right-color: ${(props) => props.theme.color.componentBackground.bg02};
     border-left: 0;
     border-bottom: 0;
-    margin-top: 20px;
-    margin-left: 45px;
   }
 `;
 
