@@ -21,12 +21,4 @@ describe('CandidateItem', () => {
       expect(screen.getByText(fixtures.candidate.name)).toBeInTheDocument();
     });
   });
-
-  context('candidate 의 name 이 없을 경우', () => {
-    it('candidate default icon 을 보여준다.', () => {
-      renderCandidateItem({ userId: 0, name: '' });
-
-      expect(screen.getByAltText('candidate default icon')).toBeInTheDocument();
-    });
-  });
 });

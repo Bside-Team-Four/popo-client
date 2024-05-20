@@ -9,6 +9,8 @@ const useGetPolls = () => useQuery(
   async () => apiService.fetchPollList(),
   {
     select: (data) => data.value,
+    cacheTime: 0,
+    staleTime: 0,
   },
 );
 

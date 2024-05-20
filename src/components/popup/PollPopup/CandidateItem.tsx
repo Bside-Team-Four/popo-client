@@ -12,10 +12,20 @@ type CandidateItemProps = {
 export default function CandidateItem({ candidate, onClick }:CandidateItemProps) {
   return (
     <Wrapper onClick={onClick}>
-      {candidate.name ? candidate.name : <CandidateDefaultIcon />}
+      {candidate.name}
     </Wrapper>
   );
 }
+
+function EmptyCandidateItem() {
+  return (
+    <Wrapper>
+      <CandidateDefaultIcon />
+    </Wrapper>
+  );
+}
+
+CandidateItem.Empty = EmptyCandidateItem;
 
 const Wrapper = styled.button`
   font-size: 16px;

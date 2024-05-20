@@ -15,7 +15,7 @@ jest.mock('framer-motion', () => ({
 jest.useFakeTimers();
 describe('CandidateList', () => {
   const ref = createRef();
-  const onVoteAndSkip = jest.fn();
+  const onVote = jest.fn();
 
   beforeEach(() => {
     jest.clearAllMocks();
@@ -25,7 +25,7 @@ describe('CandidateList', () => {
     <CandidateList
       isChanged={given.isChanged}
       candidates={given.candidates}
-      onVoteAndSkip={onVoteAndSkip}
+      onVote={onVote}
     />,
   );
 
@@ -51,7 +51,7 @@ describe('CandidateList', () => {
 
       fireEvent.click(nameButton);
 
-      expect(onVoteAndSkip).toHaveBeenCalled();
+      expect(onVote).toHaveBeenCalled();
     });
   });
 
@@ -64,6 +64,16 @@ describe('CandidateList', () => {
 
       expect(screen.getByText('이재준')).toBeInTheDocument();
       expect(screen.getAllByAltText('candidate default icon').length).toBe(3);
+    });
+  });
+
+  context('candidate가 4개 미만일때', () => {
+    given('isChanged', () => false);
+    given('candidates', () => fixtures.polls[0].candidates);
+
+    it('모자란 개수만큼 빈 선택지가 나온다', () => {
+      renderCandidateList();
+      expect(screen.getAllByAltText('candidate default icon').length).toBe(4 - fixtures.polls[0].candidates.length);
     });
   });
 });
