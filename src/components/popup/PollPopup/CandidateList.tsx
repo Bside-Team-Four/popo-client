@@ -11,14 +11,14 @@ import CandidateItem from './CandidateItem';
 type CandidateListProps = {
   isChanged: boolean;
   candidates: Candidate[];
-  onVoteAndSkip: (userId?: number) => void;
+  onVote: (userId: number) => void;
 };
 
 const getCandidateData = (candidates: Candidate[], isChanged:boolean) => {
   const candidatesMaxCount = candidates.length > 4 ? 8 : 4;
 
-  const emptyCandidates = Array(candidatesMaxCount - candidates.length)
-    .fill({ userId: 0, name: '' });
+  const emptyCandidates = Array<null>(candidatesMaxCount - candidates.length)
+    .fill(null);
 
   if (isChanged) {
     return [...candidates, ...emptyCandidates].slice(4, 8);
@@ -28,7 +28,7 @@ const getCandidateData = (candidates: Candidate[], isChanged:boolean) => {
 };
 
 export default function CandidateList({
-  isChanged, candidates, onVoteAndSkip,
+  isChanged, candidates, onVote,
 }:CandidateListProps) {
   const candidateData = getCandidateData(candidates, isChanged);
   const [divRef, animate] = useAnimate();
@@ -47,13 +47,17 @@ export default function CandidateList({
 
   return (
     <Container ref={divRef}>
-      {candidateData.map((candidate, i) => (
+      {candidateData.map((candidate, i) => (candidate != null ? (
         <CandidateItem
           key={`${candidate.userId}-${i}`}
           candidate={candidate}
-          onClick={() => onVoteAndSkip(candidate.userId)}
+          onClick={() => onVote(candidate.userId)}
         />
-      ))}
+      ) : (
+        <CandidateItem.Empty
+          key={`empty-${i}`}
+        />
+      )))}
     </Container>
   );
 }

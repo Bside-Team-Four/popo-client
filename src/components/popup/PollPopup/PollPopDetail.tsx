@@ -46,22 +46,21 @@ export default function PollPopDetail({
     setIsChanged(false);
   }, [currentStep, totalQuestionCount]);
 
-  const onVoteAndSkip = useCallback(async (userId?: number) => {
-    if (!userId) {
-      await skip({ questionId }, {
-        onSuccess: () => {
-          goNextStep();
-        },
-      });
-      return;
-    }
-
-    await vote({ questionId, chosenId: userId }, {
+  const handleVote = (userId:number) => {
+    vote({ questionId, chosenId: userId }, {
       onSuccess: () => {
         goNextStep();
       },
     });
-  }, [goNextStep, questionId, vote, skip]);
+  };
+
+  const handleSkip = () => {
+    skip({ questionId }, {
+      onSuccess: () => {
+        goNextStep();
+      },
+    });
+  };
 
   return (
     <Container
@@ -77,12 +76,12 @@ export default function PollPopDetail({
       <CandidateList
         isChanged={isChanged}
         candidates={candidates}
-        onVoteAndSkip={onVoteAndSkip}
+        onVote={handleVote}
       />
       <OptionButtons
         isChanged={candidates.length <= 4 || isChanged}
         setIsChanged={setIsChanged}
-        onVoteAndSkip={onVoteAndSkip}
+        onSkip={handleSkip}
       />
       <RewardPop show={showRewardPop} setShow={setShowRewardPop} onClose={onClose} />
     </Container>
