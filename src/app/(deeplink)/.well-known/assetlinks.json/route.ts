@@ -1,7 +1,7 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextResponse } from "next/server";
 
-export async function GET(_, res:NextApiResponse) {
-    return res.json([{
+export async function GET() {
+    return NextResponse.json([{
       "relation": [ "delegate_permission/common.handle_all_urls" ],
       "target": {
         "namespace": "android_app",
